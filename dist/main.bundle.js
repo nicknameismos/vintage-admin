@@ -4825,7 +4825,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ServerConfig = (function () {
     function ServerConfig() {
-        this.url = 'https://eatsyd-test.herokuapp.com/';
+        this.url = 'https://vintage-server.herokuapp.com/';
     }
     ServerConfig.prototype.isLogin = function () {
         var user = window.localStorage.getItem('user');

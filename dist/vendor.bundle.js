@@ -20804,6 +20804,12 @@ var ImageCropperComponent = (function () {
         this.maintainAspectRatio = true;
         this.aspectRatio = 1;
         this.resizeToWidth = 0;
+        this.cropper = {
+            x1: -100,
+            y1: -100,
+            x2: 10000,
+            y2: 10000
+        };
         this.imageCropped = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.imageLoaded = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
         this.loadImageFailed = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
@@ -20836,6 +20842,20 @@ var ImageCropperComponent = (function () {
         configurable: true
     });
     /**
+     * @param {?} changes
+     * @return {?}
+     */
+    ImageCropperComponent.prototype.ngOnChanges = function (changes) {
+        var _this = this;
+        if (changes['cropper']) {
+            setTimeout(function () {
+                _this.setMaxSize();
+                _this.checkCropperPosition(false);
+                _this.crop();
+            });
+        }
+    };
+    /**
      * @return {?}
      */
     ImageCropperComponent.prototype.initCropper = function () {
@@ -20863,12 +20883,10 @@ var ImageCropperComponent = (function () {
             width: 0,
             height: 0
         };
-        this.cropper = {
-            x1: -100,
-            y1: -100,
-            x2: 1000,
-            y2: 1000
-        };
+        this.cropper.x1 = -100;
+        this.cropper.y1 = -100;
+        this.cropper.x2 = 10000;
+        this.cropper.y2 = 10000;
     };
     /**
      * @param {?} event
@@ -20900,13 +20918,21 @@ var ImageCropperComponent = (function () {
         this.originalImage.onload = function () {
             _this.originalSize.width = _this.originalImage.width;
             _this.originalSize.height = _this.originalImage.height;
-            _this.imageLoaded.emit();
         };
         this.imgDataUrl = imageBase64;
         this.originalImage.src = imageBase64;
-        setTimeout(function () {
-            _this.resetCropperPosition();
-        }, 1);
+    };
+    /**
+     * @return {?}
+     */
+    ImageCropperComponent.prototype.imageLoadedInView = function () {
+        var _this = this;
+        if (this.originalImage != null) {
+            this.imageLoaded.emit();
+            setTimeout(function () {
+                _this.resetCropperPosition();
+            });
+        }
     };
     /**
      * @return {?}
@@ -20941,8 +20967,8 @@ var ImageCropperComponent = (function () {
         this.moveStart.active = true;
         this.moveStart.type = moveType;
         this.moveStart.position = position;
-        this.moveStart.clientX = event.clientX || event.touches[0].clientX;
-        this.moveStart.clientY = event.clientY || event.touches[0].clientY;
+        this.moveStart.clientX = this.getClientX(event);
+        this.moveStart.clientY = this.getClientY(event);
         Object.assign(this.moveStart, this.cropper);
     };
     /**
@@ -20953,24 +20979,30 @@ var ImageCropperComponent = (function () {
         if (this.moveStart.active) {
             event.stopPropagation();
             event.preventDefault();
-            var /** @type {?} */ el = this.elementRef.nativeElement.querySelector('.source-image');
-            this.maxSize.width = el.offsetWidth;
-            this.maxSize.height = el.offsetHeight;
+            this.setMaxSize();
             if (this.moveStart.type === 'move') {
                 this.move(event);
-                this.checkCoordinates(true);
+                this.checkCropperPosition(true);
             }
             else if (this.moveStart.type === 'resize') {
                 this.resize(event);
-                this.checkCoordinates(false);
+                this.checkCropperPosition(false);
             }
         }
+    };
+    /**
+     * @return {?}
+     */
+    ImageCropperComponent.prototype.setMaxSize = function () {
+        var /** @type {?} */ el = this.elementRef.nativeElement.querySelector('.source-image');
+        this.maxSize.width = el.offsetWidth;
+        this.maxSize.height = el.offsetHeight;
     };
     /**
      * @param {?=} maintainSize
      * @return {?}
      */
-    ImageCropperComponent.prototype.checkCoordinates = function (maintainSize) {
+    ImageCropperComponent.prototype.checkCropperPosition = function (maintainSize) {
         if (maintainSize === void 0) { maintainSize = false; }
         if (this.cropper.x1 < 0) {
             this.cropper.x2 -= maintainSize ? this.cropper.x1 : 0;
@@ -21003,8 +21035,8 @@ var ImageCropperComponent = (function () {
      * @return {?}
      */
     ImageCropperComponent.prototype.move = function (event) {
-        var /** @type {?} */ diffX = (event.clientX || event.touches[0].clientX) - this.moveStart.clientX;
-        var /** @type {?} */ diffY = (event.clientY || event.touches[0].clientY) - this.moveStart.clientY;
+        var /** @type {?} */ diffX = this.getClientX(event) - this.moveStart.clientX;
+        var /** @type {?} */ diffY = this.getClientY(event) - this.moveStart.clientY;
         this.cropper.x1 = this.moveStart.x1 + diffX;
         this.cropper.y1 = this.moveStart.y1 + diffY;
         this.cropper.x2 = this.moveStart.x2 + diffX;
@@ -21015,8 +21047,8 @@ var ImageCropperComponent = (function () {
      * @return {?}
      */
     ImageCropperComponent.prototype.resize = function (event) {
-        var /** @type {?} */ diffX = (event.clientX || event.touches[0].clientX) - this.moveStart.clientX;
-        var /** @type {?} */ diffY = (event.clientY || event.touches[0].clientY) - this.moveStart.clientY;
+        var /** @type {?} */ diffX = this.getClientX(event) - this.moveStart.clientX;
+        var /** @type {?} */ diffY = this.getClientY(event) - this.moveStart.clientY;
         switch (this.moveStart.position) {
             case 'left':
                 this.cropper.x1 = Math.min(this.moveStart.x1 + diffX, this.cropper.x2 - 20);
@@ -21120,7 +21152,7 @@ var ImageCropperComponent = (function () {
      */
     ImageCropperComponent.prototype.crop = function () {
         var /** @type {?} */ displayedImage = this.elementRef.nativeElement.querySelector('.source-image');
-        if (displayedImage) {
+        if (displayedImage && this.originalImage != null) {
             var /** @type {?} */ ratio = this.originalSize.width / displayedImage.offsetWidth;
             var /** @type {?} */ left = Math.round(this.cropper.x1 * ratio);
             var /** @type {?} */ top = Math.round(this.cropper.y1 * ratio);
@@ -21140,13 +21172,27 @@ var ImageCropperComponent = (function () {
             }
         }
     };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    ImageCropperComponent.prototype.getClientX = function (event) {
+        return event.clientX != null ? event.clientX : event.touches[0].clientX;
+    };
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    ImageCropperComponent.prototype.getClientY = function (event) {
+        return event.clientY != null ? event.clientY : event.touches[0].clientY;
+    };
     return ImageCropperComponent;
 }());
 ImageCropperComponent.decorators = [
     { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"], args: [{
                 selector: 'image-cropper',
-                template: "\n      <div>\n          <img\n              [src]=\"imgDataUrl\"\n              [style.visibility]=\"imageVisible ? 'visible' : 'hidden'\"\n              class=\"source-image\"\n          />\n          <div class=\"cropper\"\n              [style.top.px]=\"cropper.y1\"\n              [style.left.px]=\"cropper.x1\"\n              [style.width.px]=\"cropper.x2 - cropper.x1\"\n              [style.height.px]=\"cropper.y2 - cropper.y1\"\n              [style.visibility]=\"imageVisible ? 'visible' : 'hidden'\"\n          >\n              <div\n                  (mousedown)=\"startMove($event, 'move')\"\n                  (touchstart)=\"startMove($event, 'move')\"\n                  class=\"move\"\n              >&nbsp;</div>\n              <span\n                  class=\"resize topleft\"\n                  (mousedown)=\"startMove($event, 'resize', 'topleft')\"\n                  (touchstart)=\"startMove($event, 'resize', 'topleft')\"\n              ></span>\n              <span\n                  class=\"resize top\"\n              ></span>\n              <span\n                  class=\"resize topright\"\n                  (mousedown)=\"startMove($event, 'resize', 'topright')\"\n                  (touchstart)=\"startMove($event, 'resize', 'topright')\"\n              ></span>\n              <span\n                  class=\"resize right\"\n              ></span>\n              <span\n                  class=\"resize bottomright\"\n                  (mousedown)=\"startMove($event, 'resize', 'bottomright')\"\n                  (touchstart)=\"startMove($event, 'resize', 'bottomright')\"\n              ></span>\n              <span\n                  class=\"resize bottom\"\n              ></span>\n              <span\n                  class=\"resize bottomleft\"\n                  (mousedown)=\"startMove($event, 'resize', 'bottomleft')\"\n                  (touchstart)=\"startMove($event, 'resize', 'bottomleft')\"\n              ></span>\n              <span\n                  class=\"resize left\"\n              ></span>\n              <span\n                  class=\"resize-bar top\"\n                  (mousedown)=\"startMove($event, 'resize', 'top')\"\n                  (touchstart)=\"startMove($event, 'resize', 'top')\"\n              ></span>\n              <span\n                  class=\"resize-bar right\"\n                  (mousedown)=\"startMove($event, 'resize', 'right')\"\n                  (touchstart)=\"startMove($event, 'resize', 'right')\"\n              ></span>\n              <span\n                  class=\"resize-bar bottom\"\n                  (mousedown)=\"startMove($event, 'resize', 'bottom')\"\n                  (touchstart)=\"startMove($event, 'resize', 'bottom')\"\n              ></span>\n              <span\n                  class=\"resize-bar left\"\n                  (mousedown)=\"startMove($event, 'resize', 'left')\"\n                  (touchstart)=\"startMove($event, 'resize', 'left')\"\n              ></span>\n          </div>\n      </div>\n    ",
-                styles: ["\n      :host {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        position: relative;\n        width: 100%;\n        max-width: 100%;\n        max-height: 100%;\n        overflow: hidden;\n        padding: 5px;\n        -webkit-user-select: none;\n        -moz-user-select: none;\n        -ms-user-select: none;\n        user-select: none; }\n        :host > div {\n          position: relative;\n          width: 100%; }\n          :host > div .source-image {\n            max-width: 100%;\n            max-height: 100%; }\n        :host .cropper {\n          position: absolute;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          color: #53535C !important;\n          background: transparent !important;\n          outline-color: rgba(255, 255, 255, 0.3);\n          outline-width: 1000px;\n          outline-style: solid;\n          -ms-touch-action: none;\n              touch-action: none; }\n          :host .cropper:after {\n            position: absolute;\n            content: '';\n            top: 0;\n            bottom: 0;\n            left: 0;\n            right: 0;\n            pointer-events: none;\n            border: dashed 1px;\n            opacity: .75;\n            color: inherit;\n            z-index: 1; }\n          :host .cropper .move {\n            width: 100%;\n            height: 100%;\n            cursor: move;\n            border: 1px solid rgba(255, 255, 255, 0.5); }\n          :host .cropper .resize {\n            position: absolute;\n            background: #53535C; }\n            :host .cropper .resize.topleft {\n              top: -5px;\n              left: -5px;\n              cursor: nw-resize; }\n            :host .cropper .resize.top {\n              top: -5px;\n              left: calc(50% - 5px);\n              cursor: n-resize; }\n            :host .cropper .resize.topright {\n              top: -5px;\n              right: 5px;\n              cursor: ne-resize; }\n            :host .cropper .resize.right {\n              top: calc(50% - 5px);\n              right: 5px;\n              cursor: e-resize; }\n            :host .cropper .resize.bottomright {\n              bottom: 5px;\n              right: 5px;\n              cursor: se-resize; }\n            :host .cropper .resize.bottom {\n              bottom: 5px;\n              left: calc(50% - 5px);\n              cursor: s-resize; }\n            :host .cropper .resize.bottomleft {\n              bottom: 5px;\n              left: -5px;\n              cursor: sw-resize; }\n            :host .cropper .resize.left {\n              top: calc(50% - 5px);\n              left: -5px;\n              cursor: w-resize; }\n            :host .cropper .resize:after {\n              position: absolute;\n              background: inherit;\n              border: 1px solid rgba(255, 255, 255, 0.5);\n              content: '';\n              width: 8px;\n              height: 8px;\n              margin: auto;\n              opacity: .85;\n              z-index: 1; }\n          :host .cropper .resize-bar {\n            position: absolute;\n            z-index: 1; }\n            :host .cropper .resize-bar.top {\n              top: -5px;\n              left: 5px;\n              width: calc(100% - 10px);\n              height: 10px;\n              cursor: n-resize; }\n            :host .cropper .resize-bar.right {\n              top: 5px;\n              right: -5px;\n              height: calc(100% - 10px);\n              width: 10px;\n              cursor: e-resize; }\n            :host .cropper .resize-bar.bottom {\n              bottom: -5px;\n              left: 5px;\n              width: calc(100% - 10px);\n              height: 10px;\n              cursor: s-resize; }\n            :host .cropper .resize-bar.left {\n              top: 5px;\n              left: -5px;\n              height: calc(100% - 10px);\n              width: 10px;\n              cursor: w-resize; }\n    "]
+                template: "\n      <div>\n          <img\n              [src]=\"imgDataUrl\"\n              [style.visibility]=\"imageVisible ? 'visible' : 'hidden'\"\n              (load)=\"imageLoadedInView()\"\n              class=\"source-image\"\n          />\n          <div class=\"cropper\"\n              [style.top.px]=\"cropper.y1\"\n              [style.left.px]=\"cropper.x1\"\n              [style.width.px]=\"cropper.x2 - cropper.x1\"\n              [style.height.px]=\"cropper.y2 - cropper.y1\"\n              [style.visibility]=\"imageVisible ? 'visible' : 'hidden'\"\n          >\n              <div\n                  (mousedown)=\"startMove($event, 'move')\"\n                  (touchstart)=\"startMove($event, 'move')\"\n                  class=\"move\"\n              >&nbsp;</div>\n              <span\n                  class=\"resize topleft\"\n                  (mousedown)=\"startMove($event, 'resize', 'topleft')\"\n                  (touchstart)=\"startMove($event, 'resize', 'topleft')\"\n              ></span>\n              <span\n                  class=\"resize top\"\n              ></span>\n              <span\n                  class=\"resize topright\"\n                  (mousedown)=\"startMove($event, 'resize', 'topright')\"\n                  (touchstart)=\"startMove($event, 'resize', 'topright')\"\n              ></span>\n              <span\n                  class=\"resize right\"\n              ></span>\n              <span\n                  class=\"resize bottomright\"\n                  (mousedown)=\"startMove($event, 'resize', 'bottomright')\"\n                  (touchstart)=\"startMove($event, 'resize', 'bottomright')\"\n              ></span>\n              <span\n                  class=\"resize bottom\"\n              ></span>\n              <span\n                  class=\"resize bottomleft\"\n                  (mousedown)=\"startMove($event, 'resize', 'bottomleft')\"\n                  (touchstart)=\"startMove($event, 'resize', 'bottomleft')\"\n              ></span>\n              <span\n                  class=\"resize left\"\n              ></span>\n              <span\n                  class=\"resize-bar top\"\n                  (mousedown)=\"startMove($event, 'resize', 'top')\"\n                  (touchstart)=\"startMove($event, 'resize', 'top')\"\n              ></span>\n              <span\n                  class=\"resize-bar right\"\n                  (mousedown)=\"startMove($event, 'resize', 'right')\"\n                  (touchstart)=\"startMove($event, 'resize', 'right')\"\n              ></span>\n              <span\n                  class=\"resize-bar bottom\"\n                  (mousedown)=\"startMove($event, 'resize', 'bottom')\"\n                  (touchstart)=\"startMove($event, 'resize', 'bottom')\"\n              ></span>\n              <span\n                  class=\"resize-bar left\"\n                  (mousedown)=\"startMove($event, 'resize', 'left')\"\n                  (touchstart)=\"startMove($event, 'resize', 'left')\"\n              ></span>\n          </div>\n      </div>\n    ",
+                styles: ["\n      :host {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        position: relative;\n        width: 100%;\n        max-width: 100%;\n        max-height: 100%;\n        overflow: hidden;\n        padding: 5px;\n        -webkit-user-select: none;\n        -moz-user-select: none;\n        -ms-user-select: none;\n        user-select: none; }\n        :host > div {\n          position: relative;\n          width: 100%; }\n          :host > div .source-image {\n            max-width: 100%;\n            max-height: 100%; }\n        :host .cropper {\n          position: absolute;\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          color: #53535C !important;\n          background: transparent !important;\n          outline-color: rgba(255, 255, 255, 0.3);\n          outline-width: 1000px;\n          outline-style: solid;\n          -ms-touch-action: none;\n              touch-action: none; }\n          :host .cropper:after {\n            position: absolute;\n            content: '';\n            top: 0;\n            bottom: 0;\n            left: 0;\n            right: 0;\n            pointer-events: none;\n            border: dashed 1px;\n            opacity: .75;\n            color: inherit;\n            z-index: 1; }\n          :host .cropper .move {\n            width: 100%;\n            cursor: move;\n            border: 1px solid rgba(255, 255, 255, 0.5); }\n          :host .cropper .resize {\n            position: absolute;\n            background: #53535C; }\n            :host .cropper .resize.topleft {\n              top: -5px;\n              left: -5px;\n              cursor: nw-resize; }\n            :host .cropper .resize.top {\n              top: -5px;\n              left: calc(50% - 5px);\n              cursor: n-resize; }\n            :host .cropper .resize.topright {\n              top: -5px;\n              right: 5px;\n              cursor: ne-resize; }\n            :host .cropper .resize.right {\n              top: calc(50% - 5px);\n              right: 5px;\n              cursor: e-resize; }\n            :host .cropper .resize.bottomright {\n              bottom: 5px;\n              right: 5px;\n              cursor: se-resize; }\n            :host .cropper .resize.bottom {\n              bottom: 5px;\n              left: calc(50% - 5px);\n              cursor: s-resize; }\n            :host .cropper .resize.bottomleft {\n              bottom: 5px;\n              left: -5px;\n              cursor: sw-resize; }\n            :host .cropper .resize.left {\n              top: calc(50% - 5px);\n              left: -5px;\n              cursor: w-resize; }\n            :host .cropper .resize:after {\n              position: absolute;\n              background: inherit;\n              border: 1px solid rgba(255, 255, 255, 0.5);\n              content: '';\n              width: 8px;\n              height: 8px;\n              margin: auto;\n              opacity: .85;\n              z-index: 1; }\n          :host .cropper .resize-bar {\n            position: absolute;\n            z-index: 1; }\n            :host .cropper .resize-bar.top {\n              top: -5px;\n              left: 5px;\n              width: calc(100% - 10px);\n              height: 10px;\n              cursor: n-resize; }\n            :host .cropper .resize-bar.right {\n              top: 5px;\n              right: -5px;\n              height: calc(100% - 10px);\n              width: 10px;\n              cursor: e-resize; }\n            :host .cropper .resize-bar.bottom {\n              bottom: -5px;\n              left: 5px;\n              width: calc(100% - 10px);\n              height: 10px;\n              cursor: s-resize; }\n            :host .cropper .resize-bar.left {\n              top: 5px;\n              left: -5px;\n              height: calc(100% - 10px);\n              width: 10px;\n              cursor: w-resize; }\n    "]
             },] },
 ];
 /**
@@ -21162,6 +21208,7 @@ ImageCropperComponent.propDecorators = {
     'maintainAspectRatio': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
     'aspectRatio': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
     'resizeToWidth': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+    'cropper': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
     'imageCropped': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
     'imageLoaded': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
     'loadImageFailed': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
