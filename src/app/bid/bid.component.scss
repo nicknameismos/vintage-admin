@@ -1,0 +1,53 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Kanit', sans-serif;
+}
+
+.line-w {
+    border: 3px solid rgb(34, 143, 34);
+    background: transparent;
+    color: rgb(34, 143, 34);
+    font-size: 1.5rem;
+}
+
+.line-w:hover {
+    color: white;
+    border: 3px solid rgba(34, 143, 34, 0);
+}
+
+.modal-content .modal-footer button {
+    width: 10rem;
+}
+
+input[type=file] {
+    display: none;
+}
+
+.img-prd {
+    object-fit: cover;
+}
+
+.del-icon {
+    color: white;
+    filter: drop-shadow(0.2rem 0.2rem 0.1rem rgb(75, 75, 75));
+}
+
+.del-icon:hover {
+    color: rgb(185, 185, 185);
+}
+
+.transparent-btn {
+    position: absolute;
+    margin-left: -3.5rem;
+    top: 0.4rem;
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}

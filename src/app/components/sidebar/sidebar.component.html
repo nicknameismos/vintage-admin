@@ -329,7 +329,12 @@
                 </a>
             </li>
 
-
+            <li *ngIf="isLogin">
+                <a [routerLink]="['bid']">
+                    <i class="material-icons">gavel</i>
+                    <p>ประมูลสินค้า</p>
+                </a>
+            </li>
 
 
 

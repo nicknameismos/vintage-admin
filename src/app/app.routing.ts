@@ -25,6 +25,7 @@ import { LoginComponent } from 'app/login/login.component';
 import { AppComponent } from 'app/app.component';
 import { ManageAdsComponent } from 'app/manage-ads/manage-ads.component';
 import { ManageCampaignComponent } from 'app/manage-campaign/manage-campaign.component';
+import { BidComponent } from 'app/bid/bid.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -50,9 +51,10 @@ const routes: Routes = [
       component: CreateShopComponent
     }]
   },
-  { path: 'manage-ads', component: ManageAdsComponent},
-  { path: 'manage-user', component: ManageUserComponent},
-  { path: 'manage-campaign', component: ManageCampaignComponent},
+  { path: 'bid', component: BidComponent },
+  { path: 'manage-ads', component: ManageAdsComponent },
+  { path: 'manage-user', component: ManageUserComponent },
+  { path: 'manage-campaign', component: ManageCampaignComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 

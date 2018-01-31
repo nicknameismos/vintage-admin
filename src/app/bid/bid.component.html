@@ -1,0 +1,125 @@
+<div class="main-content">
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right">
+        <button class="btn btn-success btn-round line-w" (click)="addBid()">
+          <i class="material-icons">add</i>เพิ่มการประมูล</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+          <div class="card-content">
+            <table class="table table-hover">
+              <thead class=" text-danger ">
+                <tr>
+                  <th class="text-center">#</th>
+                  <th>สินค้าประมูล</th>
+
+                  <th>ราคาเริ่มต้น</th>
+                  <th>ราคาประมูลต่อเคาะ</th>
+                  <th>เวลาเริ่มต้นประมูล</th>
+                  <th>เวลาสิ้นสุดประมูล</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="height:10rem;" *ngFor="let item of bidlist; let i = index">
+                  <td class="text-center">{{i + 1}}</td>
+                  <td>
+                    <img [src]="item.image[0]" alt=""> {{item.name}}</td>
+
+                  <td>{{item.startprice}}</td>
+                  <td>{{item.bidprice}}</td>
+                  <td>{{item.starttime}}</td>
+                  <td>{{item.endtime}}</td>
+                  <td>
+                    <i class="material-icons del-icon">more horiz</i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- //////////////////  Modal ADD or EDIT BID ///////////////////// -->
+<div class="modal fade" #modalbid tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">{{ACTION_BID}}การประมูลสินค้า</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+            <img *ngIf="addImgPrd.length < 3" class="img-prd" width="120" height="120" src="http://res.cloudinary.com/ha7s6qhcg/image/upload/v1511519960/camera_bkdxf8.png"
+              alt="" (click)="upImgPrd()">
+            <input #prdimgInput type="file" accept="image/x-png,image/jpeg" (change)="onupImgPrdChange($event)">
+            <span *ngFor="let image of addImgPrd; let i = index">
+              <img *ngIf="addImgPrd" class="img-prd" width="120" height="120" [src]="image" alt="">
+              <button class="transparent-btn" (click)="removeprdImg(i)">
+                <i class="material-icons del-icon">delete</i>
+              </button>
+            </span>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-1 col-md-1 col-sm-1 text-right">
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+            <div class="form-group form-black floating is-empty">
+              ชื่อสินค้า
+              <input type="text" class="form-control" [(ngModel)]="bidData.name">
+            </div>
+
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
+            <div class="form-group form-black floating is-empty">
+              ราคาเริ่มต้น
+              <input type="number" [(ngModel)]="bidData.startprice" class="form-control">
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
+            <div class="form-group form-black floating is-empty">
+              ราคาเคาะประมูล
+              <input type="number" [(ngModel)]="bidData.bidprice" class="form-control">
+            </div>
+          </div>
+          <div class="col-lg-1 col-md-1 col-sm-1  text-center"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-1  text-center"></div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 text-center">
+          รายละเอียด
+          <div class="form-group form-black floating is-empty">
+            <textarea id="detail" rows="5" style="width:100%" [(ngModel)]="bidData.detail"></textarea>
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 text-center">
+          <div class="form-group form-black floating is-empty">
+            เริ่มต้นประมูล
+            <input type="datetime-local" [(ngModel)]="bidData.starttime">
+          </div>
+          <div class="form-group form-black floating is-empty">
+            สิ้นสุดประมูล
+            <input type="datetime-local" [(ngModel)]="bidData.endtime">
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1  text-center"></div>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-success " (click)="saveBid()">บันทึก</button>
+        <button type="button" class="btn btn-default " (click)="cancelAddBid()">ยกเลิก</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- //////////////////  Modal ADD BID ///////////////////// -->

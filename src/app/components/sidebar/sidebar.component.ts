@@ -20,8 +20,9 @@ export const ROUTES: RouteInfo[] = [
     { path: 'manage-shop', title: 'จัดการร้านค้า', icon: '', class: '' },
     { path: 'manage-user', title: 'จัดการบัญชีผู้ใช้', icon: '', class: '' },
     { path: 'manage-ads', title: 'จัดการโฆษณา', icon: '', class: '' },
-    { path: 'manage-campaign', title: 'จัดการแคมเปญ', icon: '', class: '' }
-    
+    { path: 'manage-campaign', title: 'จัดการแคมเปญ', icon: '', class: '' },
+    { path: 'bid', title: 'ประมูลสินค้า', icon: '', class: '' }
+
     // { path: 'user-profile', title: 'รายการขาย',  icon: 'unarchive', class: '' },
     // { path: 'typography', title: 'สินค้า',  icon: 'inbox', class: '' },
     // { path: 'icons', title: 'ลูกค้า / คู่ค้า',  icon: 'assignment_ind', class: '' },

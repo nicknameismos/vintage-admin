@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Pipe, PipeTransform  } from '@angular/core';
+import { NgModule, Pipe, PipeTransform } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
@@ -55,6 +55,8 @@ import { ADSService } from 'app/manage-ads/manage-ads.service';
 import { DatePipe } from '@angular/common';
 import { ManageCampaignComponent } from 'app/manage-campaign/manage-campaign.component';
 import { CampaignService } from 'app/manage-campaign/manage-campaign.service';
+import { BidComponent } from './bid/bid.component';
+import { BidService } from 'app/bid/bid.service';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,8 @@ import { CampaignService } from 'app/manage-campaign/manage-campaign.service';
     LoginComponent,
     ManageUserComponent,
     ManageAdsComponent,
-    ManageCampaignComponent
+    ManageCampaignComponent,
+    BidComponent
     // Pipe
   ],
   imports: [
@@ -110,7 +113,8 @@ import { CampaignService } from 'app/manage-campaign/manage-campaign.service';
     ShopService,
     Pager,
     ADSService,
-    CampaignService
+    CampaignService,
+    BidService
   ],
   bootstrap: [AppComponent]
 })
