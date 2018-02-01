@@ -412,7 +412,7 @@ AppRoutingModule = __decorate([
 /***/ "../../../../../src/app/bid/bid.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"main-content\">\n\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right\">\n        <button class=\"btn btn-success btn-round line-w\" (click)=\"addBid()\">\n          <i class=\"material-icons\">add</i>เพิ่มการประมูล</button>\n      </div>\n    </div>\n    <div class=\"row\">\n      <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">\n        <div class=\"card\">\n          <div class=\"card-content\">\n            <table class=\"table table-hover\">\n              <thead class=\" text-danger \">\n                <tr>\n                  <th class=\"text-center\">#</th>\n                  <th>สินค้าประมูล</th>\n\n                  <th>ราคาเริ่มต้น</th>\n                  <th>ราคาประมูลต่อเคาะ</th>\n                  <th>เวลาเริ่มต้นประมูล</th>\n                  <th>เวลาสิ้นสุดประมูล</th>\n                  <th>Action</th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr style=\"height:10rem;\" *ngFor=\"let item of bidlist; let i = index\">\n                  <td class=\"text-center\">{{i + 1}}</td>\n                  <td>\n                    <img [src]=\"item.image[0]\" alt=\"\"> {{item.name}}</td>\n\n                  <td>{{item.startprice}}</td>\n                  <td>{{item.bidprice}}</td>\n                  <td>{{item.starttime}}</td>\n                  <td>{{item.endtime}}</td>\n                  <td>\n                    <i class=\"material-icons del-icon\">more horiz</i>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<!-- //////////////////  Modal ADD or EDIT BID ///////////////////// -->\n<div class=\"modal fade\" #modalbid tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" data-keyboard=\"false\" data-backdrop=\"static\">\n  <div class=\"modal-dialog modal-lg\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title\" id=\"exampleModalLabel\">{{ACTION_BID}}การประมูลสินค้า</h4>\n      </div>\n      <div class=\"modal-body\">\n        <div class=\"row\">\n          <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center\">\n            <img *ngIf=\"addImgPrd.length < 3\" class=\"img-prd\" width=\"120\" height=\"120\" src=\"http://res.cloudinary.com/ha7s6qhcg/image/upload/v1511519960/camera_bkdxf8.png\"\n              alt=\"\" (click)=\"upImgPrd()\">\n            <input #prdimgInput type=\"file\" accept=\"image/x-png,image/jpeg\" (change)=\"onupImgPrdChange($event)\">\n            <span *ngFor=\"let image of addImgPrd; let i = index\">\n              <img *ngIf=\"addImgPrd\" class=\"img-prd\" width=\"120\" height=\"120\" [src]=\"image\" alt=\"\">\n              <button class=\"transparent-btn\" (click)=\"removeprdImg(i)\">\n                <i class=\"material-icons del-icon\">delete</i>\n              </button>\n            </span>\n\n          </div>\n        </div>\n        <div class=\"row\">\n          <div class=\"col-lg-1 col-md-1 col-sm-1 text-right\">\n          </div>\n          <div class=\"col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left\">\n            <div class=\"form-group form-black floating is-empty\">\n              ชื่อสินค้า\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"bidData.name\">\n            </div>\n\n          </div>\n          <div class=\"col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center\">\n            <div class=\"form-group form-black floating is-empty\">\n              ราคาเริ่มต้น\n              <input type=\"number\" [(ngModel)]=\"bidData.startprice\" class=\"form-control\">\n            </div>\n          </div>\n          <div class=\"col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center\">\n            <div class=\"form-group form-black floating is-empty\">\n              ราคาเคาะประมูล\n              <input type=\"number\" [(ngModel)]=\"bidData.bidprice\" class=\"form-control\">\n            </div>\n          </div>\n          <div class=\"col-lg-1 col-md-1 col-sm-1  text-center\"></div>\n        </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-lg-1 col-md-1 col-sm-1  text-center\"></div>\n        <div class=\"col-lg-5 col-md-5 col-sm-5 col-xs-12 text-center\">\n          รายละเอียด\n          <div class=\"form-group form-black floating is-empty\">\n            <textarea id=\"detail\" rows=\"5\" style=\"width:100%\" [(ngModel)]=\"bidData.detail\"></textarea>\n          </div>\n        </div>\n        <div class=\"col-lg-5 col-md-5 col-sm-5 col-xs-12 text-center\">\n          <div class=\"form-group form-black floating is-empty\">\n            เริ่มต้นประมูล\n            <input type=\"datetime-local\" [(ngModel)]=\"bidData.starttime\">\n          </div>\n          <div class=\"form-group form-black floating is-empty\">\n            สิ้นสุดประมูล\n            <input type=\"datetime-local\" [(ngModel)]=\"bidData.endtime\">\n          </div>\n        </div>\n        <div class=\"col-lg-1 col-md-1 col-sm-1  text-center\"></div>\n      </div>\n      <div class=\"modal-footer text-center\">\n        <button type=\"button\" class=\"btn btn-success \" (click)=\"saveBid()\">บันทึก</button>\n        <button type=\"button\" class=\"btn btn-default \" (click)=\"cancelAddBid()\">ยกเลิก</button>\n      </div>\n    </div>\n  </div>\n</div>\n<!-- //////////////////  Modal ADD BID ///////////////////// -->"
+module.exports = "<div class=\"main-content\">\n\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n      <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right\">\n        <button class=\"btn btn-success btn-round line-w\" (click)=\"addBid()\">\n          <i class=\"material-icons\">add</i>เพิ่มการประมูล</button>\n      </div>\n    </div>\n    <div class=\"row\">\n      <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\">\n        <div class=\"card\">\n          <div class=\"card-content\">\n            <table class=\"table table-hover\">\n              <thead class=\" text-danger \">\n                <tr>\n                  <th class=\"text-center\">#</th>\n                  <th class=\"prd-col\">สินค้าประมูล</th>\n\n                  <th>ราคาเริ่มต้น</th>\n                  <th>ราคาประมูลต่อเคาะ</th>\n                  <th>เวลาเริ่มต้นประมูล</th>\n                  <th>เวลาสิ้นสุดประมูล</th>\n                  <th>Action</th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr style=\"height:10rem;\" *ngFor=\"let item of bidlist; let i = index\">\n                  <td class=\"text-center\" (click)=\"editBid(item)\">{{i + 1}}</td>\n                  <td (click)=\"editBid(item)\">\n                    <img class=\"img-display\" [src]=\"item.image[0]\" alt=\"\"> {{item.name}}</td>\n\n                  <td class=\"text-center\" (click)=\"editBid(item)\">{{item.startprice}}</td>\n                  <td class=\"text-center\" (click)=\"editBid(item)\">{{item.bidprice}}</td>\n                  <td class=\"text-center\" (click)=\"editBid(item)\">{{item.starttime | date: 'short'}}</td>\n                  <td class=\"text-center\" (click)=\"editBid(item)\">{{item.endtime | date: 'short'}}</td>\n                  <td class=\"text-center\">\n                    <div class=\"btn-group\" role=\"group\">\n                      <button type=\"button\" class=\"more-btn\" data-toggle=\"dropdown\">\n                        <i class=\"material-icons\">more_horiz</i>\n                      </button>\n                      <div class=\"dropdown-menu pull-right\">\n                        <li (click)=\"deleteBid(item)\">\n                          <span>\n                            <i class=\"material-icons del-color\">delete</i>\n                          </span>\n                        </li>\n                      </div>\n                    </div>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<!-- //////////////////  Modal ADD or EDIT BID ///////////////////// -->\n<div class=\"modal fade\" #modalbid tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" data-keyboard=\"false\" data-backdrop=\"static\">\n  <div class=\"modal-dialog modal-lg\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h4 class=\"modal-title\" id=\"exampleModalLabel\">{{ACTION_BID}}การประมูลสินค้า</h4>\n      </div>\n      <div class=\"modal-body\">\n        <div class=\"row\">\n          <div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center\">\n            <!-- ADD -->\n            <img *ngIf=\"addImgPrd.length < 3 && ACTION_BID =='เพิ่ม'\" class=\"img-prd\" width=\"120\" height=\"120\" src=\"http://res.cloudinary.com/ha7s6qhcg/image/upload/v1511519960/camera_bkdxf8.png\"\n              alt=\"\" (click)=\"upImgPrd()\">\n            <!-- ADD -->\n\n            <!-- EDIT -->\n            <img *ngIf=\"ImgprdEdit.length + addImgPrd.length < 3 && ACTION_BID =='แก้ไข'\" class=\"img-prd\" width=\"120\" height=\"120\" src=\"http://res.cloudinary.com/ha7s6qhcg/image/upload/v1511519960/camera_bkdxf8.png\"\n              alt=\"\" (click)=\"upImgPrd()\">\n            <!-- EDIT -->\n            <input #prdimgInput type=\"file\" accept=\"image/x-png,image/jpeg\" (change)=\"onupImgPrdChange($event)\">\n            <span *ngFor=\"let image of addImgPrd; let i = index\">\n              <img *ngIf=\"addImgPrd\" class=\"img-prd\" width=\"120\" height=\"120\" [src]=\"image\" alt=\"\">\n              <button class=\"transparent-btn\" (click)=\"removeprdImg(i)\">\n                <i class=\"material-icons del-icon\">delete</i>\n              </button>\n            </span>\n            <span *ngFor=\"let image of ImgprdEdit; let i = index\">\n              <img *ngIf=\"addImgPrd\" class=\"img-prd\" width=\"120\" height=\"120\" [src]=\"image\" alt=\"\">\n              <button class=\"transparent-btn\" (click)=\"removeprdImgEDIT(i)\">\n                <i class=\"material-icons del-icon\">delete</i>\n              </button>\n            </span>\n\n          </div>\n        </div>\n        <div class=\"row\">\n          <div class=\"col-lg-1 col-md-1 col-sm-1 text-right\">\n          </div>\n          <div class=\"col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left\">\n            <div class=\"form-group form-black floating is-empty\">\n              ชื่อสินค้า\n              <input type=\"text\" class=\"form-control\" [(ngModel)]=\"bidData.name\">\n            </div>\n\n          </div>\n          <div class=\"col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center\">\n            <div class=\"form-group form-black floating is-empty\">\n              ราคาเริ่มต้น\n              <input type=\"number\" [(ngModel)]=\"bidData.startprice\" class=\"form-control\">\n            </div>\n          </div>\n          <div class=\"col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center\">\n            <div class=\"form-group form-black floating is-empty\">\n              ราคาเคาะประมูล\n              <input type=\"number\" [(ngModel)]=\"bidData.bidprice\" class=\"form-control\">\n            </div>\n          </div>\n          <div class=\"col-lg-1 col-md-1 col-sm-1  text-center\"></div>\n        </div>\n      </div>\n      <div class=\"row\">\n        <div class=\"col-lg-1 col-md-1 col-sm-1  text-center\"></div>\n        <div class=\"col-lg-5 col-md-5 col-sm-5 col-xs-12 text-center\">\n          รายละเอียด\n          <div class=\"form-group form-black floating is-empty\">\n            <textarea id=\"detail\" rows=\"5\" style=\"width:100%\" [(ngModel)]=\"bidData.detail\"></textarea>\n          </div>\n        </div>\n        <div class=\"col-lg-5 col-md-5 col-sm-5 col-xs-12 text-center\">\n          <div class=\"form-group form-black floating is-empty\">\n            เริ่มต้นประมูล\n            <input type=\"datetime-local\" [(ngModel)]=\"bidData.starttime\">\n          </div>\n          <div class=\"form-group form-black floating is-empty\">\n            สิ้นสุดประมูล\n            <input type=\"datetime-local\" [(ngModel)]=\"bidData.endtime\">\n          </div>\n        </div>\n        <div class=\"col-lg-1 col-md-1 col-sm-1  text-center\"></div>\n      </div>\n      <div class=\"modal-footer text-center\">\n        <button type=\"button\" class=\"btn btn-success \" (click)=\"saveBid()\">บันทึก</button>\n        <button type=\"button\" class=\"btn btn-default \" (click)=\"cancelAddBid()\">ยกเลิก</button>\n      </div>\n    </div>\n  </div>\n</div>\n<!-- //////////////////  Modal ADD BID ///////////////////// -->"
 
 /***/ }),
 
@@ -424,7 +424,7 @@ exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-b
 
 
 // module
-exports.push([module.i, "h1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-family: 'Kanit', sans-serif; }\n\n.line-w {\n  border: 3px solid #228f22;\n  background: transparent;\n  color: #228f22;\n  font-size: 1.5rem; }\n\n.line-w:hover {\n  color: white;\n  border: 3px solid rgba(34, 143, 34, 0); }\n\n.modal-content .modal-footer button {\n  width: 10rem; }\n\ninput[type=file] {\n  display: none; }\n\n.img-prd {\n  -o-object-fit: cover;\n     object-fit: cover; }\n\n.del-icon {\n  color: white;\n  -webkit-filter: drop-shadow(0.2rem 0.2rem 0.1rem #4b4b4b);\n          filter: drop-shadow(0.2rem 0.2rem 0.1rem #4b4b4b); }\n\n.del-icon:hover {\n  color: #b9b9b9; }\n\n.transparent-btn {\n  position: absolute;\n  margin-left: -3.5rem;\n  top: 0.4rem;\n  background-color: Transparent;\n  background-repeat: no-repeat;\n  border: none;\n  cursor: pointer;\n  overflow: hidden;\n  outline: none; }\n", ""]);
+exports.push([module.i, "h1,\nh2,\nh3,\nh4,\nh5,\nh6 {\n  font-family: 'Kanit', sans-serif; }\n\nth {\n  text-align: center; }\n\n.line-w {\n  border: 3px solid #228f22;\n  background: transparent;\n  color: #228f22;\n  font-size: 1.5rem; }\n\n.line-w:hover {\n  color: white;\n  border: 3px solid rgba(34, 143, 34, 0); }\n\n.modal-content .modal-footer button {\n  width: 10rem; }\n\ninput[type=file] {\n  display: none; }\n\n.img-prd {\n  -o-object-fit: cover;\n     object-fit: cover; }\n\n.del-icon {\n  color: white;\n  -webkit-filter: drop-shadow(0.2rem 0.2rem 0.1rem #4b4b4b);\n          filter: drop-shadow(0.2rem 0.2rem 0.1rem #4b4b4b); }\n\n.del-icon:hover {\n  color: #b9b9b9; }\n\n.transparent-btn {\n  position: absolute;\n  margin-left: -3.5rem;\n  top: 0.4rem;\n  background-color: Transparent;\n  background-repeat: no-repeat;\n  border: none;\n  cursor: pointer;\n  overflow: hidden;\n  outline: none; }\n\n.img-display {\n  height: 70px;\n  width: 70px; }\n\n.prd-col {\n  width: 24rem; }\n\n.more-btn {\n  background-color: Transparent;\n  background-repeat: no-repeat;\n  border: none;\n  cursor: pointer;\n  overflow: hidden;\n  outline: none; }\n\n.del-color {\n  padding: 0 0.8rem 0 0.8rem;\n  color: red;\n  font-size: 2.3rem;\n  cursor: pointer;\n  margin-top: 0.8rem; }\n\n.dropdown-menu {\n  min-width: 4rem; }\n\n.dropdown-menu:hover {\n  background-color: #c5c5c5; }\n", ""]);
 
 // exports
 
@@ -465,6 +465,7 @@ var BidComponent = (function () {
         this.pubsub = pubsub;
         this.bidService = bidService;
         this.addImgPrd = [];
+        this.ImgprdEdit = [];
         this.isEditImage = false;
         this.bidData = {};
         this.bidlist = [];
@@ -495,7 +496,26 @@ var BidComponent = (function () {
     BidComponent.prototype.cancelAddBid = function () {
         $(this.modalbid.nativeElement).modal('hide');
         this.addImgPrd = [];
+        this.ImgprdEdit = [];
         this.bidData = {};
+    };
+    BidComponent.prototype.editBid = function (item) {
+        this.ACTION_BID = 'แก้ไข';
+        this.bidData = JSON.parse(JSON.stringify(item));
+        this.addImgPrd = this.bidData.image;
+        $(this.modalbid.nativeElement).modal('show');
+    };
+    BidComponent.prototype.deleteBid = function (item) {
+        var _this = this;
+        var cfDelete = confirm('ยืนยันการลบการประมูลนี้');
+        if (cfDelete) {
+            this.pubsub.$pub('loading', true);
+            this.bidService.deleteBid(item).subscribe(function (data) {
+                _this.InitialData();
+            }, function (err) {
+                console.log(err);
+            });
+        }
     };
     BidComponent.prototype.upImgPrd = function () {
         this.prdimgInput.nativeElement.click();
@@ -503,6 +523,12 @@ var BidComponent = (function () {
     BidComponent.prototype.removeprdImg = function (index) {
         this.addImgPrd.splice(index, 1);
         if (this.addImgPrd.length == 0) {
+            this.isEditImage = false;
+        }
+    };
+    BidComponent.prototype.removeprdImgEDIT = function (index) {
+        this.ImgprdEdit.splice(index, 1);
+        if (this.ImgprdEdit.length == 0) {
             this.isEditImage = false;
         }
     };
@@ -514,7 +540,12 @@ var BidComponent = (function () {
         if (fileBrowser.files.length > 0) {
             reader.onload = function () {
                 _this.isEditImage = true;
-                _this.addImgPrd.push(reader.result.replace(/\n/g, ''));
+                if (_this.ACTION_BID == 'เพิ่ม') {
+                    _this.addImgPrd.push(reader.result.replace(/\n/g, ''));
+                }
+                else {
+                    _this.ImgprdEdit.push(reader.result.replace(/\n/g, ''));
+                }
             };
         }
     };
@@ -523,33 +554,42 @@ var BidComponent = (function () {
         this.pubsub.$pub('loading', true);
         var sendBid = {};
         var img = [];
-        if (this.ACTION_BID == 'เพิ่ม') {
-            if (this.isEditImage == true) {
-                this.addImgPrd.forEach(function (el, i) {
-                    _this.bidService.uploadImage(el).subscribe(function (upImg) {
+        if (this.ACTION_BID === 'เพิ่ม') {
+            if (this.isEditImage === true) {
+                console.log(this.addImgPrd.length);
+                var _loop_1 = function (i) {
+                    this_1.bidService.uploadImage(this_1.addImgPrd[i]).subscribe(function (upImg) {
                         img.push(upImg.imageURL);
-                        if (i == _this.addImgPrd.length) {
+                        console.log(i);
+                        if (i === 0) {
+                            console.log(i);
                             sendBid.image = img;
+                            sendBid.name = _this.bidData.name;
+                            sendBid.startprice = _this.bidData.startprice;
+                            sendBid.bidprice = _this.bidData.bidprice;
+                            sendBid.detail = _this.bidData.detail;
+                            sendBid.starttime = _this.bidData.starttime;
+                            sendBid.endtime = _this.bidData.endtime;
+                            console.log(sendBid);
+                            _this.bidService.saveBid(sendBid).subscribe(function (data) {
+                                alert("เพิ่มการประมูลสินค้าเรียบร้อย");
+                                _this.cancelAddBid();
+                                _this.InitialData();
+                                $(_this.modalbid.nativeElement).modal('hide');
+                            }, function (err) {
+                                alert("ไม่สามารถเพิ่มการประมูลสินค้าได้");
+                                console.log(err);
+                                _this.pubsub.$pub('loading', false);
+                            });
                         }
-                        sendBid.name = _this.bidData.name;
-                        sendBid.startprice = _this.bidData.startprice;
-                        sendBid.bidprice = _this.bidData.bidprice;
-                        sendBid.detail = _this.bidData.detail;
-                        sendBid.starttime = _this.bidData.starttime;
-                        sendBid.endtime = _this.bidData.endtime;
-                        console.log(sendBid);
-                        _this.bidService.saveBid(sendBid).subscribe(function (data) {
-                            alert("เพิ่มการประมูลสินค้าเรียบร้อย");
-                            _this.InitialData();
-                            $(_this.modalbid.nativeElement).modal('hide');
-                        }, function (err) {
-                            alert("ไม่สามารถเพิ่มการประมูลสินค้าได้");
-                            console.log(err);
-                            _this.pubsub.$pub('loading', false);
-                        });
-                        // }
+                    }, function (err) {
+                        console.log(err);
                     });
-                });
+                };
+                var this_1 = this;
+                for (var i = 0; i < this.addImgPrd.length; i++) {
+                    _loop_1(i);
+                }
             }
             else {
                 alert("กรุณาเพิ่มรูปภาพการประมูล");
@@ -558,8 +598,62 @@ var BidComponent = (function () {
         }
         else if (this.ACTION_BID == 'แก้ไข') {
             if (this.isEditImage == true) {
+                var _loop_2 = function (i) {
+                    this_2.bidService.uploadImage(this_2.ImgprdEdit[i]).subscribe(function (upImg) {
+                        _this.bidData.image.push(upImg.imageURL);
+                        console.log(i);
+                        if (i === 0) {
+                            console.log(i);
+                            sendBid._id = _this.bidData._id;
+                            sendBid.image = _this.bidData.image;
+                            sendBid.name = _this.bidData.name;
+                            sendBid.startprice = _this.bidData.startprice;
+                            sendBid.bidprice = _this.bidData.bidprice;
+                            sendBid.detail = _this.bidData.detail;
+                            sendBid.starttime = _this.bidData.starttime;
+                            sendBid.endtime = _this.bidData.endtime;
+                            console.log(sendBid);
+                            _this.bidService.editBid(sendBid).subscribe(function (data) {
+                                alert("แก้ไขการประมูลสินค้าเรียบร้อย");
+                                _this.cancelAddBid();
+                                _this.InitialData();
+                                $(_this.modalbid.nativeElement).modal('hide');
+                            }, function (err) {
+                                alert("ไม่สามารถแก้ไขการประมูลสินค้าได้");
+                                console.log(err);
+                                _this.pubsub.$pub('loading', false);
+                            });
+                        }
+                    }, function (err) {
+                        console.log(err);
+                        _this.pubsub.$pub('loading', false);
+                        alert("ไม่สามารถอัพโหลดรูปสินค้าประมูลได้ในขณะนี้ \nกรุณาลองใหม่อีกครั้ง");
+                    });
+                };
+                var this_2 = this;
+                for (var i = 0; i < this.ImgprdEdit.length; i++) {
+                    _loop_2(i);
+                }
             }
             else {
+                sendBid._id = this.bidData._id;
+                sendBid.image = this.addImgPrd;
+                sendBid.name = this.bidData.name;
+                sendBid.startprice = this.bidData.startprice;
+                sendBid.bidprice = this.bidData.bidprice;
+                sendBid.detail = this.bidData.detail;
+                sendBid.starttime = this.bidData.starttime;
+                sendBid.endtime = this.bidData.endtime;
+                this.bidService.editBid(sendBid).subscribe(function (data) {
+                    alert("แก้ไขการประมูลสินค้าเรียบร้อย");
+                    _this.cancelAddBid();
+                    _this.InitialData();
+                    $(_this.modalbid.nativeElement).modal('hide');
+                }, function (err) {
+                    alert("ไม่สามารถแก้ไขการประมูลสินค้าได้");
+                    console.log(err);
+                    _this.pubsub.$pub('loading', false);
+                });
             }
         }
     };
@@ -623,6 +717,16 @@ var BidService = (function () {
     }
     BidService.prototype.saveBid = function (data) {
         return this.http.post(this.server.url + 'api/bids', data, this.server.AuthHeaders())
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(error); });
+    };
+    BidService.prototype.editBid = function (data) {
+        return this.http.put(this.server.url + 'api/bids/' + data._id, data, this.server.AuthHeaders())
+            .map(function (res) { return res.json(); })
+            .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(error); });
+    };
+    BidService.prototype.deleteBid = function (data) {
+        return this.http.delete(this.server.url + 'api/bids/' + data._id, this.server.AuthHeaders())
             .map(function (res) { return res.json(); })
             .catch(function (error) { return __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__["Observable"].throw(error); });
     };

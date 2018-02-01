@@ -7,6 +7,10 @@ h6 {
     font-family: 'Kanit', sans-serif;
 }
 
+th {
+    text-align: center;
+}
+
 .line-w {
     border: 3px solid rgb(34, 143, 34);
     background: transparent;
@@ -50,4 +54,38 @@ input[type=file] {
     cursor: pointer;
     overflow: hidden;
     outline: none;
+}
+
+.img-display {
+    height: 70px;
+    width: 70px;
+}
+
+.prd-col {
+    width: 24rem;
+}
+
+.more-btn {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
+.del-color {
+    padding: 0 0.8rem 0 0.8rem;
+    color: red;
+    font-size: 2.3rem;
+    cursor: pointer;
+    margin-top: 0.8rem;
+}
+
+.dropdown-menu {
+    min-width: 4rem;
+}
+
+.dropdown-menu:hover {
+    background-color: rgb(197, 197, 197);
 }
