@@ -117,8 +117,12 @@
             <h4 class="modal-title pull-left"> {{CE_action_ads}}โฆษณา</h4>
           </div>
           <div class="col-lg-3 text-right verti-middle">
-            <div class="text-status">สถานะ : </div>
+            <span class="text-status">สถานะ : </span>
             <ui-switch size="small" [(ngModel)]="adsStatus" (change)="activeChange($event)"></ui-switch>
+            <button class="btn btn-danger btn-sm" *ngIf="CE_action_ads == 'แก้ไข'" (click)="removeAds(adsEditDATA)">
+              <i class="material-icons icon-delete">delete</i>
+            </button>
+
           </div>
         </div>
 

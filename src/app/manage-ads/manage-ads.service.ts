@@ -26,6 +26,12 @@ export class ADSService {
             .catch((error: any) => Observable.throw(error));
     }
 
+    delteAds(data): Observable<any> {
+        return this.http.delete(this.server.url + 'api/ads/' + data._id, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
     uploadImage(img): Observable<any> {
         return this.http.post(this.server.url + 'api/products_picture', { data: img.replace('data:image/jpeg;base64,', '') }, this.server.AuthHeaders())
             .map((res: Response) => res.json())
