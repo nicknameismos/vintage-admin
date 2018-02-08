@@ -73,8 +73,8 @@ export class ManageAdsComponent implements OnInit {
       // DEFAULT INIT DATA
       this.adsDATA.status = false;
       // DEFAULT INIT DATA
-    },(err)=>{
-    console.log(err);
+    }, (err) => {
+      console.log(err);
 
     });
   }
@@ -360,6 +360,23 @@ export class ManageAdsComponent implements OnInit {
       }
     }
   }
+  removeAds(item) {
+    const cfDelete = confirm('คุณต้องการลบโฆษณานี้ใช่หรือไม่');
+    if (cfDelete) {
+      this.pubsub.$pub('loading', true);
+      this.ADSservice.delteAds(item).subscribe((success) => {
+        alert("ระบบได้ทำการลบโฆษณาเรียบร้อยแล้วค่ะ");
+        $(this.modalads.nativeElement).modal('hide');
+        this.cancelSave();
+        this.LoadInitial();
+
+      }, (err) => {
+        alert("ระบบไม่สามารถทำการลบโฆษณาได้ค่ะ กรุณาลองใหม่อีกครั้ง");
+        this.pubsub.$pub('loading', false);
+      })
+    }
+  }
+
   cancelSave() {
     $(this.modalads.nativeElement).modal('hide');
     this.adsimgAdding = null;

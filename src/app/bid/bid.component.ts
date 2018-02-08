@@ -14,7 +14,8 @@ export class BidComponent implements OnInit {
   @ViewChild('modalbid') modalbid;
   @ViewChild('prdimgInput') prdimgInput;
   private ACTION_BID: string;
-  private addImgPrd: Array<any> = [];
+  private addImgPrd: Array<string> = [];
+  private ImgprdEdit: Array<string> = [];
   private isEditImage: boolean = false;
   private bidData: any = {};
   private bidlist: Array<any> = [];
@@ -44,7 +45,27 @@ export class BidComponent implements OnInit {
   cancelAddBid() {
     $(this.modalbid.nativeElement).modal('hide');
     this.addImgPrd = [];
+    this.ImgprdEdit = [];
     this.bidData = {};
+  }
+
+  editBid(item) {
+    this.ACTION_BID = 'แก้ไข';
+    this.bidData = JSON.parse(JSON.stringify(item));
+    this.addImgPrd = this.bidData.image;
+    $(this.modalbid.nativeElement).modal('show');
+  }
+
+  deleteBid(item) {
+    const cfDelete = confirm('ยืนยันการลบการประมูลนี้');
+    if (cfDelete) {
+      this.pubsub.$pub('loading', true);
+      this.bidService.deleteBid(item).subscribe(data => {
+        this.InitialData();
+      }, err => {
+        console.log(err);
+      });
+    }
   }
 
   upImgPrd() {
@@ -57,6 +78,13 @@ export class BidComponent implements OnInit {
     }
   }
 
+  removeprdImgEDIT(index) {
+    this.ImgprdEdit.splice(index, 1);
+    if (this.ImgprdEdit.length == 0) {
+      this.isEditImage = false;
+    }
+  }
+
 
   onupImgPrdChange($event) {
     const fileBrowser = this.prdimgInput.nativeElement;
@@ -65,7 +93,12 @@ export class BidComponent implements OnInit {
     if (fileBrowser.files.length > 0) {
       reader.onload = () => {
         this.isEditImage = true;
-        this.addImgPrd.push(reader.result.replace(/\n/g, ''));
+        if (this.ACTION_BID == 'เพิ่ม') {
+          this.addImgPrd.push(reader.result.replace(/\n/g, ''));
+        } else {
+          this.ImgprdEdit.push(reader.result.replace(/\n/g, ''));
+        }
+
       };
     }
   }
@@ -73,34 +106,39 @@ export class BidComponent implements OnInit {
     this.pubsub.$pub('loading', true);
     let sendBid: any = {};
     let img: Array<any> = [];
-    if (this.ACTION_BID == 'เพิ่ม') {
-      if (this.isEditImage == true) {
-        this.addImgPrd.forEach((el, i) => {
-          this.bidService.uploadImage(el).subscribe((upImg) => {
+    if (this.ACTION_BID === 'เพิ่ม') {
+      if (this.isEditImage === true) {
+        console.log(this.addImgPrd.length);
+        for (let i = 0; i < this.addImgPrd.length; i++) {
+          this.bidService.uploadImage(this.addImgPrd[i]).subscribe((upImg) => {
             img.push(upImg.imageURL);
-            if (i == this.addImgPrd.length) {
+            console.log(i);
+            if (i === 0) {
+              console.log(i);
               sendBid.image = img;
-            }
-            sendBid.name = this.bidData.name;
-            sendBid.startprice = this.bidData.startprice;
-            sendBid.bidprice = this.bidData.bidprice;
-            sendBid.detail = this.bidData.detail;
-            sendBid.starttime = this.bidData.starttime;
-            sendBid.endtime = this.bidData.endtime;
-            console.log(sendBid);
-            this.bidService.saveBid(sendBid).subscribe((data) => {
-              alert("เพิ่มการประมูลสินค้าเรียบร้อย");
-              this.InitialData();
-              $(this.modalbid.nativeElement).modal('hide');
-            }, (err) => {
-              alert("ไม่สามารถเพิ่มการประมูลสินค้าได้");
-              console.log(err);
-              this.pubsub.$pub('loading', false);
-            });
-            // }
-          });
-        });
 
+              sendBid.name = this.bidData.name;
+              sendBid.startprice = this.bidData.startprice;
+              sendBid.bidprice = this.bidData.bidprice;
+              sendBid.detail = this.bidData.detail;
+              sendBid.starttime = this.bidData.starttime;
+              sendBid.endtime = this.bidData.endtime;
+              console.log(sendBid);
+              this.bidService.saveBid(sendBid).subscribe((data) => {
+                alert("เพิ่มการประมูลสินค้าเรียบร้อย");
+                this.cancelAddBid();
+                this.InitialData();
+                $(this.modalbid.nativeElement).modal('hide');
+              }, (err) => {
+                alert("ไม่สามารถเพิ่มการประมูลสินค้าได้");
+                console.log(err);
+                this.pubsub.$pub('loading', false);
+              });
+            }
+          }, (err) => {
+            console.log(err);
+          });
+        }
 
       } else {
         alert("กรุณาเพิ่มรูปภาพการประมูล");
@@ -108,9 +146,57 @@ export class BidComponent implements OnInit {
       }
     } else if (this.ACTION_BID == 'แก้ไข') {
       if (this.isEditImage == true) {
-
+        for (let i = 0; i < this.ImgprdEdit.length; i++) {
+          this.bidService.uploadImage(this.ImgprdEdit[i]).subscribe((upImg) => {
+            this.bidData.image.push(upImg.imageURL);
+            console.log(i);
+            if (i === 0) {
+              console.log(i);
+              sendBid._id = this.bidData._id;
+              sendBid.image = this.bidData.image;
+              sendBid.name = this.bidData.name;
+              sendBid.startprice = this.bidData.startprice;
+              sendBid.bidprice = this.bidData.bidprice;
+              sendBid.detail = this.bidData.detail;
+              sendBid.starttime = this.bidData.starttime;
+              sendBid.endtime = this.bidData.endtime;
+              console.log(sendBid);
+              this.bidService.editBid(sendBid).subscribe((data) => {
+                alert("แก้ไขการประมูลสินค้าเรียบร้อย");
+                this.cancelAddBid();
+                this.InitialData();
+                $(this.modalbid.nativeElement).modal('hide');
+              }, (err) => {
+                alert("ไม่สามารถแก้ไขการประมูลสินค้าได้");
+                console.log(err);
+                this.pubsub.$pub('loading', false);
+              });
+            }
+          }, (err) => {
+            console.log(err);
+            this.pubsub.$pub('loading', false);
+            alert("ไม่สามารถอัพโหลดรูปสินค้าประมูลได้ในขณะนี้ \nกรุณาลองใหม่อีกครั้ง");
+          });
+        }
       } else {
-
+        sendBid._id = this.bidData._id;
+        sendBid.image = this.addImgPrd;
+        sendBid.name = this.bidData.name;
+        sendBid.startprice = this.bidData.startprice;
+        sendBid.bidprice = this.bidData.bidprice;
+        sendBid.detail = this.bidData.detail;
+        sendBid.starttime = this.bidData.starttime;
+        sendBid.endtime = this.bidData.endtime;
+        this.bidService.editBid(sendBid).subscribe((data) => {
+          alert("แก้ไขการประมูลสินค้าเรียบร้อย");
+          this.cancelAddBid();
+          this.InitialData();
+          $(this.modalbid.nativeElement).modal('hide');
+        }, (err) => {
+          alert("ไม่สามารถแก้ไขการประมูลสินค้าได้");
+          console.log(err);
+          this.pubsub.$pub('loading', false);
+        });
       }
     }
   }

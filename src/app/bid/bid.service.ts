@@ -17,6 +17,18 @@ export class BidService {
             .catch((error: any) => Observable.throw(error));
     }
 
+    editBid(data): Observable<any> {
+        return this.http.put(this.server.url + 'api/bids/' + data._id, data, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
+    deleteBid(data): Observable<any> {
+        return this.http.delete(this.server.url + 'api/bids/' + data._id, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
     uploadImage(image): Observable<any> {
         return this.http.post(this.server.url + 'api/products_picture', { data: image.replace('data:image/jpeg;base64,', '') }, this.server.AuthHeaders())
             .map((res: Response) => res.json())
