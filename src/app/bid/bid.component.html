@@ -60,8 +60,8 @@
 
                   <td class="text-center" (click)="editBid(item)">{{item.startprice}}</td>
                   <td class="text-center" (click)="editBid(item)">{{item.bidprice}}</td>
-                  <td class="text-center" (click)="editBid(item)">{{item.starttime | date: 'short'}}</td>
-                  <td class="text-center" (click)="editBid(item)">{{item.endtime | date: 'short'}}</td>
+                  <td class="text-center" (click)="editBid(item)">{{item.starttime | amLocale:'th' | amDateFormat:'MMMM Do YYYY, h:mm:ss'}}</td>
+                  <td class="text-center" (click)="editBid(item)">{{item.endtime | amLocale:'th' | amDateFormat:'MMMM Do YYYY, h:mm:ss'}}</td>
                   <td class="text-center">
                     <div class="btn-group" role="group">
                       <button type="button" class="more-btn" data-toggle="dropdown">

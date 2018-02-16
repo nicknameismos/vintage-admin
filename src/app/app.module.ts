@@ -3,7 +3,7 @@ import { NgModule, Pipe, PipeTransform } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-
+import { MomentModule } from 'angular2-moment';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
@@ -104,7 +104,8 @@ import { ManageOrderComponent } from './manage-order/manage-order.component';
     NgbModule.forRoot(),
     Ng2MapModule.forRoot({ apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDcsyfUw4ToTjnU9i_IxfdaoQZKs8suBPc' }),
     SortablejsModule.forRoot({ animation: 150 }),
-    ImageCropperModule
+    ImageCropperModule,
+    MomentModule
   ],
   providers: [
     DashboardService,
