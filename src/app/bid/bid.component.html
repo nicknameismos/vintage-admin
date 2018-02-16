@@ -2,11 +2,40 @@
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-right">
+      <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#tab1" role="tab" data-toggle="tab">กำลังประมูล</a>
+          </li>
+          <li role="presentation">
+            <a href="#tab2" role="tab" data-toggle="tab">รอการประมูล</a>
+          </li>
+          <li role="presentation">
+            <a href="#tab3" role="tab" data-toggle="tab">ประมูลแล้ว</a>
+          </li>
+          <li role="presentation">
+            <a href="#tab4" role="tab" data-toggle="tab">จ่ายเงินแล้ว</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-8 col-sm-8 col-xs-8" style="margin-top: 10px">
+        <div class="sb">
+          <span class="inner-sb">
+            <span class="txb">
+              ค้นหา
+            </span>
+          </span>
+          <span>
+            <input type="text" class="form-control tb">
+          </span>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
         <button class="btn btn-success btn-round line-w" (click)="addBid()">
           <i class="material-icons">add</i>เพิ่มการประมูล</button>
       </div>
     </div>
+
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
@@ -16,7 +45,6 @@
                 <tr>
                   <th class="text-center">#</th>
                   <th class="prd-col">สินค้าประมูล</th>
-
                   <th>ราคาเริ่มต้น</th>
                   <th>ราคาประมูลต่อเคาะ</th>
                   <th>เวลาเริ่มต้นประมูล</th>
