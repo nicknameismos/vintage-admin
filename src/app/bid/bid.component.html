@@ -4,16 +4,16 @@
     <div class="row">
       <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
         <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active">
+          <li role="presentation" class="active" (click)="selectTab('กำลังประมูล')">
             <a href="#tab1" role="tab" data-toggle="tab">กำลังประมูล</a>
           </li>
-          <li role="presentation">
+          <li role="presentation" (click)="selectTab('รอการประมูล')">
             <a href="#tab2" role="tab" data-toggle="tab">รอการประมูล</a>
           </li>
-          <li role="presentation">
+          <li role="presentation" (click)="selectTab('ประมูลแล้ว')">
             <a href="#tab3" role="tab" data-toggle="tab">ประมูลแล้ว</a>
           </li>
-          <li role="presentation">
+          <li role="presentation" (click)="selectTab('จ่ายเงินแล้ว')">
             <a href="#tab4" role="tab" data-toggle="tab">จ่ายเงินแล้ว</a>
           </li>
         </ul>
@@ -157,13 +157,24 @@
         </div>
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 text-center">
           <div class="form-group form-black floating is-empty">
-            เริ่มต้นประมูล
-            <input type="datetime-local" [(ngModel)]="bidData.starttime">
+            วันที่เริ่มต้นประมูล
+            <input type="date" [(ngModel)]="bidData.startdate" (ngModelChange)="calcDate($event)">
           </div>
           <div class="form-group form-black floating is-empty">
-            สิ้นสุดประมูล
-            <input type="datetime-local" [(ngModel)]="bidData.endtime">
+            เวลาเริ่มต้นประมูล
+            <input type="time" [disabled]="!bidData.startdate" [(ngModel)]="bidData.starttime" (ngModelChange)="calcDate()">
           </div>
+
+
+          <div class="form-group form-black floating is-empty">
+            วันที่สิ้นสุดประมูล
+            <input type="date" [disabled]="!(bidData.startdate && bidData.starttime)" [(ngModel)]="bidData.enddate" (ngModelChange)="calcDate($event)">
+          </div>
+          <div class="form-group form-black floating is-empty">
+            เวลาสิ้นสุดประมูล
+            <input type="time" [disabled]="!bidData.enddate" [(ngModel)]="bidData.endtime" (ngModelChange)="calcDate()">
+          </div>
+
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1  text-center"></div>
       </div>

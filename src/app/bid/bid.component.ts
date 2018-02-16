@@ -19,6 +19,8 @@ export class BidComponent implements OnInit {
   private isEditImage: boolean = false;
   private bidData: any = {};
   private bidlist: Array<any> = [];
+  private selectedTab: string = 'กำลังประมูล';
+  nextDay: Date;
   constructor(private server: ServerConfig, private router: Router, private pubsub: PubSubService, private bidService: BidService) { }
 
   ngOnInit() {
@@ -35,7 +37,29 @@ export class BidComponent implements OnInit {
     this.bidService.getBid().subscribe((data) => {
       this.bidlist = data;
       this.pubsub.$pub('loading', false);
-    })
+    });
+  }
+
+  calcDate(e) {
+    let date = new Date(e);
+    let curTime = new Date();
+    let h = curTime.getHours() <= 9 ? '0' + curTime.getHours() : curTime.getHours();
+    let m = curTime.getMinutes() <= 9 ? '0' + curTime.getMinutes() : curTime.getMinutes();
+    let defaultTime = h + ':' + m + ':00';
+
+    let timeStartSelected = this.bidData.starttime ? this.bidData.starttime + ':00' : defaultTime;
+    let datetimeStartStr = this.bidData.startdate + 'T' + timeStartSelected;
+    let dateTimeStartSelected = new Date(datetimeStartStr);
+
+    let timeEndSelected = this.bidData.endtime ? this.bidData.endtime + ':00' : defaultTime;
+    let datetimeEndStr = this.bidData.enddate ? this.bidData.enddate : this.bidData.startdate + 'T' + timeEndSelected;
+    let dateTimeEndSelected = new Date(datetimeEndStr);
+
+    let oneDay = 24 * 60 * 60 * 1000;
+    let firstDate = new Date(dateTimeStartSelected);
+    let secondDate = new Date(dateTimeEndSelected);
+    let diffDays = Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay));
+    console.log(diffDays);
   }
 
   addBid() {
