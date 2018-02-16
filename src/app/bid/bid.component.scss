@@ -89,3 +89,67 @@ input[type=file] {
 .dropdown-menu:hover {
     background-color: rgb(197, 197, 197);
 }
+
+.tb {
+    position: absolute;
+    margin-top: -22px;
+    width: 220px;
+    margin-left: 68px;
+}
+
+.sb {
+    height: 48px;
+    border: 2px solid;
+    border-radius: 40px;
+}
+
+.inner-sb {
+    position: absolute;
+    margin-left: 50px;
+    border-right: 2px solid;
+    padding-right: 4px;
+    height: 46px;
+    margin-top: -2px;
+}
+
+.txb {
+    margin-top: 14px;
+    position: absolute;
+    margin-left: -36px;
+    font-weight: bold;
+}
+
+.addBTN {
+    background-color: #ffffff00;
+    color: rgb(34, 143, 34);
+    border-color: rgb(34, 143, 34);
+    border-radius: 4rem;
+    border: 3px solid;
+    font-size: 1.5rem;
+}
+
+.addBTN :focus {
+    background-color: #ffffff00;
+}
+
+.addBTN :active {
+    background-color: #f72222fb !important;
+}
+
+.nav-tabs {
+    background: #ffffff00;
+    /* height: 4rem; */
+}
+
+.nav-tabs>li>a,
+.nav-tabs>li>a:hover,
+.nav-tabs>li>a:focus {
+    color: black !important;
+    font-size: 1.2em;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover,
+.nav-tabs>li.active>a:focus {
+    border-bottom: 3px solid rgb(14, 156, 14) !important;
+}
