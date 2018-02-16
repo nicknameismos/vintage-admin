@@ -58,6 +58,7 @@ import { CampaignService } from 'app/manage-campaign/manage-campaign.service';
 import { BidComponent } from './bid/bid.component';
 import { BidService } from 'app/bid/bid.service';
 import { ManageOrderComponent } from './manage-order/manage-order.component';
+import { ManageOrderService } from 'app/manage-order/manage-order.service';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import { ManageOrderComponent } from './manage-order/manage-order.component';
     ImageCropperModule
   ],
   providers: [
+    ManageOrderService,
     DashboardService,
     ManageShopService,
     ManageUserService,

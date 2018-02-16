@@ -15,7 +15,7 @@
               </span>
             </span>
             <span>
-              <input type="text" class="form-control tb" >
+              <input type="text" class="form-control tb" [(ngModel)]="searchKeyword" (keyup.enter)="searchOrder()">
             </span>
           </div>
         </div>
@@ -24,6 +24,11 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
           <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" *ngFor="let tab of OrderList.titles; let i = index" class="{{ selectedTab === i ? 'active':''}}">
+              <a href="#tab{{i}}" role="tab" data-toggle="tab" (click)="selectTab(tab)">{{tab}}</a>
+            </li>
+          </ul>
+          <!-- <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
               <a href="#topay" aria-controls="topay" role="tab" data-toggle="tab" (click)="activeTab('topay')">รอชำระเงิน</a>
             </li>
@@ -48,14 +53,14 @@
             <li role="presentation">
               <a href="#transferred" aria-controls="transferred" role="tab" data-toggle="tab" (click)="activeTab('transferred')">จ่ายเงินแล้ว</a>
             </li>
-          </ul>
+          </ul> -->
         </div>
 
 
       </div>
 
       <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="topay">
+        <div id="tab{{k}}" *ngFor="let item of OrderList.titles; let k = index" class="tab-pane fade in {{ k === 0 ? 'active':''}}">
           <div class="row">
             <div class="col-md-12">
               <div class="card">
@@ -63,8 +68,8 @@
                   <table class="table table-hover">
                     <thead class="text-danger">
                       <tr>
-                        <th class="text-center">เลขที่</th>
-                        <th class="text-center">ชื่อสินค้า</th>
+                        <th>เลขที่</th>
+                        <th>ชื่อสินค้า</th>
                         <th class="text-center">ราคา</th>
                         <th class="text-center">จำนวน</th>
                         <th class="text-center">วิธีการจัดส่ง</th>
@@ -74,15 +79,21 @@
                       </tr>
                     </thead>
                     <tbody data-toggle="modal" data-target="#modalDetail">
-                      <tr>
-                        <td class="text-center">ord1234</td>
-                        <td class="text-center">เสื้อยีนส์</td>
-                        <td class="text-center">50</td>
-                        <td class="text-center">1</td>
-                        <td class="text-center">EMS</td>
-                        <td class="text-center">50</td>
-                        <td class="text-center">100</td>
-                        <td class="text-center">รอชำระเงิน</td>
+                      <tr *ngIf="OrderList.items && OrderList.items.length ==0">
+                        <td colspan="7" class="text-center">
+                          ยังไม่มีข้อมูลออเดอร์ในระบบ
+                        </td>
+
+                      </tr>
+                      <tr *ngFor="let item of OrderList.items; let i = index" (click)="onClickDetail(item)">
+                        <td>{{item.docno}}</td>
+                        <td>{{item.name}}</td>
+                        <td class="text-center">{{item.price}}</td>
+                        <td class="text-center">{{item.qty}}</td>
+                        <td class="text-center">{{item.shippingtype}}</td>
+                        <td class="text-center">{{item.shippingprice}}</td>
+                        <td class="text-center">{{item.amount}}</td>
+                        <td class="text-center">{{item.status}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -90,8 +101,8 @@
                   <div class="pc">
                     <nav aria-label="Page navigation">
                       <ul class="pagination">
-                        <li>
-                          <a (click)="pageing(item)">1</a>
+                        <li [class]="curentPage[item]" *ngFor="let item of OrderList.paging">
+                          <a (click)="pageing(item)">{{item}}</a>
                         </li>
                       </ul>
                     </nav>
@@ -112,23 +123,53 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <h4 style="font-family: 'Kanit', sans-serif;" class="modal-title">ORDER DETAIL</h4>
+          <h4 style="font-family: 'Kanit', sans-serif;" class="modal-title">รายละเอียดออเดอร์</h4>
         </div>
 
         <div class="modal-body">
           <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <img class="ic" src="https://pbs.twimg.com/media/Cyr1ehxUkAEfLDj.jpg">
+              <img class="ic" src="{{OrderDetail.product.image}}">
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <p>เลขที่ : ord1234</p>
-              <p>ชื่อสินค้า : เสื้อยีนส์</p>
-              <p>ราคา : 50</p>
-              <p>จำนวน : 1</p>
-              <p>วิธีการจัดส่ง : EMS</p>
-              <p>ค่าส่ง : 50</p>
-              <p>ราคารวม : 100</p>
-              <p>สถานะ : รอชำระเงิน</p>
+              <p>วันที่สั่งซื้อ :
+                <label>{{OrderDetail.confirmdate}}</label>
+              </p>
+              <p>สถานะ :
+                <label>{{OrderDetail.status}}</label>
+              </p>
+              <p>เลขการสั่งซื้อ :
+                <label>{{OrderDetail.docno}}</label>
+              </p>
+              <p>ที่อยู่จัดส่ง :
+                <label>{{OrderDetail.shipping.name + ' '+ OrderDetail.shipping.address + ' '+ OrderDetail.shipping.subdistrict +'
+                  '+ OrderDetail.shipping.district + ' '+ OrderDetail.shipping.province + ' ' + OrderDetail.shipping.postcode
+                  + ' ' + OrderDetail.shipping.tel}}
+                </label>
+              </p>
+              <label style="margin-top: 10px">รายการสินค้า</label>
+              <p>ชื่อสินค้า :
+                <label>{{OrderDetail.product.name}}</label>
+              </p>
+              <p>ราคา :
+                <label>{{OrderDetail.product.price}}</label>
+              </p>
+              <p>จำนวน :
+                <label>{{OrderDetail.product.qty}}</label>
+              </p>
+              <p>ค่าจัดส่ง :
+                <label>{{OrderDetail.product.shippingprice}}</label>
+              </p>
+              <p>ราคารวม :
+                <label>{{OrderDetail.amount}}</label>
+              </p>
+              <p>รวมสุทธิ :
+                <label>{{OrderDetail.amount+OrderDetail.product.shippingprice}}</label>
+              </p>
+              <p>วิธีการจัดส่ง :
+                <label>{{OrderDetail.product.shippingtype}}</label>
+              </p>
+              <label>{{statusdate}} : {{dateShow | date :'dd/MM/yyyy HH:mm'}}</label>
             </div>
           </div>
         </div>
@@ -136,6 +177,10 @@
         <div class="modal-footer">
           <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'cancel' || OrderDetail.status === 'reject'"
+                (click)="refunditm()" data-dismiss="modal">คืนเงิน</button>
+              <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'completed'" (click)="transferitm()" data-dismiss="modal">จ่ายเงิน</button>
+
               <button #dissmissBtn2 class="btn" data-dismiss="modal">ปิด</button>
             </div>
           </div>
