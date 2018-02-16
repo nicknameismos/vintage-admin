@@ -336,6 +336,13 @@
                 </a>
             </li>
 
+            <li *ngIf="isLogin">
+                <a [routerLink]="['manage-order']">
+                    <i class="material-icons">assignment</i>
+                    <p>จัดการออเดอร์</p>
+                </a>
+            </li>
+
 
 
 

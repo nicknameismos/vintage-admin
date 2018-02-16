@@ -57,6 +57,7 @@ import { ManageCampaignComponent } from 'app/manage-campaign/manage-campaign.com
 import { CampaignService } from 'app/manage-campaign/manage-campaign.service';
 import { BidComponent } from './bid/bid.component';
 import { BidService } from 'app/bid/bid.service';
+import { ManageOrderComponent } from './manage-order/manage-order.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { BidService } from 'app/bid/bid.service';
     ManageUserComponent,
     ManageAdsComponent,
     ManageCampaignComponent,
-    BidComponent
+    BidComponent,
+    ManageOrderComponent
     // Pipe
   ],
   imports: [
