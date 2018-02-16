@@ -61,6 +61,9 @@ export class BidComponent implements OnInit {
     let diffDays = Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay));
     if (diffDays > 1) {
       alert('ต้องไม่เกิน 24 ชั่วโมง');
+    } else {
+      this.bidData.starttime = dateTimeStartSelected;
+      this.bidData.endtime = dateTimeEndSelected;
     }
   }
 
