@@ -59,7 +59,13 @@ export class BidComponent implements OnInit {
     let firstDate = new Date(dateTimeStartSelected);
     let secondDate = new Date(dateTimeEndSelected);
     let diffDays = Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay));
-    console.log(diffDays);
+    if (diffDays > 1) {
+      alert('ต้องไม่เกิน 24 ชั่วโมง');
+    }
+  }
+
+  selectTab(name) {
+    this.selectedTab = name;
   }
 
   addBid() {
