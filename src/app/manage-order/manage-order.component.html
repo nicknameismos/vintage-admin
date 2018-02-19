@@ -62,7 +62,7 @@
       <div class="tab-content">
         <div id="tab{{k}}" *ngFor="let item of OrderList.titles; let k = index" class="tab-pane fade in {{ k === 0 ? 'active':''}}">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="card">
                 <div class="card-content table-responsive">
                   <table class="table table-hover">
@@ -75,25 +75,42 @@
                         <th class="text-center">วิธีการจัดส่ง</th>
                         <th class="text-center">ค่าส่ง</th>
                         <th class="text-center">ราคารวม</th>
-                        <th class="text-center">สถานะ</th>
+                        <!-- <th class="text-center"></th> -->
                       </tr>
                     </thead>
-                    <tbody data-toggle="modal" data-target="#modalDetail">
-                      <tr *ngIf="OrderList.items && OrderList.items.length ==0">
+                    <tbody>
+                      <tr *ngIf="OrderList.items && OrderList.items.length == 0">
                         <td colspan="7" class="text-center">
                           ยังไม่มีข้อมูลออเดอร์ในระบบ
                         </td>
 
                       </tr>
                       <tr *ngFor="let item of OrderList.items; let i = index" (click)="onClickDetail(item)">
-                        <td>{{item.docno}}</td>
-                        <td>{{item.name}}</td>
-                        <td class="text-center">{{item.price}}</td>
-                        <td class="text-center">{{item.qty}}</td>
-                        <td class="text-center">{{item.shippingtype}}</td>
-                        <td class="text-center">{{item.shippingprice}}</td>
-                        <td class="text-center">{{item.amount+item.shippingprice}}</td>
-                        <td class="text-center">{{item.status}}</td>
+                        <td data-toggle="modal" data-target="#modalDetail">{{item.docno}}</td>
+                        <td data-toggle="modal" data-target="#modalDetail">
+                          <p class="warp-text">{{item.name}}</p>
+                        </td>
+                        <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.price | number}}</td>
+                        <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.qty | number}}</td>
+                        <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.shippingtype}}</td>
+                        <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.shippingprice | number}}</td>
+                        <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.amount+item.shippingprice | number}}</td>
+                        <!-- <td class="text-center">
+                          <div class="dropdown pull-right">
+                            <button class="btn btn-simple btn-xs pull-right dropdown-toggle " type="button" id="dropdownMenu2" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="true">
+                              <i class="material-icons toggle-color">more_horiz</i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                              <span (click)="ok()">
+                                <i class="material-icons edit-color">done</i>
+                              </span>
+                              <span (click)="cancel()">
+                                <i class="material-icons del-color">clear</i>
+                              </span>
+                            </ul>
+                          </div>
+                        </td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -124,6 +141,9 @@
 
         <div class="modal-header">
           <h4 style="font-family: 'Kanit', sans-serif;" class="modal-title">รายละเอียดออเดอร์</h4>
+          <button type="button" class="close close-modal" data-dismiss="modal" #modalDetail aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
 
         <div class="modal-body">
@@ -133,10 +153,13 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
               <p>วันที่สั่งซื้อ :
-                <label>{{OrderDetail.confirmdate}}</label>
+                <label>{{OrderDetail.confirmdate | date :'dd/MM/yyyy HH:mm'}}</label>
               </p>
               <p>สถานะ :
-                <label>{{OrderDetail.status}}</label>
+                <label>{{OrderDetail.status === 'confirm' ? 'รอจัดส่ง': OrderDetail.status === 'sent' ? 'รอรับสินค้า': OrderDetail.status
+                  === 'completed' ? 'สำเร็จ': OrderDetail.status === 'cancel' ? 'ลูกค้ายกเลิก': OrderDetail.status === 'reject'
+                  ? 'ระบบยกเลิก': OrderDetail.status === 'cancelrefund' ? 'คืนเงินให้ลูกค้าแล้ว': OrderDetail.status ===
+                  'transferred' ? 'จ่ายเงินให้ร้านค้าแล้ว':'' }}</label>
               </p>
               <p>เลขการสั่งซื้อ :
                 <label>{{OrderDetail.docno}}</label>
@@ -147,29 +170,55 @@
                   + ' ' + OrderDetail.shipping.tel}}
                 </label>
               </p>
-              <label style="margin-top: 10px">รายการสินค้า</label>
+              <!-- <p style="margin-top: 10px">รายการสินค้า</p> -->
               <p>ชื่อสินค้า :
                 <label>{{OrderDetail.product.name}}</label>
               </p>
               <p>ราคา :
-                <label>{{OrderDetail.product.price}}</label>
+                <label>{{OrderDetail.product.price | number : '1.2-2'}}</label>
               </p>
               <p>จำนวน :
-                <label>{{OrderDetail.product.qty}}</label>
+                <label>{{OrderDetail.product.qty | number}}</label>
               </p>
               <p>ค่าจัดส่ง :
-                <label>{{OrderDetail.product.shippingprice}}</label>
+                <label>{{OrderDetail.product.shippingprice | number : '1.2-2'}}</label>
               </p>
               <p>ราคารวม :
-                <label>{{OrderDetail.amount}}</label>
+                <label>{{OrderDetail.amount | number : '1.2-2'}}</label>
               </p>
               <p>รวมสุทธิ :
-                <label>{{OrderDetail.amount+OrderDetail.product.shippingprice}}</label>
+                <label>{{OrderDetail.amount+OrderDetail.product.shippingprice | number : '1.2-2'}}</label>
               </p>
               <p>วิธีการจัดส่ง :
                 <label>{{OrderDetail.product.shippingtype}}</label>
               </p>
-              <label>{{statusdate}} : {{dateShow | date :'dd/MM/yyyy HH:mm'}}</label>
+
+              <p *ngIf="OrderDetail.sentdate">วันที่ส่ง :
+                <label>{{OrderDetail.sentdate | date :'dd/MM/yyyy HH:mm'}}</label>
+              </p>
+              <p *ngIf="OrderDetail.receiveddate">วันที่สำเร็จ :
+                <label>{{OrderDetail.receiveddate | date :'dd/MM/yyyy HH:mm'}}</label>
+              </p>
+              <p *ngIf="OrderDetail.canceldate">{{OrderDetail.status === 'cancel' ? 'วันที่ยกเลิก' : 'วันที่ระบบยกเลิก'}} :
+                <label>{{OrderDetail.canceldate | date :'dd/MM/yyyy HH:mm'}}</label>
+              </p>
+
+              <p *ngIf="OrderDetail.transferdate">วันที่ชำระเงิน :
+                <label>{{OrderDetail.transferdate | date :'dd/MM/yyyy HH:mm'}}</label>
+              </p>
+              <p *ngIf="OrderDetail.refunddate">วันที่คืนเงิน :
+                <label>{{OrderDetail.refunddate | date :'dd/MM/yyyy HH:mm'}}</label>
+              </p>
+
+              <p *ngIf="OrderDetail.status === 'reject' || OrderDetail.status === 'admincancel'">หมายเหตุ :
+                <label>{{OrderDetail.rejectreason}}</label>
+              </p>
+
+
+              <!-- <p *ngIf="OrderDetail.confirmdate">วันที่สั่งซื้อ : {{OrderDetail.confirmdate | date :'dd/MM/yyyy HH:mm'}}</p>
+              <p *ngIf="OrderDetail.confirmdate">วันที่สั่งซื้อ : {{OrderDetail.confirmdate | date :'dd/MM/yyyy HH:mm'}}</p>
+               -->
+              <!-- <label>{{statusdate}} : {{dateShow | date :'dd/MM/yyyy HH:mm'}}</label> -->
             </div>
           </div>
         </div>
@@ -177,11 +226,20 @@
         <div class="modal-footer">
           <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'cancel' || OrderDetail.status === 'reject'"
-                (click)="refunditm()" data-dismiss="modal">คืนเงิน</button>
-              <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'completed'" (click)="transferitm()" data-dismiss="modal">จ่ายเงิน</button>
 
-              <button #dissmissBtn2 class="btn" data-dismiss="modal">ปิด</button>
+              <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'confirm'" data-toggle="modal" data-target="#refid">จัดส่งแล้ว</button>
+              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'confirm'" data-toggle="modal" data-target="#remark">ยกเลิกออเดอร์</button>
+
+              <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'sent'" (click)="completeitm()" data-dismiss="modal">ได้รับสินค้าแล้ว</button>
+              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'sent'" data-toggle="modal" data-target="#remark">ยกเลิกออเดอร์</button>
+
+              <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'completed'" (click)="transferitm()" data-dismiss="modal">จ่ายเงินให้ร้านค้า</button>
+              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'completed'" data-toggle="modal" data-target="#remark">ยกเลิกออเดอร์</button>
+
+              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'cancel' || OrderDetail.status === 'reject'" (click)="refunditm()"
+                data-dismiss="modal">คืนเงินให้ลูกค้า</button>
+
+              <!-- <button #dissmissBtn2 class="btn" data-dismiss="modal">ปิด</button> -->
             </div>
           </div>
         </div>
@@ -190,3 +248,47 @@
     </div>
   </div>
   <!-- MODAL DETAIL ORDER -->
+
+  <!-- MODAL REFID -->
+  <div class="modal" tabindex="-1" role="dialog" id="refid">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">กรุณากรอกหมายเลขพัสดุ</h5>
+          <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control" [(ngModel)]="refid">
+        </div>
+        <div class="modal-footer text-center">
+          <!-- <button type="button" class="btn btn-primary displaynone" #modalDetail data-dismiss="modal">Save changes</button> -->
+          <button type="button" class="btn btn-success" (click)="sentitm(refid)" data-dismiss="modal">ยืนยัน</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL REFID -->
+
+  <!-- MODAL REMARK -->
+  <div class="modal" tabindex="-1" role="dialog" id="remark">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">กรุณากรอกเหตุผลที่ยกเลิกออเดอร์</h5>
+          <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control" [(ngModel)]="remark">
+        </div>
+        <div class="modal-footer text-center">
+          <!-- <button type="button" class="btn btn-primary displaynone" #modalDetail data-dismiss="modal">Save changes</button> -->
+          <button type="button" class="btn btn-success" (click)="adminCancelitm(remark)" data-dismiss="modal">ยืนยัน</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL REMARK -->
