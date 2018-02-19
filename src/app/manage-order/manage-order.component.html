@@ -158,8 +158,8 @@
               <p>สถานะ :
                 <label>{{OrderDetail.status === 'confirm' ? 'รอจัดส่ง': OrderDetail.status === 'sent' ? 'รอรับสินค้า': OrderDetail.status
                   === 'completed' ? 'สำเร็จ': OrderDetail.status === 'cancel' ? 'ลูกค้ายกเลิก': OrderDetail.status === 'reject'
-                  ? 'ระบบยกเลิก': OrderDetail.status === 'cancelrefund' ? 'คืนเงินให้ลูกค้าแล้ว': OrderDetail.status ===
-                  'transferred' ? 'จ่ายเงินให้ร้านค้าแล้ว':'' }}</label>
+                  ? 'ร้านค้าปฏิเสธ': OrderDetail.status === 'cancelrefund' ? 'คืนเงินให้ลูกค้าแล้ว': OrderDetail.status ===
+                  'transferred' ? 'จ่ายเงินให้ร้านค้าแล้ว': OrderDetail.status === 'admincancel' ? 'ระบบยกเลิก': '' }}</label>
               </p>
               <p>เลขการสั่งซื้อ :
                 <label>{{OrderDetail.docno}}</label>
