@@ -8,7 +8,7 @@
       <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
         <ul class="nav nav-tabs">
           <li role="presentation" >
-            <a>{{shopsL.name[0]}}</a>
+            <a>{{shopsL.name && shopsL.name.length > 0 ? shopsL.name[0] : ''}}</a>
           </li>
         </ul>
       </div>
