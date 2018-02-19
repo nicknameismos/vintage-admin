@@ -9,7 +9,7 @@
 
 .btn-color {
     border-radius: 10rem;
-    background-color: rgb(255, 0, 0);
+    background-color: #D50000;
     width: 8rem;
 }
 
@@ -74,7 +74,7 @@
 }
 
 .b-bage {
-    background-color: red;
+    background-color: #D50000;
     border-radius: 6px;
     padding: 4px;
     color: #ffffff;
@@ -178,7 +178,7 @@
 }
 
 .addBTN :active{
-    background-color: #f72222fb !important;
+    background-color: #D50000 !important;
 }
 /* .btn .btn:hover .btn:focus .open > .btn.dropdown-toggle .open > .btn.dropdown-toggle:focus .open > .btn.dropdown-toggle:hover {
     background-color: #ff1515fa;
@@ -196,7 +196,7 @@
 
 .del-color {
     padding: 0 0.8rem 0 0.8rem;
-    color: red;
+    color: #D50000;
     font-size: 2.3rem;
     cursor: pointer;
     margin-top: 0.8rem;
@@ -230,8 +230,8 @@
 .btn.btn-default,
 .btn.btn-default:hover {
     background-color: #ffffff00 !important;
-    border-color: rgb(34, 143, 34);
-    color: rgb(34, 143, 34) !important;
+    border-color: #3c6233;
+    color: #3c6233 !important;
 }
 
 .toggle-color {
@@ -275,4 +275,14 @@
     overflow: hidden;
     white-space: nowrap;
     max-width: 30rem;
+}
+
+/* ////////////////////////////// */
+.text-danger {
+    color: #3c6233;
+    font-size: 14px;
+}
+.btn-border[_ngcontent-c4] {
+    border: 2px solid #D50000 !important;
+    color: #D50000 !important;
 }
