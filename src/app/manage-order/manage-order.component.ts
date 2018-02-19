@@ -22,8 +22,8 @@ export class ManageOrderComponent implements OnInit {
   private curentPage: Array<any> = [];
   private dateShow: any;
   private statusdate: string = '';
-  public refid: string;
-  public remark: string;
+  public refid: '';
+  public remark: '';
   @ViewChild('modalDetail') modalDetail;
   constructor(
     private pubsub: PubSubService,
@@ -45,6 +45,8 @@ export class ManageOrderComponent implements OnInit {
   }
   searchOrder() {
     this.pubsub.$pub('loading', true);
+    this.refid = '';
+    this.remark = '';
     this.manageOrderService.searchOrder(this.typeTab, this.currentPageSelected, this.searchKeyword).subscribe(data => {
       this.OrderList = data;
       // this.OrderList.items = data.items;
@@ -144,7 +146,7 @@ export class ManageOrderComponent implements OnInit {
       this.manageOrderService.changeStatusSent(this.OrderDetail, this.refid).subscribe(data => {
         this.modalDetail.nativeElement.click();
         alert('จัดส่งสำเร็จ!');
-        console.log(data);
+        // console.log(data);
         this.searchOrder();
       }, err => {
         console.log(err);
@@ -158,7 +160,9 @@ export class ManageOrderComponent implements OnInit {
     const cfcancel = confirm('ยืนยันการยกเลิกออเดอร์');
     if (cfcancel) {
       this.manageOrderService.adminChangeStatusReject(this.OrderDetail, this.remark).subscribe(data => {
+        this.modalDetail.nativeElement.click();
         alert('ยกเลิกออเดอร์สำเร็จ!');
+        // console.log(data);
         this.searchOrder();
       }, err => {
         console.log(err);
@@ -180,16 +184,16 @@ export class ManageOrderComponent implements OnInit {
 
   }
 
-  ok() {
-    const cfok = confirm('ยืนยันการจัดส่ง');
-    alert('OK!');
-  }
+  //   ok() {
+  //     const cfok = confirm('ยืนยันการจัดส่ง');
+  //     alert('OK!');
+  //   }
 
-  cancel(remark) {
-    this.remark = remark;
-    const cfcancel = confirm('ยืนยันการลบร้านค้า');
-    this.modalDetail.nativeElement.click();
-    console.log(this.remark);
-    alert('Cancel!');
-  }
+  //   cancel(remark) {
+  //     this.remark = remark;
+  //     const cfcancel = confirm('ยืนยันการลบร้านค้า');
+  //     this.modalDetail.nativeElement.click();
+  //     console.log(this.remark);
+  //     alert('Cancel!');
+  //   }
 }

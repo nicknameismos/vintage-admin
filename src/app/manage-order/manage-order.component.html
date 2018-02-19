@@ -158,7 +158,7 @@
               <p>สถานะ :
                 <label>{{OrderDetail.status === 'confirm' ? 'รอจัดส่ง': OrderDetail.status === 'sent' ? 'รอรับสินค้า': OrderDetail.status
                   === 'completed' ? 'สำเร็จ': OrderDetail.status === 'cancel' ? 'ลูกค้ายกเลิก': OrderDetail.status === 'reject'
-                  ? 'ร้านค้าปฏิเสธ': OrderDetail.status === 'cancelrefund' ? 'คืนเงินให้ลูกค้าแล้ว': OrderDetail.status ===
+                  ? 'ระบบยกเลิก': OrderDetail.status === 'cancelrefund' ? 'คืนเงินให้ลูกค้าแล้ว': OrderDetail.status ===
                   'transferred' ? 'จ่ายเงินให้ร้านค้าแล้ว':'' }}</label>
               </p>
               <p>เลขการสั่งซื้อ :
@@ -199,7 +199,7 @@
               <p *ngIf="OrderDetail.receiveddate">วันที่สำเร็จ :
                 <label>{{OrderDetail.receiveddate | date :'dd/MM/yyyy HH:mm'}}</label>
               </p>
-              <p *ngIf="OrderDetail.canceldate">{{OrderDetail.status === 'cancel' ? 'วันที่ยกเลิก' : 'วันที่ปฏิเสธ'}} :
+              <p *ngIf="OrderDetail.canceldate">{{OrderDetail.status === 'cancel' ? 'วันที่ยกเลิก' : 'วันที่ระบบยกเลิก'}} :
                 <label>{{OrderDetail.canceldate | date :'dd/MM/yyyy HH:mm'}}</label>
               </p>
 
@@ -208,6 +208,10 @@
               </p>
               <p *ngIf="OrderDetail.refunddate">วันที่คืนเงิน :
                 <label>{{OrderDetail.refunddate | date :'dd/MM/yyyy HH:mm'}}</label>
+              </p>
+
+              <p *ngIf="OrderDetail.status === 'reject' || OrderDetail.status === 'admincancel'">หมายเหตุ :
+                <label>{{OrderDetail.rejectreason}}</label>
               </p>
 
 
@@ -224,13 +228,13 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
 
               <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'confirm'" data-toggle="modal" data-target="#refid">จัดส่งแล้ว</button>
-              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'confirm'" data-toggle="modal" data-target="#remark">..ยกเลิกออเดอร์</button>
+              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'confirm'" data-toggle="modal" data-target="#remark">ยกเลิกออเดอร์</button>
 
               <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'sent'" (click)="completeitm()" data-dismiss="modal">ได้รับสินค้าแล้ว</button>
-              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'sent'" (click)="cancel()" data-dismiss="modal">...ยกเลิกออเดอร์</button>
+              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'sent'" data-toggle="modal" data-target="#remark">ยกเลิกออเดอร์</button>
 
               <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'completed'" (click)="transferitm()" data-dismiss="modal">จ่ายเงินให้ร้านค้า</button>
-              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'completed'" (click)="cancel()" data-dismiss="modal">...ยกเลิกออเดอร์</button>
+              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'completed'" data-toggle="modal" data-target="#remark">ยกเลิกออเดอร์</button>
 
               <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'cancel' || OrderDetail.status === 'reject'" (click)="refunditm()"
                 data-dismiss="modal">คืนเงินให้ลูกค้า</button>
@@ -282,7 +286,7 @@
         </div>
         <div class="modal-footer text-center">
           <!-- <button type="button" class="btn btn-primary displaynone" #modalDetail data-dismiss="modal">Save changes</button> -->
-          <button type="button" class="btn btn-success" (click)="cancel(remark)" data-dismiss="modal">ยืนยัน</button>
+          <button type="button" class="btn btn-success" (click)="adminCancelitm(remark)" data-dismiss="modal">ยืนยัน</button>
         </div>
       </div>
     </div>
