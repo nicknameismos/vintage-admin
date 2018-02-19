@@ -60,8 +60,8 @@
 
                   <td class="text-center" (click)="editBid(item)">{{item.startprice}}</td>
                   <td class="text-center" (click)="editBid(item)">{{item.bidprice}}</td>
-                  <td class="text-center" (click)="editBid(item)">{{item.starttime | amLocale:'th' | amDateFormat:'MMMM Do YYYY, h:mm:ss'}}</td>
-                  <td class="text-center" (click)="editBid(item)">{{item.endtime | amLocale:'th' | amDateFormat:'MMMM Do YYYY, h:mm:ss'}}</td>
+                  <td class="text-center" (click)="editBid(item)">{{item.starttime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</td>
+                  <td class="text-center" (click)="editBid(item)">{{item.endtime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</td>
                   <td class="text-center">
                     <div class="btn-group" role="group">
                       <button type="button" class="more-btn" data-toggle="dropdown">
@@ -158,22 +158,22 @@
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 text-center">
           <div class="form-group form-black floating is-empty">
             วันที่เริ่มต้นประมูล
-            <input type="date" [(ngModel)]="bidData.startdate" (ngModelChange)="calcDate($event)">
+            <input type="datetime-local" format="dd/MM/yyyy" [(ngModel)]="bidData.starttime">
           </div>
-          <div class="form-group form-black floating is-empty">
+          <!-- <div class="form-group form-black floating is-empty">
             เวลาเริ่มต้นประมูล
-            <input type="time" [disabled]="!bidData.startdate" [(ngModel)]="bidData.starttime" (ngModelChange)="calcDate()">
-          </div>
+            <input type="time" [disabled]="!startdate" [(ngModel)]="starttime">
+          </div> -->
 
 
           <div class="form-group form-black floating is-empty">
             วันที่สิ้นสุดประมูล
-            <input type="date" [disabled]="!(bidData.startdate && bidData.starttime)" [(ngModel)]="bidData.enddate" (ngModelChange)="calcDate($event)">
+            <input type="datetime-local" format="dd/MM/yyyy" [disabled]="!bidData.starttime" [(ngModel)]="bidData.endtime">
           </div>
-          <div class="form-group form-black floating is-empty">
+          <!-- <div class="form-group form-black floating is-empty">
             เวลาสิ้นสุดประมูล
-            <input type="time" [disabled]="!bidData.enddate" [(ngModel)]="bidData.endtime" (ngModelChange)="calcDate()">
-          </div>
+            <input type="time" [disabled]="!enddate" [(ngModel)]="endtime">
+          </div> -->
 
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1  text-center"></div>
