@@ -170,9 +170,9 @@ fieldset[disabled] .form-group .form-control {
     max-width: 26rem;
 }
 
-.modal-content .modal-footer button {
-    width: 10rem;
-}
+// .modal-content .modal-footer button {
+//     width: 10rem;
+// }
 
 .dropdown-menu {
     min-width: 90px;
@@ -208,4 +208,11 @@ fieldset[disabled] .form-group .form-control {
     width: 13em;
     overflow: hidden;
     text-overflow: ellipsis
+}
+.close-modal{
+    margin-top: -40px;
+}
+
+.displaynone{
+    display: none;
 }
