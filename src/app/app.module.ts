@@ -3,7 +3,7 @@ import { NgModule, Pipe, PipeTransform } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-
+import { MomentModule } from 'angular2-moment';
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 
@@ -57,6 +57,8 @@ import { ManageCampaignComponent } from 'app/manage-campaign/manage-campaign.com
 import { CampaignService } from 'app/manage-campaign/manage-campaign.service';
 import { BidComponent } from './bid/bid.component';
 import { BidService } from 'app/bid/bid.service';
+import { ManageOrderComponent } from './manage-order/manage-order.component';
+import { ManageOrderService } from 'app/manage-order/manage-order.service';
 
 @NgModule({
   declarations: [
@@ -82,7 +84,8 @@ import { BidService } from 'app/bid/bid.service';
     ManageUserComponent,
     ManageAdsComponent,
     ManageCampaignComponent,
-    BidComponent
+    BidComponent,
+    ManageOrderComponent
     // Pipe
   ],
   imports: [
@@ -102,9 +105,11 @@ import { BidService } from 'app/bid/bid.service';
     NgbModule.forRoot(),
     Ng2MapModule.forRoot({ apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDcsyfUw4ToTjnU9i_IxfdaoQZKs8suBPc' }),
     SortablejsModule.forRoot({ animation: 150 }),
-    ImageCropperModule
+    ImageCropperModule,
+    MomentModule
   ],
   providers: [
+    ManageOrderService,
     DashboardService,
     ManageShopService,
     ManageUserService,
