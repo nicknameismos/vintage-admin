@@ -75,25 +75,27 @@
                         <th class="text-center">วิธีการจัดส่ง</th>
                         <th class="text-center">ค่าส่ง</th>
                         <th class="text-center">ราคารวม</th>
-                        <th class="text-center">สถานะ</th>
+                        <!-- <th class="text-center">สถานะ</th> -->
                       </tr>
                     </thead>
-                    <tbody data-toggle="modal" data-target="#modalDetail">
-                      <tr *ngIf="OrderList.items && OrderList.items.length ==0">
+                    <tbody>
+                      <tr *ngIf="OrderList.items && OrderList.items.length == 0">
                         <td colspan="7" class="text-center">
                           ยังไม่มีข้อมูลออเดอร์ในระบบ
                         </td>
 
                       </tr>
-                      <tr *ngFor="let item of OrderList.items; let i = index" (click)="onClickDetail(item)">
+                      <tr *ngFor="let item of OrderList.items; let i = index" (click)="onClickDetail(item)" data-toggle="modal" data-target="#modalDetail">
                         <td>{{item.docno}}</td>
-                        <td>{{item.name}}</td>
-                        <td class="text-center">{{item.price}}</td>
-                        <td class="text-center">{{item.qty}}</td>
+                        <td>
+                          <p class="warp-text">{{item.name}}</p>
+                        </td>
+                        <td class="text-center">{{item.price | number}}</td>
+                        <td class="text-center">{{item.qty | number}}</td>
                         <td class="text-center">{{item.shippingtype}}</td>
-                        <td class="text-center">{{item.shippingprice}}</td>
-                        <td class="text-center">{{item.amount+item.shippingprice}}</td>
-                        <td class="text-center">{{item.status}}</td>
+                        <td class="text-center">{{item.shippingprice | number}}</td>
+                        <td class="text-center">{{item.amount+item.shippingprice | number}}</td>
+                        <!-- <td class="text-center">{{item.status}}</td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -133,10 +135,13 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
               <p>วันที่สั่งซื้อ :
-                <label>{{OrderDetail.confirmdate}}</label>
+                <label>{{OrderDetail.confirmdate | date :'dd/MM/yyyy HH:mm'}}</label>
               </p>
               <p>สถานะ :
-                <label>{{OrderDetail.status}}</label>
+                <label>{{OrderDetail.status === 'confirm' ? 'รอจัดส่ง': OrderDetail.status === 'sent' ? 'รอรับสินค้า': OrderDetail.status
+                  === 'completed' ? 'สำเร็จ': OrderDetail.status === 'cancel' ? 'ลูกค้ายกเลิก': OrderDetail.status === 'reject'
+                  ? 'ร้านค้าปฏิเสธ': OrderDetail.status === 'cancelrefund' ? 'คืนเงินให้ลูกค้าแล้ว': OrderDetail.status ===
+                  'transferred' ? 'จ่ายเงินให้ร้านค้าแล้ว':'' }}</label>
               </p>
               <p>เลขการสั่งซื้อ :
                 <label>{{OrderDetail.docno}}</label>
@@ -147,29 +152,42 @@
                   + ' ' + OrderDetail.shipping.tel}}
                 </label>
               </p>
-              <label style="margin-top: 10px">รายการสินค้า</label>
+              <p style="margin-top: 10px">รายการสินค้า</p>
               <p>ชื่อสินค้า :
                 <label>{{OrderDetail.product.name}}</label>
               </p>
               <p>ราคา :
-                <label>{{OrderDetail.product.price}}</label>
+                <label>{{OrderDetail.product.price | number : '1.2-2'}}</label>
               </p>
               <p>จำนวน :
-                <label>{{OrderDetail.product.qty}}</label>
+                <label>{{OrderDetail.product.qty | number}}</label>
               </p>
               <p>ค่าจัดส่ง :
-                <label>{{OrderDetail.product.shippingprice}}</label>
+                <label>{{OrderDetail.product.shippingprice | number : '1.2-2'}}</label>
               </p>
               <p>ราคารวม :
-                <label>{{OrderDetail.amount}}</label>
+                <label>{{OrderDetail.amount | number : '1.2-2'}}</label>
               </p>
               <p>รวมสุทธิ :
-                <label>{{OrderDetail.amount+OrderDetail.product.shippingprice}}</label>
+                <label>{{OrderDetail.amount+OrderDetail.product.shippingprice | number : '1.2-2'}}</label>
               </p>
               <p>วิธีการจัดส่ง :
                 <label>{{OrderDetail.product.shippingtype}}</label>
               </p>
-              <label>{{statusdate}} : {{dateShow | date :'dd/MM/yyyy HH:mm'}}</label>
+
+              <p *ngIf="OrderDetail.sentdate">วันที่ส่ง : <label>{{OrderDetail.sentdate | date :'dd/MM/yyyy HH:mm'}}</label></p>
+              <p *ngIf="OrderDetail.receiveddate">วันที่สำเร็จ : <label>{{OrderDetail.receiveddate | date :'dd/MM/yyyy HH:mm'}}</label></p>
+              <p *ngIf="OrderDetail.canceldate">{{OrderDetail.status === 'cancel' ? 'วันที่ยกเลิก' : 'วันที่ปฏิเสธ'}} : <label>{{OrderDetail.canceldate | date :'dd/MM/yyyy HH:mm'}}</label>
+              </p>
+
+              <p *ngIf="OrderDetail.transferdate">วันที่ชำระเงิน : <label>{{OrderDetail.transferdate | date :'dd/MM/yyyy HH:mm'}}</label></p>
+              <p *ngIf="OrderDetail.refunddate">วันที่คืนเงิน : <label>{{OrderDetail.refunddate | date :'dd/MM/yyyy HH:mm'}}</label></p>
+
+
+              <!-- <p *ngIf="OrderDetail.confirmdate">วันที่สั่งซื้อ : {{OrderDetail.confirmdate | date :'dd/MM/yyyy HH:mm'}}</p>
+              <p *ngIf="OrderDetail.confirmdate">วันที่สั่งซื้อ : {{OrderDetail.confirmdate | date :'dd/MM/yyyy HH:mm'}}</p>
+               -->
+              <!-- <label>{{statusdate}} : {{dateShow | date :'dd/MM/yyyy HH:mm'}}</label> -->
             </div>
           </div>
         </div>
@@ -177,8 +195,8 @@
         <div class="modal-footer">
           <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'cancel' || OrderDetail.status === 'reject'"
-                (click)="refunditm()" data-dismiss="modal">คืนเงิน</button>
+              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'cancel' || OrderDetail.status === 'reject'" (click)="refunditm()"
+                data-dismiss="modal">คืนเงิน</button>
               <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'completed'" (click)="transferitm()" data-dismiss="modal">จ่ายเงิน</button>
 
               <button #dissmissBtn2 class="btn" data-dismiss="modal">ปิด</button>
