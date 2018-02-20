@@ -7,6 +7,46 @@
 }
 
 .gif-po {
-    margin-left: 50%;
-    margin-top: 18%;
+    /* margin-left: 50%;
+    margin-top: 18%; */
+    width:  140px;
+    height: 140px;
+    z-index: 2000;
+    position: absolute;
+    top: 38.2%;
+    left: 49.6%;
+}
+/* loading */
+
+.spin {
+    /* margin-left: 50%;
+    margin-top: 50%; */
+    /* position: relative; */
+    z-index: 2000;
+    position: absolute;
+    -webkit-animation: lds-eclipse 1s linear infinite;
+    animation: lds-eclipse 1s linear infinite;
+    width: 160px;
+    height: 160px;
+    top: 37%;
+    left: 49%;
+    border-radius: 50%;
+    box-shadow: 0 4px 0 0 #689171;
+    -webkit-transform-origin: 80px 82px;
+    transform-origin: 80px 82px;
+}
+
+@-webkit-keyframes lds-eclipse {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    50% {
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
