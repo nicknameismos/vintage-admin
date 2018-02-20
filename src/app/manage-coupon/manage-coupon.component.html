@@ -146,9 +146,21 @@
         <div class="row bd">
           <div class="col-md-12">
             <div class="form-group form-black is-empty">
-              เจ้าของ :
-              <input class="form-control" type="text" [(ngModel)]="coupon.owner">
+              <div class="btn-group">
+                <button type="button" [disabled]="blockInput" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="true">
+                  เลือกเจ้าของคูปอง
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <p class="text-select-cate" *ngFor="let item of user" (click)="selectUser(item._id, item.displayName)">{{item.displayName}}
+                    <img *ngIf="checkeds[item._id]" class="check_po check_icon" src="https://image.flaticon.com/icons/svg/189/189677.svg" alt="icon">
+                  </p>
+                </ul>
+              </div>
             </div>
+            <span *ngFor="let userSelect of userList"> {{userSelect}} </span>
+
           </div>
         </div>
 
@@ -173,7 +185,7 @@
       <div class="modal-footer">
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-            <button class="btn btn-success" (click)="createCoupon()">บันทึก</button>
+            <button class="btn btn-success" data-dismiss="modal" (click)="createCoupon()">บันทึก</button>
             <button class="btn" data-dismiss="modal" (click)="cancel()">ยกเลิก</button>
           </div>
         </div>

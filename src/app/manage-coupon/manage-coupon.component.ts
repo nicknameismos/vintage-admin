@@ -13,6 +13,13 @@ export class ManageCouponComponent implements OnInit {
   private coupon: any = {};
   private listAllUser: Array<any> = [];
   private listUser: Array<any> = [];
+  private user: Array<any> = [];
+  private selectList: Array<any> = [];
+  private userSelected: Array<any> = [];
+  private users: any = [];
+  private checkeds: Array<any> = [];
+  private userList: Array<any> = [];
+
 
   constructor(
     private UserService: ManageUserService,
@@ -46,7 +53,8 @@ export class ManageCouponComponent implements OnInit {
           this.listUser.push(element.users);
         }
       });
-      console.log(this.listUser);
+      this.user = this.listUser[0].concat(this.listUser[1].concat(this.listUser[2]));
+      console.log(this.user);
       this.pubsub.$pub('loading', false);
     }, err => {
       console.log(err);
@@ -57,9 +65,24 @@ export class ManageCouponComponent implements OnInit {
 
   createCoupon() {
     console.log('coupon');
+    this.coupon.owner = this.users;
+    console.log(this.coupon);
   }
   cancel() {
     this.coupon = '';
+  }
+
+  selectUser(user_id, user_dis) {
+    if (this.users.indexOf(user_id) !== -1) {
+      console.log(this.users.indexOf(user_id));
+      let index = this.users.indexOf(user_id);
+      this.users.splice(index, 1);
+      this.userList.splice(index, 1);
+    } else {
+      this.users.push(user_id);
+      this.userList.push(user_dis);
+    }
+    console.log(this.userList);
   }
 
 }
