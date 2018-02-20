@@ -152,9 +152,8 @@
               <img class="ic" src="{{OrderDetail.product.image}}">
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-              <p>วันที่สั่งซื้อ :
-                <label>{{OrderDetail.confirmdate | date :'dd/MM/yyyy HH:mm'}}</label>
-              </p>
+
+              <p>{{OrderDetail.confirmdate | amLocale:'th' | amTimeAgo}}</p>
               <p>สถานะ :
                 <label>{{OrderDetail.status === 'confirm' ? 'รอจัดส่ง': OrderDetail.status === 'sent' ? 'รอรับสินค้า': OrderDetail.status
                   === 'completed' ? 'สำเร็จ': OrderDetail.status === 'cancel' ? 'ลูกค้ายกเลิก': OrderDetail.status === 'reject'
@@ -193,6 +192,9 @@
                 <label>{{OrderDetail.product.shippingtype}}</label>
               </p>
 
+              <p>วันที่สั่งซื้อ :
+                <label>{{OrderDetail.confirmdate | date :'dd/MM/yyyy HH:mm'}}</label>
+              </p>
               <p *ngIf="OrderDetail.sentdate">วันที่ส่ง :
                 <label>{{OrderDetail.sentdate | date :'dd/MM/yyyy HH:mm'}}</label>
               </p>
