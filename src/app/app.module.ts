@@ -45,7 +45,7 @@ import { Pager } from 'app/provider/pager';
 import { NgxGalleryModule } from 'ngx-gallery';
 import { ImageCropperModule } from 'ngx-image-cropper';
 // import { ModalModule } from 'ngx-bootstrap/modal';
-
+import { DateValueAccessorModule } from 'angular-date-value-accessor';
 import 'hammerjs';
 import { ManageUserService } from 'app/manage-user/manage-user.service';
 import { ManageAdsComponent } from './manage-ads/manage-ads.component';
@@ -106,7 +106,8 @@ import { ManageOrderService } from 'app/manage-order/manage-order.service';
     Ng2MapModule.forRoot({ apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDcsyfUw4ToTjnU9i_IxfdaoQZKs8suBPc' }),
     SortablejsModule.forRoot({ animation: 150 }),
     ImageCropperModule,
-    MomentModule
+    MomentModule,
+    DateValueAccessorModule
   ],
   providers: [
     ManageOrderService,
