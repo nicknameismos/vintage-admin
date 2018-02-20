@@ -26,7 +26,7 @@ export class BidComponent implements OnInit {
   enddate: string;
   starttime: string;
   endtime: string;
-  // private myBirthday: any;
+  private oldDate: any = {};
   constructor(private server: ServerConfig, private router: Router, private pubsub: PubSubService, private bidService: BidService) { }
 
   ngOnInit() {
@@ -57,12 +57,20 @@ export class BidComponent implements OnInit {
     let oneDay = 24 * 60 * 60 * 1000;
     let firstDate = new Date(this.bidData.starttime);
     let secondDate = new Date(this.bidData.endtime);
-    // let nowDate = new Date();
     let diffDays = Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay));
-    // let diffNow = Math.abs((nowDate.getTime() - firstDate.getTime()) / (oneDay));
     if (diffDays > 1) {
+      this.bidData.starttime = '';
+      this.bidData.endtime = '';
+      setTimeout(() => {
+        this.bidData.starttime = this.oldDate.starttime;
+        this.bidData.endtime = this.oldDate.endtime;
+      }, 50);
       alert('ต้องไม่เกิน 24 ชั่วโมง');
-      // alert('ต้องไม่ต่ำกว่าวันที่ปัจจุบันและไม่เกิน 24 ชั่วโมง');
+    } else {
+      this.oldDate = {
+        starttime: this.bidData.starttime,
+        endtime: this.bidData.starttime
+      };
     }
   }
 
