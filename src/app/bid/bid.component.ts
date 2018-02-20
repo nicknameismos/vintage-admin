@@ -85,6 +85,7 @@ export class BidComponent implements OnInit {
     this.ACTION_BID = 'แก้ไข';
     this.bidData = JSON.parse(JSON.stringify(item));
     this.addImgPrd = this.bidData.image;
+    console.log(this.bidData);
     this.bidData.starttime = this.bidData.starttime.replace(':00.000Z', '');
     this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
     $(this.modalbid.nativeElement).modal('show');
@@ -127,12 +128,12 @@ export class BidComponent implements OnInit {
     if (fileBrowser.files.length > 0) {
       reader.onload = () => {
         this.isEditImage = true;
+        let result = reader.result.replace(/\n/g, '');
         if (this.ACTION_BID === 'เพิ่ม') {
-          this.addImgPrd.push(reader.result.replace(/\n/g, ''));
-        } else {
-          this.ImgprdEdit.push(reader.result.replace(/\n/g, ''));
+          this.addImgPrd.push(result);
+        } else if (this.ACTION_BID === 'แก้ไข') {
+          this.ImgprdEdit.push(result);
         }
-
       };
     }
   }
@@ -140,7 +141,30 @@ export class BidComponent implements OnInit {
   saveBid() {
     this.pubsub.$pub('loading', true);
     if (this.ACTION_BID === 'เพิ่ม') {
-
+      let image: Array<any> = [];
+      let countUpload: any = 0;
+      for (let i = 0; i < this.addImgPrd.length; i++) {
+        this.bidService.uploadImage(this.addImgPrd[i]).subscribe(data => {
+          countUpload += 1;
+          image.push(data.imageURL);
+          if (countUpload === this.addImgPrd.length) {
+            this.bidData.image = image;
+            this.bidService.saveBid(this.bidData).subscribe(res => {
+              this.pubsub.$pub('loading', false);
+              alert('เพิ่มการประมูลเรียบร้อยแล้ว');
+              window.location.reload();
+            }, errRes => {
+              console.log(errRes);
+              this.pubsub.$pub('loading', false);
+              alert('ไม่สามารถเพิ่มการประมูลได้');
+            });
+          }
+        }, err => {
+          console.log(err);
+          this.pubsub.$pub('loading', false);
+          alert('ไม่สามารถอัพโหลดรูปได้');
+        });
+      }
     } else if (this.ACTION_BID === 'แก้ไข') {
       this.bidService.editBid(this.bidData).subscribe(data => {
         this.pubsub.$pub('loading', false);
