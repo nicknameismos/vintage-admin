@@ -85,9 +85,8 @@ export class BidComponent implements OnInit {
     this.ACTION_BID = 'แก้ไข';
     this.bidData = JSON.parse(JSON.stringify(item));
     this.addImgPrd = this.bidData.image;
-    this.bidData.starttime = new Date(this.bidData.starttime);
-    this.bidData.endtime = new Date(this.bidData.endtime);
-    console.log(this.bidData);
+    this.bidData.starttime = this.bidData.starttime.replace(':00.000Z', '');
+    this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
     $(this.modalbid.nativeElement).modal('show');
   }
 
@@ -138,100 +137,21 @@ export class BidComponent implements OnInit {
     }
   }
 
-  saveBid2() {
-    console.log(this.bidData);
-  }
-  saveBid(e) {
-    console.log(e);
-    // this.pubsub.$pub('loading', true);
-    // let sendBid: any = {};
-    // let img: Array<any> = [];
-    // console.log(this.bidData.starttime);
-    // if (this.ACTION_BID === 'เพิ่ม') {
-    //   if (this.isEditImage === true) {
-    //     console.log(this.addImgPrd.length);
-    //     for (let i = 0; i < this.addImgPrd.length; i++) {
-    //       this.bidService.uploadImage(this.addImgPrd[i]).subscribe((upImg) => {
-    //         img.push(upImg.imageURL);
-    //         if (i === 0) {
-    //           sendBid.image = img;
-    //           sendBid.name = this.bidData.name;
-    //           sendBid.startprice = this.bidData.startprice;
-    //           sendBid.bidprice = this.bidData.bidprice;
-    //           sendBid.detail = this.bidData.detail;
-    //           sendBid.starttime = this.bidData.starttime;
-    //           sendBid.endtime = this.bidData.endtime;
-    //           this.bidService.saveBid(sendBid).subscribe((data) => {
-    //             alert("เพิ่มการประมูลสินค้าเรียบร้อย");
-    //             this.cancelAddBid();
-    //             this.InitialData();
-    //             $(this.modalbid.nativeElement).modal('hide');
-    //           }, (err) => {
-    //             alert("ไม่สามารถเพิ่มการประมูลสินค้าได้");
-    //             console.log(err);
-    //             this.pubsub.$pub('loading', false);
-    //           });
-    //         }
-    //       }, (err) => {
-    //         console.log(err);
-    //       });
-    //     }
+  saveBid() {
+    this.pubsub.$pub('loading', true);
+    if (this.ACTION_BID === 'เพิ่ม') {
 
-    //   } else {
-    //     alert("กรุณาเพิ่มรูปภาพการประมูล");
-    //     this.pubsub.$pub('loading', false);
-    //   }
-    // } else if (this.ACTION_BID === 'แก้ไข') {
-    //   if (this.isEditImage === true) {
-    //     for (let i = 0; i < this.ImgprdEdit.length; i++) {
-    //       this.bidService.uploadImage(this.ImgprdEdit[i]).subscribe((upImg) => {
-    //         this.bidData.image.push(upImg.imageURL);
-    //         if (i === 0) {
-    //           sendBid._id = this.bidData._id;
-    //           sendBid.image = this.bidData.image;
-    //           sendBid.name = this.bidData.name;
-    //           sendBid.startprice = this.bidData.startprice;
-    //           sendBid.bidprice = this.bidData.bidprice;
-    //           sendBid.detail = this.bidData.detail;
-    //           sendBid.starttime = this.bidData.starttime;
-    //           sendBid.endtime = this.bidData.endtime;
-    //           this.bidService.editBid(sendBid).subscribe((data) => {
-    //             alert("แก้ไขการประมูลสินค้าเรียบร้อย");
-    //             this.cancelAddBid();
-    //             this.InitialData();
-    //             $(this.modalbid.nativeElement).modal('hide');
-    //           }, (err) => {
-    //             alert("ไม่สามารถแก้ไขการประมูลสินค้าได้");
-    //             console.log(err);
-    //             this.pubsub.$pub('loading', false);
-    //           });
-    //         }
-    //       }, (err) => {
-    //         console.log(err);
-    //         this.pubsub.$pub('loading', false);
-    //         alert("ไม่สามารถอัพโหลดรูปสินค้าประมูลได้ในขณะนี้ \nกรุณาลองใหม่อีกครั้ง");
-    //       });
-    //     }
-    //   } else {
-    //     sendBid._id = this.bidData._id;
-    //     sendBid.image = this.addImgPrd;
-    //     sendBid.name = this.bidData.name;
-    //     sendBid.startprice = this.bidData.startprice;
-    //     sendBid.bidprice = this.bidData.bidprice;
-    //     sendBid.detail = this.bidData.detail;
-    //     sendBid.starttime = this.bidData.starttime;
-    //     sendBid.endtime = this.bidData.endtime;
-    //     this.bidService.editBid(sendBid).subscribe((data) => {
-    //       alert("แก้ไขการประมูลสินค้าเรียบร้อย");
-    //       this.cancelAddBid();
-    //       this.InitialData();
-    //       $(this.modalbid.nativeElement).modal('hide');
-    //     }, (err) => {
-    //       alert("ไม่สามารถแก้ไขการประมูลสินค้าได้");
-    //       console.log(err);
-    //       this.pubsub.$pub('loading', false);
-    //     });
-    //   }
-    // }
+    } else if (this.ACTION_BID === 'แก้ไข') {
+      this.bidService.editBid(this.bidData).subscribe(data => {
+        this.pubsub.$pub('loading', false);
+        alert('แก้ไขข้อมูลเรียบร้อย');
+        $(this.modalbid.nativeElement).modal('hide');
+        window.location.reload();
+      }, err => {
+        console.log(err);
+        this.pubsub.$pub('loading', false);
+        alert('ไม่สามารถแก้ไขข้อมูลได้');
+      });
+    }
   }
 }
