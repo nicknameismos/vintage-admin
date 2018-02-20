@@ -1,0 +1,197 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div>
+      <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
+          <!-- <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+              <a href="#customer" aria-controls="customer" role="tab" data-toggle="tab" (click)="activeTab('customer')">ลูกค้า</a>
+            </li>
+            <li role="presentation">
+              <a href="#shopowner" aria-controls="shopowner" role="tab" data-toggle="tab" (click)="activeTab('shopowner')">เจ้าของร้าน</a>
+            </li>
+            <li role="presentation">
+              <a href="#admin" aria-controls="admin" role="tab" data-toggle="tab" (click)="activeTab('admin')">แอดมิน</a>
+            </li>
+          </ul> -->
+        </div>
+
+        <div class="col-lg-4 col-md-8 col-sm-8 col-xs-8" style="margin-top: 10px">
+          <!-- <div class="sb">
+            <span class="inner-sb">
+              <span class="txb">
+                ค้นหา
+              </span>
+            </span>
+            <span>
+              <input type="text" class="form-control tb" [(ngModel)]="searchKeyword" (keyup.enter)="searchShop()">
+            </span>
+          </div> -->
+        </div>
+
+        <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
+          <button class="btn addBTN" type="button" data-toggle="modal" data-target="#modalCreateCoupon" (click)="createCoupon()">
+            <i class="material-icons">add</i> เพิ่มคูปอง
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+
+        <!-- Tab Customer -->
+        <div role="tabpanel" class="tab-pane active">
+          <div class="tab-content">
+
+            <div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <div class="card-content table-responsive">
+                      <table class="table table-hover">
+                        <thead class="text-danger">
+                          <tr>
+                            <th class="text-center" index-col-size>#</th>
+                            <th class="text-center">ชื่อที่แสดง</th>
+                            <th class="text-center">ชื่อ - นามสกุล</th>
+                            <th class="text-center">เบอร์โทร</th>
+                            <th class="text-center">อีเมล์</th>
+                            <th class="text-center">สถานะ</th>
+                            <!-- <th class="text-center">Action</th> -->
+                            <!-- <th class="text-center"></th> -->
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <!-- <tr *ngIf="listCust && listCust.length <=0">
+                            <td colspan="8" class="text-center">
+                              ยังไม่มีข้อมูลผู้ใช้ในระบบค่ะ
+                            </td>
+
+                          </tr> -->
+                          <tr>
+                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">1</td>
+                            <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">name</td>
+                            <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">name+name</td>
+                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">08415125</td>
+                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">mail</td>
+                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">Active</td>
+                            <!-- <td style="text-align: center">
+                              <ui-switch size="small" color="green" (change)="activeChange($event,item)"></ui-switch>
+                            </td> -->
+                            <!-- <td style="text-align: center">
+                              <button class="btn btn-danger btn-simple btn-xs btn-border" type="button" (click)="banUser(item)">
+                                Ban User
+                              </button>
+                            </td> -->
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- Tab Customer -->
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL EDIT USER -->
+<div class="modal fade close-modal" id="modalCreateCoupon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 style="font-family: 'Kanit', sans-serif;" class="modal-title">สร้างคูปอง</h4>
+        <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+      </div>
+
+      <div class="modal-body">
+        <div class="row bd">
+          <div class="col-md-12">
+            <div class="form-group form-black is-empty">
+              คูปอง
+              <span style="color:red"> *</span>:
+              <input class="form-control" type="text" [(ngModel)]="coupon.code">
+            </div>
+          </div>
+        </div>
+        <div class="row bd">
+          <div class="col-md-12">
+            <div class="form-group form-black is-empty">
+              ราคา
+              <span style="color:red"> *</span>:
+              <input class="form-control" type="number" [(ngModel)]="coupon.price">
+            </div>
+          </div>
+        </div>
+        <div class="row bd">
+          <div class="col-md-12">
+            <div class="form-group form-black is-empty">
+              ประเภท
+              <span style="color:red"> *</span>:
+              <input class="form-control" type="text" [(ngModel)]="coupon.type">
+            </div>
+          </div>
+        </div>
+        <div class="row bd">
+          <div class="col-md-12">
+            <div class="form-group form-black is-empty">
+              <div class="btn-group">
+                <button type="button" [disabled]="blockInput" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="true">
+                  เลือกเจ้าของคูปอง
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <p class="text-select-cate" *ngFor="let item of user" (click)="selectUser(item._id, item.displayName)">{{item.displayName}}
+                    <img *ngIf="checkeds[item._id]" class="check_po check_icon" src="https://image.flaticon.com/icons/svg/189/189677.svg" alt="icon">
+                  </p>
+                </ul>
+              </div>
+            </div>
+            <span *ngFor="let userSelect of userList"> {{userSelect}} </span>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+            <div class="form-group form-black is-empty">
+              วันที่เริ่ม :
+              <input type="date" class="form-control" [(ngModel)]="coupon.startdate">
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+            <div class="col-md-12">
+              <div class="form-group form-black is-empty">
+                วันที่สิ้นสุด :
+                <input type="date" class="form-control" [(ngModel)]="coupon.enddate">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
+            <button class="btn btn-success" data-dismiss="modal" (click)="createCoupon()">บันทึก</button>
+            <button class="btn" data-dismiss="modal" (click)="cancel()">ยกเลิก</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- MODAL EDIT USER -->
