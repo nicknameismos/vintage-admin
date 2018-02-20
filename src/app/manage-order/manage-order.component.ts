@@ -51,7 +51,7 @@ export class ManageOrderComponent implements OnInit {
       this.OrderList = data;
       // this.OrderList.items = data.items;
       // this.OrderList.pagings = data.paging;
-      console.log(this.OrderList);
+      // console.log(this.OrderList);
       this.pubsub.$pub('loading', false);
     }, err => {
       this.pubsub.$pub('loading', false);
