@@ -3,6 +3,7 @@ import { ServerConfig } from 'app/provider/server.config';
 import { Router } from '@angular/router';
 import { PubSubService } from 'angular2-pubsub';
 import { BidService } from 'app/bid/bid.service';
+import { MomentModule } from 'angular2-moment';
 declare let $: any;
 
 @Component({
@@ -21,6 +22,10 @@ export class BidComponent implements OnInit {
   private bidlist: Array<any> = [];
   private selectedTab: string = 'กำลังประมูล';
   nextDay: Date;
+  startdate: string;
+  enddate: string;
+  starttime: string;
+  endtime: string;
   constructor(private server: ServerConfig, private router: Router, private pubsub: PubSubService, private bidService: BidService) { }
 
   ngOnInit() {
@@ -86,6 +91,9 @@ export class BidComponent implements OnInit {
     this.ACTION_BID = 'แก้ไข';
     this.bidData = JSON.parse(JSON.stringify(item));
     this.addImgPrd = this.bidData.image;
+    this.bidData.starttime = new Date(this.bidData.starttime);
+    this.bidData.endtime = new Date(this.bidData.endtime);
+    console.log(this.bidData);
     $(this.modalbid.nativeElement).modal('show');
   }
 
@@ -139,6 +147,9 @@ export class BidComponent implements OnInit {
     this.pubsub.$pub('loading', true);
     let sendBid: any = {};
     let img: Array<any> = [];
+    // this.bidData.starttime = new Date(this.startdate);
+    // this.bidData.endtime = new Date(this.enddate);
+    console.log(this.bidData.starttime);
     if (this.ACTION_BID === 'เพิ่ม') {
       if (this.isEditImage === true) {
         console.log(this.addImgPrd.length);

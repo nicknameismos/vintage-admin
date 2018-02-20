@@ -170,15 +170,18 @@ fieldset[disabled] .form-group .form-control {
     max-width: 26rem;
 }
 
-.modal-content .modal-footer button {
-    width: 10rem;
-}
+// .modal-content .modal-footer button {
+//     width: 10rem;
+// }
+
 .dropdown-menu {
     min-width: 90px;
 }
+
 .pc {
     text-align: center;
 }
+
 .edit-color {
     padding: 0 0.8rem 0 0.8rem;
     color: green;
@@ -194,7 +197,22 @@ fieldset[disabled] .form-group .form-control {
     cursor: pointer;
     margin-top: 0.8rem;
 }
+
 .ic {
     width: 100% !important;
     height: 100% !important;
+}
+
+.warp-text {
+    white-space: nowrap;
+    width: 13em;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+.close-modal{
+    margin-top: -40px;
+}
+
+.displaynone{
+    display: none;
 }

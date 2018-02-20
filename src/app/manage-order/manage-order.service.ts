@@ -49,4 +49,42 @@ export class ManageOrderService {
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error));
     }
+
+    changeStatusSent(order, refid): Observable<any> {
+        return this.http.post(this.server.url + 'api/sentitem/', {
+            orderid: order.orderid,
+            itemid: order.itemid,
+            refid: refid
+        }, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
+    adminChangeStatusReject(order, remark): Observable<any> {
+        return this.http.post(this.server.url + 'api/admincancelitem/', {
+            orderid: order.orderid,
+            itemid: order.itemid,
+            remark: remark
+        }, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
+    changeStatusComplete(order): Observable<any> {
+        return this.http.post(this.server.url + 'api/completeitem/', {
+            orderid: order.orderid,
+            itemid: order.itemid
+        }, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
+    changeStatusCancel(order): Observable<any> {
+        return this.http.post(this.server.url + 'api/cancelitem/', {
+            orderid: order.orderid,
+            itemid: order.itemid
+        }, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
 }

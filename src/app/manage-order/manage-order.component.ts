@@ -22,6 +22,8 @@ export class ManageOrderComponent implements OnInit {
   private curentPage: Array<any> = [];
   private dateShow: any;
   private statusdate: string = '';
+  public refid: '';
+  public remark: '';
   @ViewChild('modalDetail') modalDetail;
   constructor(
     private pubsub: PubSubService,
@@ -43,6 +45,8 @@ export class ManageOrderComponent implements OnInit {
   }
   searchOrder() {
     this.pubsub.$pub('loading', true);
+    this.refid = '';
+    this.remark = '';
     this.manageOrderService.searchOrder(this.typeTab, this.currentPageSelected, this.searchKeyword).subscribe(data => {
       this.OrderList = data;
       // this.OrderList.items = data.items;
@@ -111,20 +115,85 @@ export class ManageOrderComponent implements OnInit {
   }
 
   refunditm() {
-    this.manageOrderService.changeStatusRefund(this.OrderDetail).subscribe(data => {
-      alert('sss');
-      this.searchOrder();
-    }, err => {
-      console.log(err);
-    });
+    const cfrefund = confirm('ยืนยันการคืนเงินให้ลูกค้า');
+    if (cfrefund) {
+      this.manageOrderService.changeStatusRefund(this.OrderDetail).subscribe(data => {
+        alert('คืนเงินให้ลูกค้าสำเร็จ!');
+        this.searchOrder();
+      }, err => {
+        console.log(err);
+      });
+    }
   }
 
   transferitm() {
-    this.manageOrderService.changeStatusTransfer(this.OrderDetail).subscribe(data => {
-      alert('sxxss');
-      this.searchOrder();
-    }, err => {
-      console.log(err);
-    });
+    const cftransfer = confirm('ยืนยันการจ่ายเงินให้ร้านค้า');
+    if (cftransfer) {
+      this.manageOrderService.changeStatusTransfer(this.OrderDetail).subscribe(data => {
+        alert('จ่ายเงินให้ร้านค้าสำเร็จ!');
+        this.searchOrder();
+      }, err => {
+        console.log(err);
+      });
+    }
+
   }
+
+  sentitm(refid) {
+    this.refid = refid;
+    const cfsent = confirm('ยืนยันการจัดส่ง');
+    if (cfsent) {
+      this.manageOrderService.changeStatusSent(this.OrderDetail, this.refid).subscribe(data => {
+        this.modalDetail.nativeElement.click();
+        alert('จัดส่งสำเร็จ!');
+        // console.log(data);
+        this.searchOrder();
+      }, err => {
+        console.log(err);
+      });
+    }
+
+  }
+
+  adminCancelitm(remark) {
+    this.remark = remark;
+    const cfcancel = confirm('ยืนยันการยกเลิกออเดอร์');
+    if (cfcancel) {
+      this.manageOrderService.adminChangeStatusReject(this.OrderDetail, this.remark).subscribe(data => {
+        this.modalDetail.nativeElement.click();
+        alert('ยกเลิกออเดอร์สำเร็จ!');
+        // console.log(data);
+        this.searchOrder();
+      }, err => {
+        console.log(err);
+      });
+    }
+
+  }
+
+  completeitm() {
+    const cfcomplete = confirm('ยืนยันการรับสินค้า');
+    if (cfcomplete) {
+      this.manageOrderService.changeStatusComplete(this.OrderDetail).subscribe(data => {
+        alert('ได้รับสินค้าแล้ว!');
+        this.searchOrder();
+      }, err => {
+        console.log(err);
+      });
+    }
+
+  }
+
+  //   ok() {
+  //     const cfok = confirm('ยืนยันการจัดส่ง');
+  //     alert('OK!');
+  //   }
+
+  //   cancel(remark) {
+  //     this.remark = remark;
+  //     const cfcancel = confirm('ยืนยันการลบร้านค้า');
+  //     this.modalDetail.nativeElement.click();
+  //     console.log(this.remark);
+  //     alert('Cancel!');
+  //   }
 }

@@ -1,10 +1,10 @@
 <div class="logo">
     <a href="#" class="simple-text">
-        <div class="logo-img">
+        <!-- <div class="logo-img">
             <img src="/assets/img/biker.jpg" />
-        </div>
+        </div> -->
         <span class="mgt-20">
-            <img src="../../../assets/img/D.png" alt="image" width="130px" height="36px">
+            <img src="../../../assets/img/D.png" alt="image" width="200px" height="100px">
         </span>
     </a>
 </div>
@@ -300,48 +300,81 @@
                     <p>เข้าสู่ระบบ</p>
                 </a>
             </li>
+            <li *ngIf="isLogin">
+                    <a [routerLink]="['bid']">
+                        <i class="material-icons">gavel</i>
+                        <p>ประมูลสินค้า</p>
+                    </a>
+            </li>
+            <li *ngIf="isLogin">
+                    <a [routerLink]="['manage-order']">
+                        <i class="material-icons">assignment</i>
+                        <p>จัดการออเดอร์</p>
+                    </a>
+            </li>
+            <li *ngIf="isLogin">
+                    <a [routerLink]="['manage-ads']">
+                        <i class="fa fa-bullhorn" aria-hidden="true"></i>
+                        <p>จัดการโฆษณา</p>
+                    </a>
+            </li>
+            <li *ngIf="isLogin">
+                    <a [routerLink]="['manage-ads']">
+                        <!-- <i class="fa fa-bullhorn" aria-hidden="true"></i> -->
+                        <i class="material-icons">
+                                <img src="https://png.icons8.com/windows/40/345f2a/ticket.png" style="
+                                height: 25px;
+                                margin-bottom: 15px;
+                                ">                  
+                        </i>
+
+                        <p>จัดการคูปอง ( ใหม่ )</p>
+                    </a>
+            </li>
 
             <li *ngIf="isLogin">
                 <a [routerLink]="['manage-shop']">
-                    <i class="material-icons">dashboard</i>
-                    <p>จัดการร้านค้า</p>
+                     <i class="material-icons">
+                        <img src="https://png.icons8.com/ios/40/345f2a/small-business-filled.png" style="
+                        height: 30px;
+                        margin-bottom: 15px;
+                        ">                  
+                    </i> 
+
+                    <!-- <i class="material-icons">dashboard</i> -->
+                    <i class="icon-me"></i>
+                    <span aria-hidden="true" data-icon="\e909" class="icon-me"></span>
+
+                  <p>จัดการร้านค้า</p>
                 </a>
             </li>
 
             <li *ngIf="isLogin">
                 <a [routerLink]="['manage-user']">
-                    <i class="material-icons">people</i>
+                    <!-- <i class="material-icons">people</i> -->
+                    <i class="material-icons">
+                            <img src="https://png.icons8.com/windows/40/345f2a/gender-neutral-user.png" style="
+                            height: 30px;
+                            margin-bottom: 15px;
+                            ">                  
+                        </i>
+
                     <p>จัดการบัญชีผู้ใช้</p>
                 </a>
             </li>
 
-            <li *ngIf="isLogin">
-                <a [routerLink]="['manage-ads']">
-                    <i class="fa fa-bullhorn" aria-hidden="true"></i>
-                    <p>จัดการโฆษณา</p>
-                </a>
-            </li>
+            
 
-            <li *ngIf="isLogin">
+            <!-- <li *ngIf="isLogin">
                 <a [routerLink]="['manage-campaign']">
                     <i class="fa fa-bullhorn" aria-hidden="true"></i>
                     <p>จัดการแคมเปญ</p>
                 </a>
-            </li>
+            </li> -->
 
-            <li *ngIf="isLogin">
-                <a [routerLink]="['bid']">
-                    <i class="material-icons">gavel</i>
-                    <p>ประมูลสินค้า</p>
-                </a>
-            </li>
+            
 
-            <li *ngIf="isLogin">
-                <a [routerLink]="['manage-order']">
-                    <i class="material-icons">assignment</i>
-                    <p>จัดการออเดอร์</p>
-                </a>
-            </li>
+            
 
 
 
