@@ -59,6 +59,8 @@ import { BidComponent } from './bid/bid.component';
 import { BidService } from 'app/bid/bid.service';
 import { ManageOrderComponent } from './manage-order/manage-order.component';
 import { ManageOrderService } from 'app/manage-order/manage-order.service';
+import { ManageCouponComponent } from './manage-coupon/manage-coupon.component';
+import { ManageCouponService } from 'app/manage-coupon/manage-coupon.service';
 
 @NgModule({
   declarations: [
@@ -85,7 +87,8 @@ import { ManageOrderService } from 'app/manage-order/manage-order.service';
     ManageAdsComponent,
     ManageCampaignComponent,
     BidComponent,
-    ManageOrderComponent
+    ManageOrderComponent,
+    ManageCouponComponent
     // Pipe
   ],
   imports: [
@@ -109,6 +112,7 @@ import { ManageOrderService } from 'app/manage-order/manage-order.service';
     MomentModule
   ],
   providers: [
+    ManageCouponService,
     ManageOrderService,
     DashboardService,
     ManageShopService,
