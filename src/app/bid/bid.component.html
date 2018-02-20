@@ -158,23 +158,12 @@
         <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 text-center">
           <div class="form-group form-black floating is-empty">
             วันที่เริ่มต้นประมูล
-            <input type="datetime-local" format="dd/MM/yyyy" [(ngModel)]="bidData.starttime">
+            <input type="datetime-local" format="dd/MM/yyyy" name="starttime" [(ngModel)]="bidData.starttime" (ngModelChange)="calcDate('start')">
           </div>
-          <!-- <div class="form-group form-black floating is-empty">
-            เวลาเริ่มต้นประมูล
-            <input type="time" [disabled]="!startdate" [(ngModel)]="starttime">
-          </div> -->
-
-
           <div class="form-group form-black floating is-empty">
             วันที่สิ้นสุดประมูล
-            <input type="datetime-local" format="dd/MM/yyyy" [disabled]="!bidData.starttime" [(ngModel)]="bidData.endtime">
+            <input type="datetime-local" format="dd/MM/yyyy" name="endtime" [disabled]="!bidData.endtime" [(ngModel)]="bidData.endtime" (ngModelChange)="calcDate('end')">
           </div>
-          <!-- <div class="form-group form-black floating is-empty">
-            เวลาสิ้นสุดประมูล
-            <input type="time" [disabled]="!enddate" [(ngModel)]="endtime">
-          </div> -->
-
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1  text-center"></div>
       </div>
