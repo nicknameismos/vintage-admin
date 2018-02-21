@@ -1486,7 +1486,21 @@ h2.title {
   z-index: 2000;
   position: absolute;
 }
-
+.loading-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100%;
+  width: 100%;
+  z-index: 2000;
+  position: absolute;
+}
+/* .gif-po {
+  width:  140px;
+  height: 140px;
+  z-index: 2000;
+  position: absolute;
+  top: 38.2%;
+  left: 60.2%;
+} */
 .gif-po {
   /* margin-left: 50%;
   margin-top: 18%; */
@@ -1495,7 +1509,7 @@ h2.title {
   z-index: 2000;
   position: absolute;
   top: 38.2%;
-  left: 60.2%;
+  left: 49.6%;
 }
 /* loading */
 
