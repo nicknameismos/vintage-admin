@@ -92,12 +92,10 @@ h6 {
 
 .text-status {
     font-size: 1.4rem;
-    display: inline-block;
-    vertical-align: super;
 }
 
 .img-size {
-    height: 20rem;
+    height: 300px;
     width: auto;
 }
 
@@ -115,4 +113,29 @@ input[type=file] {
 
 .icon-delete {
     font-size: 2rem;
+}
+
+.close {
+    font-size: 4rem;
+}
+
+.close-modal {
+    margin-top: -10px;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.ads-status {
+    padding-top: 14px !important;
+}
+
+.play-icon {
+    position: absolute;
+    width: 100px !important;
+    height: 100px !important;
+    left: 50%;
+    top: 0;
+    margin-left: -52px;
 }
