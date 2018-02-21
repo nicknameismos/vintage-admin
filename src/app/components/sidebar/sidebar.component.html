@@ -302,31 +302,25 @@
             </li>
             <li *ngIf="isLogin">
                     <a [routerLink]="['bid']">
-                        <i class="material-icons">gavel</i>
+                        <i class="icon-bid" aria-hidden="true"></i>
                         <p>ประมูลสินค้า</p>
                     </a>
             </li>
             <li *ngIf="isLogin">
                     <a [routerLink]="['manage-order']">
-                        <i class="material-icons">assignment</i>
+                        <i class="icon-order" aria-hidden="true"></i>
                         <p>จัดการออเดอร์</p>
                     </a>
             </li>
             <li *ngIf="isLogin">
                     <a [routerLink]="['manage-ads']">
-                        <i class="fa fa-bullhorn" aria-hidden="true"></i>
+                        <i class="icon-manage-ads" aria-hidden="true"></i>
                         <p>จัดการโฆษณา</p>
                     </a>
             </li>
             <li *ngIf="isLogin">
                     <a [routerLink]="['manage-ads']">
-                        <!-- <i class="fa fa-bullhorn" aria-hidden="true"></i> -->
-                        <i class="material-icons">
-                                <img src="https://png.icons8.com/windows/40/345f2a/ticket.png" style="
-                                height: 25px;
-                                margin-bottom: 15px;
-                                ">                  
-                        </i>
+                        <i class="icon-manage-coupon" aria-hidden="true"></i>
 
                         <p>จัดการคูปอง</p>
                     </a>
@@ -334,16 +328,7 @@
 
             <li *ngIf="isLogin">
                 <a [routerLink]="['manage-shop']">
-                     <!-- <i class="material-icons">
-                        <img src="https://png.icons8.com/ios/40/345f2a/small-business-filled.png" style="
-                        height: 30px;
-                        margin-bottom: 15px;
-                        ">                  
-                    </i>  -->
-
-                    <!-- <i class="material-icons">dashboard</i> -->
-                    <!-- <i class="icon-me"></i> -->
-                    <i class="icon-home"></i>
+                    <i class="icon-manage-shop" aria-hidden="true"></i>
 
                   <p>จัดการร้านค้า</p>
                 </a>
@@ -351,14 +336,7 @@
 
             <li *ngIf="isLogin">
                 <a [routerLink]="['manage-user']">
-                    <!-- <i class="material-icons">people</i> -->
-                    <i class="material-icons">
-                            <img src="https://png.icons8.com/windows/40/345f2a/gender-neutral-user.png" style="
-                            height: 30px;
-                            margin-bottom: 15px;
-                            ">                  
-                        </i>
-
+                    <i class="icon-me" aria-hidden="true"></i>
                     <p>จัดการบัญชีผู้ใช้</p>
                 </a>
             </li>
