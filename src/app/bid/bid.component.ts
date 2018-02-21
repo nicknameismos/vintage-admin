@@ -23,6 +23,7 @@ export class BidComponent implements OnInit {
   private selectedTab: string = 'กำลังประมูล';
   private oldDate: any = {};
   private shippingMaster: Array<any> = [];
+  private shippingMasterOld: Array<any> = [];
   private shippings: Array<any> = [];
   constructor(private server: ServerConfig, private router: Router, private pubsub: PubSubService, private bidService: BidService) { }
 
@@ -40,6 +41,14 @@ export class BidComponent implements OnInit {
     this.bidService.getBid().subscribe((data) => {
       this.bidlist = data;
       this.pubsub.$pub('loading', false);
+    });
+    this.bidService.getShipingMaster().subscribe(data => {
+      this.shippingMaster = data;
+      this.shippingMasterOld = data;
+      console.log(this.shippingMaster);
+    }, err => {
+      console.log(err);
+      alert('ไม่สามารถโหลดข้อมูล Shipping Master ได้');
     });
   }
 
@@ -101,6 +110,7 @@ export class BidComponent implements OnInit {
   addBid() {
     this.ACTION_BID = 'เพิ่ม';
     this.shippings = [];
+    this.shippingMaster = this.shippingMasterOld;
     $(this.modalbid.nativeElement).modal('show');
     let date = new Date();
     let _month = date.getMonth() <= 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
@@ -114,14 +124,6 @@ export class BidComponent implements OnInit {
       starttime: this.bidData.starttime,
       endtime: this.bidData.starttime
     };
-
-    this.bidService.getShipingMaster().subscribe(data => {
-      this.shippingMaster = data;
-      console.log(this.shippingMaster);
-    }, err => {
-      console.log(err);
-      alert('ไม่สามารถโหลดข้อมูล Shipping Master ได้');
-    });
   }
   cancelAddBid() {
     $(this.modalbid.nativeElement).modal('hide');
@@ -134,8 +136,27 @@ export class BidComponent implements OnInit {
     this.ACTION_BID = 'แก้ไข';
     this.bidData = JSON.parse(JSON.stringify(item));
     this.addImgPrd = this.bidData.image;
-    // this.shippings = this.bidData.shippings;
-    console.log(this.bidData);
+    for (let i = 0; i < this.shippingMaster.length; i++) {
+      for (let j = 0; j < this.bidData.shippings.length; j++) {
+        if (this.shippingMaster[i]._id === this.bidData.shippings[j].ref._id) {
+          this.shippingMaster[i].isChecked = true;
+        }
+      }
+    }
+
+    setTimeout(() => {
+      let shippings: Array<any> = [];
+      this.bidData.shippings.forEach((e, i) => {
+        shippings.push({
+          _id: e.ref._id,
+          price: e.price,
+          name: e.ref.name,
+          detail: e.ref.detail,
+          isChecked: true
+        });
+      });
+      this.shippings = shippings;
+    }, 100);
     this.bidData.starttime = this.bidData.starttime.replace(':00.000Z', '');
     this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
     $(this.modalbid.nativeElement).modal('show');
@@ -190,8 +211,17 @@ export class BidComponent implements OnInit {
 
   saveBid() {
     this.pubsub.$pub('loading', true);
+    let refShippings: Array<any> = [];
+    this.shippings.forEach((e, i) => {
+      refShippings.push({
+        ref: {
+          _id: e._id,
+        },
+        price: e.price
+      });
+    });
+    this.bidData.shippings = refShippings;
     if (this.ACTION_BID === 'เพิ่ม') {
-      this.bidData.shippings = this.shippings;
       let image: Array<any> = [];
       let countUpload: any = 0;
       for (let i = 0; i < this.addImgPrd.length; i++) {
