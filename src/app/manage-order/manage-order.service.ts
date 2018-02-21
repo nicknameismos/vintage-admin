@@ -32,6 +32,15 @@ export class ManageOrderService {
             .catch((error: any) => Observable.throw(error));
     }
 
+    changeStatusConfirm(order): Observable<any> {
+        return this.http.post(this.server.url + 'api/confirmitem/', {
+            orderid: order.orderid,
+            itemid: order.itemid
+        }, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
     changeStatusRefund(order): Observable<any> {
         return this.http.post(this.server.url + 'api/refunditem/', {
             orderid: order.orderid,

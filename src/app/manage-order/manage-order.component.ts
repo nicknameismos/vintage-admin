@@ -51,7 +51,7 @@ export class ManageOrderComponent implements OnInit {
       this.OrderList = data;
       // this.OrderList.items = data.items;
       // this.OrderList.pagings = data.paging;
-      // console.log(this.OrderList);
+      console.log(this.OrderList);
       this.pubsub.$pub('loading', false);
     }, err => {
       this.pubsub.$pub('loading', false);
@@ -65,7 +65,6 @@ export class ManageOrderComponent implements OnInit {
     this.curentPage = [];
     this.curentPage[1] = 'active';
     this.typeTab = titles;
-    // alert(this.currentPageSelected)
     this.searchOrder();
   }
 
@@ -76,6 +75,7 @@ export class ManageOrderComponent implements OnInit {
     this.curentPage[page] = 'active';
     this.pageSelect = (page - 1) * 10;
     this.currentPageSelected = page;
+    console.log(this.currentPageSelected);
     this.searchOrder();
   }
 
@@ -119,6 +119,18 @@ export class ManageOrderComponent implements OnInit {
     if (cfrefund) {
       this.manageOrderService.changeStatusRefund(this.OrderDetail).subscribe(data => {
         alert('คืนเงินให้ลูกค้าสำเร็จ!');
+        this.searchOrder();
+      }, err => {
+        console.log(err);
+      });
+    }
+  }
+
+  confirmitm() {
+    const cfconfirm = confirm('ยืนยันการชำระเงิน');
+    if (cfconfirm) {
+      this.manageOrderService.changeStatusConfirm(this.OrderDetail).subscribe(data => {
+        alert('ชำระเงินเรียบร้อยแล้ว!');
         this.searchOrder();
       }, err => {
         console.log(err);
