@@ -21,12 +21,9 @@ export class BidComponent implements OnInit {
   private bidData: any = {};
   private bidlist: Array<any> = [];
   private selectedTab: string = 'กำลังประมูล';
-  nextDay: Date;
-  startdate: string;
-  enddate: string;
-  starttime: string;
-  endtime: string;
   private oldDate: any = {};
+  private shippingMaster: Array<any> = [];
+  private shippings: Array<any> = [];
   constructor(private server: ServerConfig, private router: Router, private pubsub: PubSubService, private bidService: BidService) { }
 
   ngOnInit() {
@@ -74,12 +71,36 @@ export class BidComponent implements OnInit {
     }
   }
 
+  selectShipping(item) {
+    let index = this.shippings.findIndex(i => i._id === item._id);
+    if (index === -1) {
+      this.shippings.push(item);
+    } else {
+      for (let i = 0; i < this.shippings.length; i++) {
+        if (this.shippings[i]._id === item._id) {
+          this.shippings.splice(i, 1);
+          break;
+        }
+      }
+    }
+  }
+
+  setShippingPrice(id, e) {
+    let price = parseFloat(e.target.value);
+    for (let i = 0; i < this.shippings.length; i++) {
+      if (this.shippings[i]._id === id) {
+        this.shippings[i].price = price ? price : 0;
+      }
+    }
+  }
+
   selectTab(name) {
     this.selectedTab = name;
   }
 
   addBid() {
     this.ACTION_BID = 'เพิ่ม';
+    this.shippings = [];
     $(this.modalbid.nativeElement).modal('show');
     let date = new Date();
     let _month = date.getMonth() <= 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
@@ -93,6 +114,14 @@ export class BidComponent implements OnInit {
       starttime: this.bidData.starttime,
       endtime: this.bidData.starttime
     };
+
+    this.bidService.getShipingMaster().subscribe(data => {
+      this.shippingMaster = data;
+      console.log(this.shippingMaster);
+    }, err => {
+      console.log(err);
+      alert('ไม่สามารถโหลดข้อมูล Shipping Master ได้');
+    });
   }
   cancelAddBid() {
     $(this.modalbid.nativeElement).modal('hide');
@@ -105,6 +134,7 @@ export class BidComponent implements OnInit {
     this.ACTION_BID = 'แก้ไข';
     this.bidData = JSON.parse(JSON.stringify(item));
     this.addImgPrd = this.bidData.image;
+    // this.shippings = this.bidData.shippings;
     console.log(this.bidData);
     this.bidData.starttime = this.bidData.starttime.replace(':00.000Z', '');
     this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
@@ -135,7 +165,7 @@ export class BidComponent implements OnInit {
 
   removeprdImgEDIT(index) {
     this.ImgprdEdit.splice(index, 1);
-    if (this.ImgprdEdit.length == 0) {
+    if (this.ImgprdEdit.length === 0) {
       this.isEditImage = false;
     }
   }
@@ -161,6 +191,7 @@ export class BidComponent implements OnInit {
   saveBid() {
     this.pubsub.$pub('loading', true);
     if (this.ACTION_BID === 'เพิ่ม') {
+      this.bidData.shippings = this.shippings;
       let image: Array<any> = [];
       let countUpload: any = 0;
       for (let i = 0; i < this.addImgPrd.length; i++) {

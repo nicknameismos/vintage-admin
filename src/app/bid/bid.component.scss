@@ -157,3 +157,6 @@ input[type=file] {
 .nav-tabs>li.active>a:focus {
     border-bottom: 3px solid rgb(14, 156, 14) !important;
 }
+.form-group .checkbox label, .form-group .radio label, .form-group label {
+    color: #000 !important;
+}
