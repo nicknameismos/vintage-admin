@@ -46,7 +46,7 @@
                 <div class="btn-group btn-group-vertical" role="group" aria-label="...">
                   <button type="button" [class]="activeMenu[0]" btn-fb-checked (click)="selectTab(0)">ข้อมูลเกี่ยวกับร้านค้า</button>
                   <button type="button" [class]="activeMenu[1]" btn-fb-checked (click)="selectTab(1)">ข้อมูลติดต่อร้านค้า</button>
-                  <button type="button" [class]="activeMenu[2]" btn-fb-checked (click)="selectTab(2)">วันเวลาเปิดปิดร้าน</button>
+                  <!-- <button type="button" [class]="activeMenu[2]" btn-fb-checked (click)="selectTab(2)">วันเวลาเปิดปิดร้าน</button> -->
                   <button type="button" [class]="activeMenu[3]" btn-fb-checked (click)="selectTab(3)">ที่อยู่ร้าน</button>
                 </div>
               </div>
@@ -72,13 +72,13 @@
                       <span *ngFor="let cateSelect of shop.categories"> {{cateSelect.name}} </span>
 
                       <div class="form-group">
-                        ชื่อร้าน
-                        <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="shopName" [(ngModel)]="shop.name">
+                        ชื่อร้าน<span style="color:red"> *</span>
+                        <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="shopName" [(ngModel)]="shop.name" required>
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         ชื่อร้าน (ภาษาอังกฤษ)
                         <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="shopNameEn" [(ngModel)]="shop.name_eng">
-                      </div>
+                      </div> -->
 
                     </div>
                     <div class="col-md-12">
@@ -105,14 +105,14 @@
                         หมายเลขโทรศัพท์ร้านค้า
                         <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="tel" [(ngModel)]="shop.tel">
                       </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         Facebook fanpage
                         <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="Facebook" [(ngModel)]="shop.facebook">
                       </div>
                       <div class="form-group">
                         Line@ Id
                         <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="Line" [(ngModel)]="shop.line">
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -120,7 +120,7 @@
 
 
                 <!-- SHOP TIME - CLOSE -->
-                <div class="card-block" *ngIf="selectTabs == 2">
+                <!-- <div class="card-block" *ngIf="selectTabs == 2">
                   <div class="row">
 
                     <div class="col-md-3 text-center" (click)="openTime()" *ngIf="isEditshopMode == true">
@@ -192,7 +192,7 @@
                     </div>
                   </div>
 
-                </div>
+                </div> -->
                 <!-- SHOP TIME - CLOSE -->
 
 
@@ -202,17 +202,17 @@
                     ที่อยู่
                     <textarea rows="1" class="form-control ct" placeholder="" name="addr" [(ngModel)]="address"></textarea>
                   </div>
-                  <p class="pin" (click)="openSelectMap()">
+                  <!-- <p class="pin" (click)="openSelectMap()">
                     <i class="material-icons">room</i>
-                  </p>
+                  </p> -->
                 </div>
-                <div *ngIf="showeMap">
+                <!-- <div *ngIf="showeMap">
                   <input #pacinput id="pac-input" class="controls m2" type="text" placeholder="ค้นหาสถานที่">
                   <div #map class="map"></div>
                   <div class="ct">
                     <button class="btn btn-info" (click)="saveMap()">ยืนยัน</button>
                   </div>
-                </div>
+                </div> -->
                 <!-- SHOP ADDRESS -->
 
 

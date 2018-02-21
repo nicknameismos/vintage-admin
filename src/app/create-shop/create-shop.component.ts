@@ -849,6 +849,10 @@ export class CreateShopComponent implements OnInit {
   }
 
   save() {
+    if (!this.shop.name) {
+      alert("กรุณาระบุชื่อร้านค้า");
+    }
+
     if (this.shop.categories.length <= 0) {
       alert("กรุณาเลือกประเภทของร้านค้าก่อนทำการบันทึก");
     } else {
