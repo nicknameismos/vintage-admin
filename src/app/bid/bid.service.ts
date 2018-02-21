@@ -34,8 +34,15 @@ export class BidService {
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error));
     }
+
     getBid(): Observable<any> {
         return this.http.get(this.server.url + 'api/bids', this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
+    getShipingMaster(): Observable<any> {
+        return this.http.get(this.server.url + 'api/shippingmasters', this.server.AuthHeaders())
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error));
     }
