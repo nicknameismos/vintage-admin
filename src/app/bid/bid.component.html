@@ -168,13 +168,22 @@
           <div class="col-lg-1 col-md-1 col-sm-1  text-center"></div>
         </div>
 
+        <div class="row">
+          <div class="col-lg-1 col-md-1 col-sm-1 text-right"></div>
+          <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left">
+            <hr>
+            <div class="center">
+              <span class="tx-hr">เลือกการจัดส่ง</span>
+            </div>
+          </div>
+        </div>
 
         <div class="row">
           <div class="col-lg-1 col-md-1 col-sm-1 text-right"></div>
           <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left">
             <div class="form-group form-black floating is-empty">
               <span *ngFor="let item of shippingMaster">
-                <input type="checkbox" class="form-check-input" (change)="selectShipping(item)">
+                <input type="checkbox" class="form-check-input" checked="{{item.isChecked}}" (change)="selectShipping(item)">
                 <label class="form-check-label">{{item.name}}</label>
               </span>
             </div>
@@ -186,7 +195,7 @@
           <div class="col-lg-11 col-md-11 col-sm-11">
             <div class="form-group">
               {{item.name}} {{item.detail}}
-              <input type="number" min="0" placeholder="ราคาจัดส่ง" class="form-control" (keyup)="setShippingPrice(item._id,$event)">
+              <input type="number" min="0" value="{{item.price}}" placeholder="ราคาจัดส่ง" class="form-control" (keyup)="setShippingPrice(item._id,$event)">
             </div>
           </div>
         </div>
