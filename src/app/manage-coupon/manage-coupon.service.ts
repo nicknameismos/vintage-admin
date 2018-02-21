@@ -10,15 +10,16 @@ export class ManageCouponService {
 
     constructor(private http: Http, public server: ServerConfig) { }
 
-    // getList(): Observable<any> {
-    //     return this.http.get(this.server.url + 'api/shops', {})
-    //         .map((res: Response) => res.json())
-    //         .catch((error: any) => Observable.throw(error));
-    // }
-
-    createCoupon(): Observable<any> {
-        return this.http.post(this.server.url + 'api/coupons', {}, this.server.AuthHeaders())
+    getList(): Observable<any> {
+        return this.http.get(this.server.url + 'api/coupons', this.server.AuthHeaders())
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error));
     }
+
+    createCoupon(coupon): Observable<any> {
+        return this.http.post(this.server.url + 'api/coupons', coupon, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
 }

@@ -3,6 +3,7 @@ import { ManageUserService } from 'app/manage-user/manage-user.service';
 import { ServerConfig } from 'app/provider/server.config';
 import { PubSubService } from 'angular2-pubsub';
 import { Router } from '@angular/router';
+import { ManageCouponService } from 'app/manage-coupon/manage-coupon.service';
 
 @Component({
   selector: 'app-manage-coupon',
@@ -14,18 +15,20 @@ export class ManageCouponComponent implements OnInit {
   private listAllUser: Array<any> = [];
   private listUser: Array<any> = [];
   private user: Array<any> = [];
-  private selectList: Array<any> = [];
-  private userSelected: Array<any> = [];
+  // private selectList: Array<any> = [];
+  // private userSelected: Array<any> = [];
   private users: any = [];
-  private checkeds: Array<any> = [];
+  // private checkeds: Array<any> = [];
   private userList: Array<any> = [];
+  private couponlist: any;
 
 
   constructor(
     private UserService: ManageUserService,
     private server: ServerConfig,
     private pubsub: PubSubService,
-    private router: Router
+    private router: Router,
+    private couponService: ManageCouponService
   ) { }
 
   ngOnInit() {
@@ -36,24 +39,33 @@ export class ManageCouponComponent implements OnInit {
         this.pubsub.$pub('loading', false);
       } else {
         this.getUser();
+        this.getCoupon();
       }
     });
   }
 
   getUser() {
+    this.user = [];
     this.UserService.getUser().subscribe(jso => {
       this.listAllUser = jso.filterrole;
       this.listUser = [];
       this.listAllUser.forEach(element => {
         if (element.name === 'customer') {
-          this.listUser.push(element.users);
+          element.users.forEach(user => {
+            this.user.push(user);
+          });
         } else if (element.name === 'shopowner') {
-          this.listUser.push(element.users);
+          element.users.forEach(user => {
+            this.user.push(user);
+          });
         } else if (element.name === 'admin') {
-          this.listUser.push(element.users);
+          element.users.forEach(user => {
+            this.user.push(user);
+          });
         }
       });
-      this.user = this.listUser[0].concat(this.listUser[1].concat(this.listUser[2]));
+      console.log(this.listUser);
+      // this.user = this.listUser[0].concat(this.listUser[1].concat(this.listUser[2]));  
       console.log(this.user);
       this.pubsub.$pub('loading', false);
     }, err => {
@@ -63,11 +75,31 @@ export class ManageCouponComponent implements OnInit {
 
   }
 
+  getCoupon() {
+    this.pubsub.$pub('loading', true);
+    this.couponService.getList().subscribe(resp => {
+      this.couponlist = resp;
+      console.log(this.couponlist);
+      this.pubsub.$pub('loading', false);
+    }, err => {
+      this.pubsub.$pub('loading', false);
+      console.log(err);
+    });
+  }
+
   createCoupon() {
     console.log('coupon');
     this.coupon.owner = this.users;
-    console.log(this.coupon);
+    this.pubsub.$pub('loading', true);
+    this.couponService.createCoupon(this.coupon).subscribe(data => {
+      console.log(data);
+      this.pubsub.$pub('loading', false);
+    }, err => {
+      this.pubsub.$pub('loading', false);
+      console.log(err);
+    });
   }
+
   cancel() {
     this.coupon = '';
   }
