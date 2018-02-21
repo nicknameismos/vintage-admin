@@ -27,6 +27,7 @@ import { ManageAdsComponent } from 'app/manage-ads/manage-ads.component';
 import { ManageCampaignComponent } from 'app/manage-campaign/manage-campaign.component';
 import { BidComponent } from 'app/bid/bid.component';
 import { ManageOrderComponent } from 'app/manage-order/manage-order.component';
+import { ManageCouponComponent } from 'app/manage-coupon/manage-coupon.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -57,6 +58,8 @@ const routes: Routes = [
   { path: 'manage-user', component: ManageUserComponent },
   { path: 'manage-campaign', component: ManageCampaignComponent },
   { path: 'manage-order', component: ManageOrderComponent },
+  { path: 'manage-coupon', component: ManageCouponComponent },
+
   { path: '', redirectTo: 'login', pathMatch: 'full' }
 ];
 
