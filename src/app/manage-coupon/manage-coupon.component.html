@@ -58,7 +58,7 @@
                         <tbody>
                           <tr *ngIf="couponlist && couponlist.length <=0">
                             <td colspan="8" class="text-center">
-                              ยังไม่มีข้อมูลผู้ใช้ในระบบ
+                              ยังไม่มีข้อมูลในระบบ
                             </td>
 
                           </tr>
@@ -103,7 +103,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 style="font-family: 'Kanit', sans-serif;" class="modal-title">สร้างคูปอง</h4>
-        <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close close-modal" data-dismiss="modal" (click)="cancel()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
 
@@ -130,12 +130,16 @@
         </div>
         <div class="row bd">
           <div class="col-md-12">
-            <div class="form-group form-black is-empty">
+            <div class="radio">
               ประเภท
               <span style="color:red"> *</span>:
               <!-- <input class="form-control" type="text" [(ngModel)]="coupon.type"> -->
-              <input class="form-check-input" type="radio" name="type" value="single" [(ngModel)]="coupon.type">single
-              <input class="form-check-input" type="radio" name="type" value="multi" [(ngModel)]="coupon.type">multi
+              <!-- <input class="form-check-input" type="radio" name="type" value="single" [(ngModel)]="coupon.type">single
+              <input class="form-check-input" type="radio" name="type" value="multi" [(ngModel)]="coupon.type">multi -->
+              <label>
+                <input type="radio" name="type" value="single" [(ngModel)]="coupon.type">single</label>
+              <label>
+                <input type="radio" name="type" value="multi" [(ngModel)]="coupon.type">multi</label>
             </div>
           </div>
         </div>
@@ -155,7 +159,7 @@
                 </ul>
               </div>
             </div>
-            <div *ngIf="userList && userList.length > 0">
+            <div class="form-group" *ngIf="userList && userList.length > 0">
               <span *ngFor="let userSelect of userList"> {{userSelect}} </span>
 
             </div>
