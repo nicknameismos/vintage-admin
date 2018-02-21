@@ -307,7 +307,7 @@ input[type=file] {
 
 .b-red {
     font-size: 0.9em;
-    color: red;
+    color: #D50000;
     margin-top: -8px;
 }
 
@@ -441,7 +441,7 @@ img {
 }
 
 .active-select {
-    border-bottom: red solid 4px;
+    border-bottom: #D50000 solid 4px;
 }
 
 .box-text {
@@ -455,17 +455,17 @@ img {
 
 .btn-group-vertical [btn-fb-checked] {
     background-color: transparent;
-    color: red;
+    color: #D50000;
     text-align: left;
 }
 
 .btn-group-vertical [btn-fb-checked]:hover,
 [btn-fb-checked]:focus {
-    border-left: red solid 4px;
+    border-left: #D50000 solid 4px;
 }
 
 .btn-fb-checked {
-    border-left: red solid 4px;
+    border-left: #D50000 solid 4px;
 }
 
 .name-label {
@@ -493,4 +493,32 @@ ngx-gallery {
 .modal .form-group {
     padding-bottom: 0px;
     margin: 0px 0 0 0;
+}
+/* ////////////////////////// */
+.btn.btn-success,
+.btn.btn-success:hover,
+.btn.btn-success:focus,
+.btn.btn-success:active,
+.btn.btn-success.active,
+.btn.btn-success:active:focus,
+.btn.btn-success:active:hover,
+.btn.btn-success.active:focus,
+.btn.btn-success.active:hover,
+.open>.btn.btn-success.dropdown-toggle,
+.open>.btn.btn-success.dropdown-toggle:focus,
+.open>.btn.btn-success.dropdown-toggle:hover,
+.navbar .navbar-nav>li>a.btn.btn-success,
+.navbar .navbar-nav>li>a.btn.btn-success:hover,
+.navbar .navbar-nav>li>a.btn.btn-success:focus,
+.navbar .navbar-nav>li>a.btn.btn-success:active,
+.navbar .navbar-nav>li>a.btn.btn-success.active,
+.navbar .navbar-nav>li>a.btn.btn-success:active:focus,
+.navbar .navbar-nav>li>a.btn.btn-success:active:hover,
+.navbar .navbar-nav>li>a.btn.btn-success.active:focus,
+.navbar .navbar-nav>li>a.btn.btn-success.active:hover,
+.open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle,
+.open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle:focus,
+.open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle:hover {
+    background-color: #3c6233;
+    color: #FFFFFF;
 }
