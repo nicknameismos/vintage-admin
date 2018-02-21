@@ -81,6 +81,18 @@ export class BidComponent implements OnInit {
   addBid() {
     this.ACTION_BID = 'เพิ่ม';
     $(this.modalbid.nativeElement).modal('show');
+    let date = new Date();
+    let _month = date.getMonth() <= 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+    let _date = date.getDate() <= 9 ? '0' + date.getDate() : date.getDate();
+    let _incHr = date.getHours() <= 9 ? '0' + date.getHours() : date.getHours();
+    let _incMin = date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes();
+    let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin;
+    this.bidData.starttime = defaultDate;
+    this.bidData.endtime = defaultDate;
+    this.oldDate = {
+      starttime: this.bidData.starttime,
+      endtime: this.bidData.starttime
+    };
   }
   cancelAddBid() {
     $(this.modalbid.nativeElement).modal('hide');

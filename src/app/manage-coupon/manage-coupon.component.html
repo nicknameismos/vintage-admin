@@ -3,21 +3,15 @@
     <div>
       <div class="row">
         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
-          <!-- <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#customer" aria-controls="customer" role="tab" data-toggle="tab" (click)="activeTab('customer')">ลูกค้า</a>
-            </li>
+          <ul class="nav nav-tabs">
             <li role="presentation">
-              <a href="#shopowner" aria-controls="shopowner" role="tab" data-toggle="tab" (click)="activeTab('shopowner')">เจ้าของร้าน</a>
+              <a>รายการคูปอง</a>
             </li>
-            <li role="presentation">
-              <a href="#admin" aria-controls="admin" role="tab" data-toggle="tab" (click)="activeTab('admin')">แอดมิน</a>
-            </li>
-          </ul> -->
+          </ul>
         </div>
 
         <div class="col-lg-4 col-md-8 col-sm-8 col-xs-8" style="margin-top: 10px">
-          <!-- <div class="sb">
+          <div class="sb">
             <span class="inner-sb">
               <span class="txb">
                 ค้นหา
@@ -26,7 +20,7 @@
             <span>
               <input type="text" class="form-control tb" [(ngModel)]="searchKeyword" (keyup.enter)="searchShop()">
             </span>
-          </div> -->
+          </div>
         </div>
 
         <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
@@ -52,29 +46,29 @@
                         <thead class="text-danger">
                           <tr>
                             <th class="text-center" index-col-size>#</th>
-                            <th class="text-center">ชื่อที่แสดง</th>
-                            <th class="text-center">ชื่อ - นามสกุล</th>
-                            <th class="text-center">เบอร์โทร</th>
-                            <th class="text-center">อีเมล์</th>
-                            <th class="text-center">สถานะ</th>
+                            <th class="text-center">โค๊ด</th>
+                            <th class="text-center">วันที่เริ่มต้น</th>
+                            <th class="text-center">วันที่สิ้นสุด</th>
+                            <th class="text-center">ราคาที่ลด</th>
+                            <th class="text-center">ประเภท</th>
                             <!-- <th class="text-center">Action</th> -->
                             <!-- <th class="text-center"></th> -->
                           </tr>
                         </thead>
                         <tbody>
-                          <!-- <tr *ngIf="listCust && listCust.length <=0">
+                          <tr *ngIf="couponlist && couponlist.length <=0">
                             <td colspan="8" class="text-center">
-                              ยังไม่มีข้อมูลผู้ใช้ในระบบค่ะ
+                              ยังไม่มีข้อมูลผู้ใช้ในระบบ
                             </td>
 
-                          </tr> -->
-                          <tr>
-                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">1</td>
-                            <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">name</td>
-                            <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">name+name</td>
-                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">08415125</td>
-                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">mail</td>
-                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">Active</td>
+                          </tr>
+                          <tr *ngFor="let item of couponlist; let i = index ">
+                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{i+1}}</td>
+                            <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{item.code}}</td>
+                            <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{item.startdate | date :'dd/MM/yyyy'}}</td>
+                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{item.enddate | date :'dd/MM/yyyy'}}</td>
+                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{item.price}}</td>
+                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{item.type}}</td>
                             <!-- <td style="text-align: center">
                               <ui-switch size="small" color="green" (change)="activeChange($event,item)"></ui-switch>
                             </td> -->
@@ -154,14 +148,17 @@
                   เลือกเจ้าของคูปอง
                   <span class="caret"></span>
                 </button>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" *ngIf="user && user.length > 0">
                   <p class="text-select-cate" *ngFor="let item of user" (click)="selectUser(item._id, item.displayName)">{{item.displayName}}
-                    <img *ngIf="checkeds[item._id]" class="check_po check_icon" src="https://image.flaticon.com/icons/svg/189/189677.svg" alt="icon">
+                    <!-- <img *ngIf="checkeds[item._id]" class="check_po check_icon" src="https://image.flaticon.com/icons/svg/189/189677.svg" alt="icon"> -->
                   </p>
                 </ul>
               </div>
             </div>
-            <span *ngFor="let userSelect of userList"> {{userSelect}} </span>
+            <div *ngIf="userList && userList.length > 0">
+              <span *ngFor="let userSelect of userList"> {{userSelect}} </span>
+
+            </div>
 
           </div>
         </div>

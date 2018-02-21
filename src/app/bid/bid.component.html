@@ -41,7 +41,7 @@
         <div class="card">
           <div class="card-content">
             <table class="table table-hover">
-              <thead class=" text-danger ">
+              <thead class="text-green">
                 <tr>
                   <th class="text-center">#</th>
                   <th class="prd-col">สินค้าประมูล</th>
@@ -135,13 +135,13 @@
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
             <div class="form-group form-black floating is-empty">
               ราคาเริ่มต้น
-              <input type="number" [(ngModel)]="bidData.startprice" class="form-control">
+              <input type="number" min="0" [(ngModel)]="bidData.startprice" class="form-control">
             </div>
           </div>
           <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
             <div class="form-group form-black floating is-empty">
               ราคาเคาะประมูล
-              <input type="number" [(ngModel)]="bidData.bidprice" class="form-control">
+              <input type="number" min="0" [(ngModel)]="bidData.bidprice" class="form-control">
             </div>
           </div>
           <div class="col-lg-1 col-md-1 col-sm-1  text-center"></div>

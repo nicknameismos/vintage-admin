@@ -13,7 +13,10 @@ import { ManageCouponService } from 'app/manage-coupon/manage-coupon.service';
 export class ManageCouponComponent implements OnInit {
   private coupon: any = {};
   private listAllUser: Array<any> = [];
-  private listUser: Array<any> = [];
+  private listUsercustomer: Array<any> = [];
+  private listUseradmin: Array<any> = [];
+  private listUsershopowner: Array<any> = [];
+
   private user: Array<any> = [];
   // private selectList: Array<any> = [];
   // private userSelected: Array<any> = [];
@@ -45,27 +48,30 @@ export class ManageCouponComponent implements OnInit {
   }
 
   getUser() {
-    this.user = [];
+    // this.user = [];
     this.UserService.getUser().subscribe(jso => {
       this.listAllUser = jso.filterrole;
-      this.listUser = [];
+      this.listUsercustomer = [];
+      this.listUseradmin = [];
+      this.listUsershopowner = [];
+
       this.listAllUser.forEach(element => {
         if (element.name === 'customer') {
           element.users.forEach(user => {
-            this.user.push(user);
+            this.listUsercustomer.push(user);
           });
         } else if (element.name === 'shopowner') {
           element.users.forEach(user => {
-            this.user.push(user);
+            this.listUsershopowner.push(user);
           });
         } else if (element.name === 'admin') {
           element.users.forEach(user => {
-            this.user.push(user);
+            this.listUseradmin.push(user);
           });
         }
       });
-      console.log(this.listUser);
-      // this.user = this.listUser[0].concat(this.listUser[1].concat(this.listUser[2]));  
+
+      this.user = this.listUsercustomer.concat(this.listUseradmin, this.listUsershopowner);
       console.log(this.user);
       this.pubsub.$pub('loading', false);
     }, err => {
@@ -88,11 +94,12 @@ export class ManageCouponComponent implements OnInit {
   }
 
   createCoupon() {
-    console.log('coupon');
+    // console.log('coupon');
     this.coupon.owner = this.users;
     this.pubsub.$pub('loading', true);
     this.couponService.createCoupon(this.coupon).subscribe(data => {
-      console.log(data);
+      // console.log(data);
+      this.getCoupon();
       this.pubsub.$pub('loading', false);
     }, err => {
       this.pubsub.$pub('loading', false);
@@ -106,7 +113,7 @@ export class ManageCouponComponent implements OnInit {
 
   selectUser(user_id, user_dis) {
     if (this.users.indexOf(user_id) !== -1) {
-      console.log(this.users.indexOf(user_id));
+      // console.log(this.users.indexOf(user_id));
       let index = this.users.indexOf(user_id);
       this.users.splice(index, 1);
       this.userList.splice(index, 1);
@@ -114,7 +121,7 @@ export class ManageCouponComponent implements OnInit {
       this.users.push(user_id);
       this.userList.push(user_dis);
     }
-    console.log(this.userList);
+    // console.log(this.userList);
   }
 
 }
