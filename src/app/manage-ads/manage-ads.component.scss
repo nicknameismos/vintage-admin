@@ -139,3 +139,42 @@ input[type=file] {
     top: 0;
     margin-left: -52px;
 }
+.addBTN {
+    background-color: #ffffff00;
+    color: #3c6233;
+    border-color: #3c6233;
+    border-radius: 4rem;
+    border: 3px solid;
+    font-size: 1.5rem;
+}
+
+.addBTN :focus {
+    background-color: #ffffff00;
+}
+.btn.btn-success,
+.btn.btn-success:hover,
+.btn.btn-success:focus,
+.btn.btn-success:active,
+.btn.btn-success.active,
+.btn.btn-success:active:focus,
+.btn.btn-success:active:hover,
+.btn.btn-success.active:focus,
+.btn.btn-success.active:hover,
+.open>.btn.btn-success.dropdown-toggle,
+.open>.btn.btn-success.dropdown-toggle:focus,
+.open>.btn.btn-success.dropdown-toggle:hover,
+.navbar .navbar-nav>li>a.btn.btn-success,
+.navbar .navbar-nav>li>a.btn.btn-success:hover,
+.navbar .navbar-nav>li>a.btn.btn-success:focus,
+.navbar .navbar-nav>li>a.btn.btn-success:active,
+.navbar .navbar-nav>li>a.btn.btn-success.active,
+.navbar .navbar-nav>li>a.btn.btn-success:active:focus,
+.navbar .navbar-nav>li>a.btn.btn-success:active:hover,
+.navbar .navbar-nav>li>a.btn.btn-success.active:focus,
+.navbar .navbar-nav>li>a.btn.btn-success.active:hover,
+.open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle,
+.open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle:focus,
+.open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle:hover {
+    background-color: #3c6233;
+    color: #FFFFFF;
+}
