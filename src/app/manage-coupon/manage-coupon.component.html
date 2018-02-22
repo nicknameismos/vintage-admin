@@ -46,7 +46,7 @@
                         <thead class="text-danger">
                           <tr>
                             <th class="text-center" index-col-size>#</th>
-                            <th class="text-center">โค๊ด</th>
+                            <th class="text-center">รหัสคูปอง</th>
                             <th class="text-center">วันที่เริ่มต้น</th>
                             <th class="text-center">วันที่สิ้นสุด</th>
                             <th class="text-center">ราคาที่ลด</th>
@@ -113,7 +113,7 @@
         <div class="row bd">
           <div class="col-md-12">
             <div class="form-group form-black is-empty">
-              คูปอง
+              รหัสคูปอง
               <span style="color:red"> *</span>:
               <input class="form-control" type="text" [(ngModel)]="coupon.code">
             </div>
@@ -188,8 +188,8 @@
       <div class="modal-footer">
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-            <button class="btn btn-success" data-dismiss="modal" (click)="createCoupon()">บันทึก</button>
-            <button class="btn" data-dismiss="modal" (click)="cancel()">ยกเลิก</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal" (click)="createCoupon()" [disabled]="!coupon.code || !coupon.price || !coupon.type">บันทึก</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancel()">ยกเลิก</button>
           </div>
         </div>
       </div>

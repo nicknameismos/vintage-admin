@@ -146,7 +146,7 @@ fieldset[disabled] .form-group .form-control {
     font-size: 1.5rem;
 }
 
-.addBTN :focus{
+.addBTN :focus {
     background-color: #ffffff00;
 }
 
@@ -155,9 +155,9 @@ fieldset[disabled] .form-group .form-control {
 .btn:focus .open>.btn.dropdown-toggle:hover,
 .btn.btn-default,
 .btn.btn-default:hover {
-    background-color: #ffffff00 !important;
+    background-color: #ffffff00 ;
     border-color: #3c6233;
-    color: #3c6233 !important;
+    color: #3c6233;
 }
 
 .email-ovf {
@@ -228,5 +228,33 @@ fieldset[disabled] .form-group .form-control {
 .open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle:focus,
 .open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle:hover {
     background-color: #3c6233;
+    color: #FFFFFF;
+}
+
+.btn.btn-danger,
+.btn.btn-danger:hover,
+.btn.btn-danger:focus,
+.btn.btn-danger:active,
+.btn.btn-danger.active,
+.btn.btn-danger:active:focus,
+.btn.btn-danger:active:hover,
+.btn.btn-danger.active:focus,
+.btn.btn-danger.active:hover,
+.open>.btn.btn-danger.dropdown-toggle,
+.open>.btn.btn-danger.dropdown-toggle:focus,
+.open>.btn.btn-danger.dropdown-toggle:hover,
+.navbar .navbar-nav>li>a.btn.btn-danger,
+.navbar .navbar-nav>li>a.btn.btn-danger:hover,
+.navbar .navbar-nav>li>a.btn.btn-danger:focus,
+.navbar .navbar-nav>li>a.btn.btn-danger:active,
+.navbar .navbar-nav>li>a.btn.btn-danger.active,
+.navbar .navbar-nav>li>a.btn.btn-danger:active:focus,
+.navbar .navbar-nav>li>a.btn.btn-danger:active:hover,
+.navbar .navbar-nav>li>a.btn.btn-danger.active:focus,
+.navbar .navbar-nav>li>a.btn.btn-danger.active:hover,
+.open>.navbar .navbar-nav>li>a.btn.btn-danger.dropdown-toggle,
+.open>.navbar .navbar-nav>li>a.btn.btn-danger.dropdown-toggle:focus,
+.open>.navbar .navbar-nav>li>a.btn.btn-danger.dropdown-toggle:hover {
+    background-color: #D50000;
     color: #FFFFFF;
 }
