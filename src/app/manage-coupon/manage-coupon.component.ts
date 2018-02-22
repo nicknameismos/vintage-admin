@@ -99,6 +99,7 @@ export class ManageCouponComponent implements OnInit {
     this.pubsub.$pub('loading', true);
     this.couponService.createCoupon(this.coupon).subscribe(data => {
       // console.log(data);
+      this.coupon = '';
       this.getCoupon();
       this.pubsub.$pub('loading', false);
     }, err => {
