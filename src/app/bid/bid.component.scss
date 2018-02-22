@@ -79,7 +79,7 @@ input[type=file] {
 }
 
 .dropdown-menu {
-    min-width: 4rem;
+    min-width: max-content !important;
 }
 
 .dropdown-menu:hover {
@@ -215,22 +215,20 @@ hr {
     color: #FFFFFF;
 }
 
-.dropdown-menu {
-    min-width: 90px;
-}
-
 .edit-color {
     padding: 0 0.8rem 0 0.8rem;
     color: orange;
-    font-size: 2.3rem;
-    cursor: pointer;
+    font-size: 2.3rem; // cursor: pointer;
     margin-top: 0.8rem;
 }
 
 .del-color {
     padding: 0 0.8rem 0 0.8rem;
     color: #D50000;
-    font-size: 2.3rem;
-    cursor: pointer;
+    font-size: 2.3rem; // cursor: pointer;
     margin-top: 0.8rem;
+}
+
+.btn-diss {
+    background-color: #fff !important;
 }
