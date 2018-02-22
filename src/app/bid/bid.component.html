@@ -75,7 +75,7 @@
                         <!-- <span (click)="editBid(item)">
                           <i class="material-icons edit-color">border_color</i>
                         </span> -->
-                        <button type="button" class="btn btn-xs btn-diss" [disabled]="(item.status=='end' || (item.status=='active' && item.isbid=='false'))"
+                        <button type="button" class="btn btn-xs btn-diss" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))"
                           (click)="deleteBid(item)">
                           <i class="material-icons del-color">delete</i>
                         </button>
