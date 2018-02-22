@@ -78,26 +78,6 @@
                       </ul>
                     </div>
                   </td>
-
-                  <!-- <td class="text-center">
-                    <div class="btn-group" role="group">
-                      <button type="button" class="more-btn" data-toggle="dropdown">
-                        <i class="material-icons">more_horiz</i>
-                      </button>
-                      <div class="dropdown-menu pull-right">
-                        <li (click)="deleteBid(item)">
-                          <span>
-                            <i class="material-icons del-color">delete</i>
-                          </span>
-                        </li>
-                        <li (click)="deleteBid(item)">
-                          <span>
-                            <i class="material-icons del-color">delete</i>
-                          </span>
-                        </li>
-                      </div>
-                    </div>
-                  </td> -->
                 </tr>
               </tbody>
             </table>
@@ -181,12 +161,12 @@
           </div>
           <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 text-center">
             <div class="form-group form-black floating is-empty">
-              วันที่เริ่มต้นประมูล
+              เริ่มต้นประมูล
               <span class="red">*</span>
               <input type="datetime-local" format="dd/MM/yyyy" name="starttime" [(ngModel)]="bidData.starttime" (ngModelChange)="calcDate('start')">
             </div>
             <div class="form-group form-black floating is-empty">
-              วันที่สิ้นสุดประมูล
+              สิ้นสุดประมูล
               <span class="red">*</span>
               <input type="datetime-local" format="dd/MM/yyyy" name="endtime" [disabled]="!bidData.endtime" [(ngModel)]="bidData.endtime"
                 (ngModelChange)="calcDate('end')">
@@ -199,17 +179,19 @@
           <div class="col-lg-1 col-md-1 col-sm-1 text-right"></div>
           <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left">
             <hr>
-            <div class="center">
+            <!-- <div class="center">
               <span class="tx-hr">เลือกการจัดส่ง
                 <span class="red">*</span>
               </span>
-            </div>
+            </div> -->
           </div>
         </div>
 
         <div class="row">
           <div class="col-lg-1 col-md-1 col-sm-1 text-right"></div>
           <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left">
+            เลือกการจัดส่ง
+            <span class="red">*</span>
             <div class="form-group form-black floating is-empty">
               <span *ngFor="let item of shippingMaster">
                 <input type="checkbox" class="form-check-input" [checked]="item.isChecked" (change)="selectShipping(item)">
