@@ -69,9 +69,11 @@
                         <i class="material-icons toggle-color">more_horiz</i>
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <!-- <button type="button" class="btn btn-xs" (click)="editBid(item)" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))"> -->
                         <span (click)="editBid(item)">
                           <i class="material-icons edit-color">border_color</i>
                         </span>
+                        <!-- <button type="button" class="btn btn-xs" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))" (click)="deleteBid(item)"> -->
                         <span (click)="deleteBid(item)">
                           <i class="material-icons del-color">delete</i>
                         </span>
@@ -179,11 +181,6 @@
           <div class="col-lg-1 col-md-1 col-sm-1 text-right"></div>
           <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left">
             <hr>
-            <!-- <div class="center">
-              <span class="tx-hr">เลือกการจัดส่ง
-                <span class="red">*</span>
-              </span>
-            </div> -->
           </div>
         </div>
 
@@ -213,7 +210,8 @@
 
 
         <div class="modal-footer text-center">
-          <button type="button" class="btn btn-success " (click)="saveBid()">บันทึก</button>
+          <button type="button" class="btn btn-success" [disabled]="!(bidData.status=='end' || (bidData.status=='active' && bidData.isbid=='false'))"
+            (click)="saveBid()">บันทึก</button>
           <button type="button" class="btn btn-default " (click)="cancelAddBid()">ยกเลิก</button>
         </div>
       </div>

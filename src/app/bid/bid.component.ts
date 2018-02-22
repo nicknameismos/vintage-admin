@@ -63,7 +63,13 @@ export class BidComponent implements OnInit {
     let firstDate = new Date(this.bidData.starttime);
     let secondDate = new Date(this.bidData.endtime);
     let diffDays = Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay));
-    if (diffDays > 1) {
+    console.log(diffDays);
+    if (diffDays >= 0 && diffDays <= 1 && secondDate.getTime() >= firstDate.getTime()) {
+      this.oldDate = {
+        starttime: this.bidData.starttime,
+        endtime: this.bidData.starttime
+      };
+    } else {
       this.bidData.starttime = '';
       this.bidData.endtime = '';
       setTimeout(() => {
@@ -71,11 +77,6 @@ export class BidComponent implements OnInit {
         this.bidData.endtime = this.oldDate.endtime;
       }, 50);
       alert('ต้องไม่เกิน 24 ชั่วโมง');
-    } else {
-      this.oldDate = {
-        starttime: this.bidData.starttime,
-        endtime: this.bidData.starttime
-      };
     }
   }
 
@@ -166,6 +167,7 @@ export class BidComponent implements OnInit {
     }, 100);
     this.bidData.starttime = this.bidData.starttime.replace(':00.000Z', '');
     this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
+    console.log(this.bidData);
     $(this.modalbid.nativeElement).modal('show');
   }
 
