@@ -110,7 +110,10 @@ export class BidComponent implements OnInit {
   addBid() {
     this.ACTION_BID = 'เพิ่ม';
     this.shippings = [];
-    this.shippingMaster = this.shippingMasterOld;
+    this.shippingMaster = [];
+    setTimeout(() => {
+      this.shippingMaster = this.shippingMasterOld;
+    }, 100);
     $(this.modalbid.nativeElement).modal('show');
     let date = new Date();
     let _month = date.getMonth() <= 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
@@ -136,13 +139,18 @@ export class BidComponent implements OnInit {
     this.ACTION_BID = 'แก้ไข';
     this.bidData = JSON.parse(JSON.stringify(item));
     this.addImgPrd = this.bidData.image;
-    for (let i = 0; i < this.shippingMaster.length; i++) {
-      for (let j = 0; j < this.bidData.shippings.length; j++) {
-        if (this.shippingMaster[i]._id === this.bidData.shippings[j].ref._id) {
-          this.shippingMaster[i].isChecked = true;
+    let shippingMasterOld: Array<any> = [];
+    this.shippingMaster = shippingMasterOld;
+    setTimeout(() => {
+      this.shippingMaster = this.shippingMasterOld;
+      for (let i = 0; i < this.shippingMaster.length; i++) {
+        for (let j = 0; j < this.bidData.shippings.length; j++) {
+          if (this.shippingMaster[i]._id === this.bidData.shippings[j].ref._id) {
+            this.shippingMaster[i].isChecked = true;
+          }
         }
       }
-    }
+    }, 200);
 
     setTimeout(() => {
       let shippings: Array<any> = [];
