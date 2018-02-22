@@ -222,7 +222,7 @@ export class BidComponent implements OnInit {
       alert('กรุณาเพิ่มรูปสินค้า');
     } else if (!this.bidData.name) {
       alert('กรุณาใส่ชื่อสินค้า');
-    } else if (!this.bidData.startprice) {
+    } else if (this.bidData.startprice === undefined || this.bidData.startprice === null) {
       alert('กรุณาใส่ราคาเริ่มต้น');
     } else if (!this.bidData.bidprice) {
       alert('กรุณาใส่ราคาเคาะประมูล');
