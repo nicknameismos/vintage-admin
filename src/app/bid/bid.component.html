@@ -110,13 +110,13 @@
             <span *ngFor="let image of addImgPrd; let i = index">
               <img *ngIf="addImgPrd" class="img-prd" width="120" height="120" [src]="image" alt="">
               <button class="transparent-btn" (click)="removeprdImg(i)">
-                <i class="material-icons del-icon">delete</i>
+                <i class="material-icons del-icon red">delete</i>
               </button>
             </span>
             <span *ngFor="let image of ImgprdEdit; let i = index">
               <img *ngIf="addImgPrd" class="img-prd" width="120" height="120" [src]="image" alt="">
               <button class="transparent-btn" (click)="removeprdImgEDIT(i)">
-                <i class="material-icons del-icon">delete</i>
+                <i class="material-icons del-icon red">delete</i>
               </button>
             </span>
 
@@ -183,8 +183,8 @@
           <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11 text-left">
             <div class="form-group form-black floating is-empty">
               <span *ngFor="let item of shippingMaster">
-                <input type="checkbox" class="form-check-input" checked="{{item.isChecked}}" (change)="selectShipping(item)">
-                <label class="form-check-label">{{item.name}}</label>
+                <input type="checkbox" class="form-check-input right" [checked]="item.isChecked" (change)="selectShipping(item)">
+                <label class="form-check-label right">{{item.name}}</label>
               </span>
             </div>
           </div>
