@@ -45,7 +45,6 @@ export class BidComponent implements OnInit {
     this.bidService.getShipingMaster().subscribe(data => {
       this.shippingMaster = data;
       this.shippingMasterOld = data;
-      console.log(this.shippingMaster);
     }, err => {
       console.log(err);
       alert('ไม่สามารถโหลดข้อมูล Shipping Master ได้');
@@ -255,8 +254,8 @@ export class BidComponent implements OnInit {
               this.bidData.image = image;
               this.bidService.saveBid(this.bidData).subscribe(res => {
                 this.pubsub.$pub('loading', false);
+                this.InitialData();
                 alert('เพิ่มการประมูลเรียบร้อยแล้ว');
-                window.location.reload();
               }, errRes => {
                 console.log(errRes);
                 this.pubsub.$pub('loading', false);
@@ -274,7 +273,7 @@ export class BidComponent implements OnInit {
           this.pubsub.$pub('loading', false);
           alert('แก้ไขข้อมูลเรียบร้อย');
           $(this.modalbid.nativeElement).modal('hide');
-          window.location.reload();
+          this.InitialData();
         }, err => {
           console.log(err);
           this.pubsub.$pub('loading', false);
