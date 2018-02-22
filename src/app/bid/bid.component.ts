@@ -166,6 +166,7 @@ export class BidComponent implements OnInit {
     }, 100);
     this.bidData.starttime = this.bidData.starttime.replace(':00.000Z', '');
     this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
+    console.log(this.bidData);
     $(this.modalbid.nativeElement).modal('show');
   }
 
