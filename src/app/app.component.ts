@@ -13,6 +13,7 @@ declare const $: any;
 })
 export class AppComponent implements OnInit {
   public loading: boolean = false;
+  imgLoading = '../assets/img/g-loading-circle.png';
   constructor(public location: Location, private pubsub: PubSubService) {
 
   }
