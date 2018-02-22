@@ -146,14 +146,18 @@ fieldset[disabled] .form-group .form-control {
     font-size: 1.5rem;
 }
 
+.addBTN :focus{
+    background-color: #ffffff00;
+}
+
 .btn,
 .btn:hover,
 .btn:focus .open>.btn.dropdown-toggle:hover,
 .btn.btn-default,
 .btn.btn-default:hover {
-    // background-color: #ffffff00 ;
-    // border-color: rgb(34, 143, 34);
-    // color: rgb(34, 143, 34) !important;
+    background-color: #ffffff00 !important;
+    border-color: #3c6233;
+    color: #3c6233 !important;
 }
 
 .email-ovf {
@@ -179,13 +183,16 @@ fieldset[disabled] .form-group .form-control {
     color: #3c6233;
     font-size: 14px;
 }
+
 .btn-border[_ngcontent-c4] {
     border: 2px solid #D50000 !important;
     color: #D50000 !important;
 }
-.close-modal{
+
+.close-modal {
     margin-top: -40px;
 }
+
 .check_icon {
     width: 22px;
     height: 22px;
