@@ -68,7 +68,7 @@
                             <td class="name-ovf" style="text-align: center">{{item.startdate | date :'dd/MM/yyyy'}}</td>
                             <td class="text-center">{{item.enddate | date :'dd/MM/yyyy'}}</td>
                             <td class="text-center">{{item.price}}</td>
-                            <td class="text-center">{{item.type}}</td>
+                            <td class="text-center">{{item.type === 'single' ? 'ระบุผู้ใช้' : item.type === 'multi' ? 'ผู้ใช้ทุกคน' : ''}}</td>
                             <!-- <td style="text-align: center">
                               <ui-switch size="small" color="green" (change)="activeChange($event,item)"></ui-switch>
                             </td> -->
