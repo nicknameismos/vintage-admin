@@ -69,14 +69,19 @@
                         <i class="material-icons toggle-color">more_horiz</i>
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <!-- <button type="button" class="btn btn-xs" (click)="editBid(item)" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))"> -->
-                        <span (click)="editBid(item)">
+                        <button type="button" class="btn btn-xs btn-diss" (click)="editBid(item)" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))">
                           <i class="material-icons edit-color">border_color</i>
-                        </span>
-                        <!-- <button type="button" class="btn btn-xs" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))" (click)="deleteBid(item)"> -->
-                        <span (click)="deleteBid(item)">
+                        </button>
+                        <!-- <span (click)="editBid(item)">
+                          <i class="material-icons edit-color">border_color</i>
+                        </span> -->
+                        <button type="button" class="btn btn-xs btn-diss" [disabled]="(item.status=='end' || (item.status=='active' && item.isbid=='false'))"
+                          (click)="deleteBid(item)">
                           <i class="material-icons del-color">delete</i>
-                        </span>
+                        </button>
+                        <!-- <span (click)="deleteBid(item)">
+                          <i class="material-icons del-color">delete</i>
+                        </span> -->
                       </ul>
                     </div>
                   </td>
