@@ -78,16 +78,12 @@ input[type=file] {
     outline: none;
 }
 
-.del-color {
-    padding: 0 0.8rem 0 0.8rem;
-    color: #D50000;
-    font-size: 2.3rem;
-    cursor: pointer;
-    margin-top: 0.8rem;
+.dropdown-menu {
+    min-width: max-content !important;
 }
 
-.dropdown-menu {
-    min-width: 4rem;
+.dropdown-menu:hover {
+    background-color: #fff !important;
 }
 
 .dropdown-menu:hover {
@@ -178,6 +174,14 @@ hr {
     background-color: #fff;
 }
 
+.red {
+    color: red;
+}
+
+.right {
+    margin-right: 26px;
+}
+
 .btn-border[_ngcontent-c4] {
     border: 2px solid #D50000 !important;
     color: #D50000 !important;
@@ -209,4 +213,34 @@ hr {
 .open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle:hover {
     background-color: #3c6233;
     color: #FFFFFF;
+}
+
+.edit-color {
+    padding: 0 0.8rem 0 0.8rem;
+    color: orange;
+    font-size: 2.3rem; // cursor: pointer;
+    margin-top: 0.8rem;
+}
+
+.del-color {
+    padding: 0 0.8rem 0 0.8rem;
+    color: #D50000;
+    font-size: 2.3rem; // cursor: pointer;
+    margin-top: 0.8rem;
+}
+
+.btn-diss {
+    background-color: #fff !important;
+}
+
+.btn.btn-xs {
+    padding: 0px !important;
+}
+
+.btn {
+    margin: 1px 1px !important;
+}
+
+.w-40 {
+    width: 40px;
 }

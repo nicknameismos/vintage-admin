@@ -139,9 +139,18 @@ input[type=file] {
     top: 0;
     margin-left: -52px;
 }
+.addBTN {
+    background-color: #ffffff00;
+    color: #3c6233;
+    border-color: #3c6233;
+    border-radius: 4rem;
+    border: 3px solid;
+    font-size: 1.5rem;
+}
 
-////////////////////
-
+.addBTN :focus {
+    background-color: #ffffff00;
+}
 .btn.btn-success,
 .btn.btn-success:hover,
 .btn.btn-success:focus,

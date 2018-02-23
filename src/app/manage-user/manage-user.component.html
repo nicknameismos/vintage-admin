@@ -343,7 +343,7 @@
             <i class="material-icons edit-color" (click)="deleteUser()">delete</i>
           </span> -->
           <div class="close-modal">
-            <button type="button" class="close" data-dismiss="modal"  #dissmissBtn2 aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" #dissmissBtn2 aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -436,7 +436,9 @@
         <div class="modal-footer">
           <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-              <button class="btn btn-success" (click)="saveUser()">บันทึก</button>
+              <button class="btn btn-success" (click)="saveUser()" *ngIf="action == 'เพิ่มบัญชีผู้ใช้'"[disabled]="!editingUserData.mobile || !editingUserData.username || !editingUserData.password || !editingUserData.firstName || !editingUserData.lastName || !editingUserData.email">บันทึก</button>
+              <button class="btn btn-success" (click)="saveUser()" *ngIf="action != 'เพิ่มบัญชีผู้ใช้'" [disabled]="!editingUserData.firstName || !editingUserData.lastName || !editingUserData.mobile">บันทึก</button>
+
               <button class="btn red" (click)="deleteUser()" type="button" *ngIf="action != 'เพิ่มบัญชีผู้ใช้'">ลบ</button>
             </div>
           </div>

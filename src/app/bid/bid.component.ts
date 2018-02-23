@@ -45,7 +45,6 @@ export class BidComponent implements OnInit {
     this.bidService.getShipingMaster().subscribe(data => {
       this.shippingMaster = data;
       this.shippingMasterOld = data;
-      console.log(this.shippingMaster);
     }, err => {
       console.log(err);
       alert('ไม่สามารถโหลดข้อมูล Shipping Master ได้');
@@ -59,12 +58,28 @@ export class BidComponent implements OnInit {
     let _incHr = (date.getHours() + 1) <= 9 ? '0' + (date.getHours() + 1) : (date.getHours() + 1);
     let _incMin = date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes();
     let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin;
+
+    let date2 = new Date(this.bidData.endtime);
+    let _month2 = date2.getMonth() <= 9 ? '0' + (date2.getMonth() + 1) : date2.getMonth() + 1;
+    let _date2 = date2.getDate() <= 9 ? '0' + date2.getDate() : date2.getDate();
+    let _incHr2 = (date2.getHours() - 1) <= 9 ? '0' + (date2.getHours() - 1) : (date2.getHours() - 1);
+    let _incMin2 = date2.getMinutes() <= 9 ? '0' + date2.getMinutes() : date2.getMinutes();
+    let defaultDate2 = date2.getFullYear() + '-' + _month2 + '-' + _date2 + 'T' + _incHr2 + ':' + _incMin2;
+    console.log(defaultDate2);
+    this.bidData.starttime = _type === 'end' ? defaultDate2 : this.bidData.starttime;
     this.bidData.endtime = _type === 'end' ? this.bidData.endtime : defaultDate;
+
     let oneDay = 24 * 60 * 60 * 1000;
     let firstDate = new Date(this.bidData.starttime);
     let secondDate = new Date(this.bidData.endtime);
     let diffDays = Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay));
-    if (diffDays > 1) {
+    console.log(diffDays);
+    if (diffDays >= 0 && diffDays <= 1 && secondDate.getTime() >= firstDate.getTime()) {
+      this.oldDate = {
+        starttime: this.bidData.starttime,
+        endtime: this.bidData.starttime
+      };
+    } else {
       this.bidData.starttime = '';
       this.bidData.endtime = '';
       setTimeout(() => {
@@ -72,11 +87,6 @@ export class BidComponent implements OnInit {
         this.bidData.endtime = this.oldDate.endtime;
       }, 50);
       alert('ต้องไม่เกิน 24 ชั่วโมง');
-    } else {
-      this.oldDate = {
-        starttime: this.bidData.starttime,
-        endtime: this.bidData.starttime
-      };
     }
   }
 
@@ -110,7 +120,9 @@ export class BidComponent implements OnInit {
   addBid() {
     this.ACTION_BID = 'เพิ่ม';
     this.shippings = [];
-    this.shippingMaster = this.shippingMasterOld;
+    this.shippingMaster.forEach((e, i) => {
+      e.isChecked = false;
+    });
     $(this.modalbid.nativeElement).modal('show');
     let date = new Date();
     let _month = date.getMonth() <= 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
@@ -136,13 +148,19 @@ export class BidComponent implements OnInit {
     this.ACTION_BID = 'แก้ไข';
     this.bidData = JSON.parse(JSON.stringify(item));
     this.addImgPrd = this.bidData.image;
-    for (let i = 0; i < this.shippingMaster.length; i++) {
-      for (let j = 0; j < this.bidData.shippings.length; j++) {
-        if (this.shippingMaster[i]._id === this.bidData.shippings[j].ref._id) {
-          this.shippingMaster[i].isChecked = true;
+    this.shippingMaster.forEach((e, i) => {
+      e.isChecked = false;
+    });
+
+    setTimeout(() => {
+      for (let i = 0; i < this.shippingMaster.length; i++) {
+        for (let j = 0; j < this.bidData.shippings.length; j++) {
+          if (this.shippingMaster[i]._id === this.bidData.shippings[j].ref._id) {
+            this.shippingMaster[i].isChecked = true;
+          }
         }
       }
-    }
+    }, 200);
 
     setTimeout(() => {
       let shippings: Array<any> = [];
@@ -159,6 +177,7 @@ export class BidComponent implements OnInit {
     }, 100);
     this.bidData.starttime = this.bidData.starttime.replace(':00.000Z', '');
     this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
+    console.log(this.bidData);
     $(this.modalbid.nativeElement).modal('show');
   }
 
@@ -210,53 +229,69 @@ export class BidComponent implements OnInit {
   }
 
   saveBid() {
-    this.pubsub.$pub('loading', true);
-    let refShippings: Array<any> = [];
-    this.shippings.forEach((e, i) => {
-      refShippings.push({
-        ref: {
-          _id: e._id,
-        },
-        price: e.price
+    if (this.addImgPrd.length <= 0) {
+      alert('กรุณาเพิ่มรูปสินค้า');
+    } else if (!this.bidData.name) {
+      alert('กรุณาใส่ชื่อสินค้า');
+    } else if (this.bidData.startprice === undefined || this.bidData.startprice === null) {
+      alert('กรุณาใส่ราคาเริ่มต้น');
+    } else if (!this.bidData.bidprice) {
+      alert('กรุณาใส่ราคาเคาะประมูล');
+    } else if (!this.bidData.starttime) {
+      alert('กรุณาใส่วันที่เริ่มต้นประมูล');
+    } else if (!this.bidData.endtime) {
+      alert('กรุณาใส่วันที่สิ้นสุดประมูล');
+    } else if (this.shippings.length <= 0) {
+      alert('กรุณาเลือกการจัดส่ง');
+    } else {
+      this.pubsub.$pub('loading', true);
+      let refShippings: Array<any> = [];
+      this.shippings.forEach((e, i) => {
+        refShippings.push({
+          ref: {
+            _id: e._id,
+          },
+          price: e.price ? e.price : 0
+        });
       });
-    });
-    this.bidData.shippings = refShippings;
-    if (this.ACTION_BID === 'เพิ่ม') {
-      let image: Array<any> = [];
-      let countUpload: any = 0;
-      for (let i = 0; i < this.addImgPrd.length; i++) {
-        this.bidService.uploadImage(this.addImgPrd[i]).subscribe(data => {
-          countUpload += 1;
-          image.push(data.imageURL);
-          if (countUpload === this.addImgPrd.length) {
-            this.bidData.image = image;
-            this.bidService.saveBid(this.bidData).subscribe(res => {
-              this.pubsub.$pub('loading', false);
-              alert('เพิ่มการประมูลเรียบร้อยแล้ว');
-              window.location.reload();
-            }, errRes => {
-              console.log(errRes);
-              this.pubsub.$pub('loading', false);
-              alert('ไม่สามารถเพิ่มการประมูลได้');
-            });
-          }
+      this.bidData.shippings = refShippings;
+      if (this.ACTION_BID === 'เพิ่ม') {
+        let image: Array<any> = [];
+        let countUpload: any = 0;
+        for (let i = 0; i < this.addImgPrd.length; i++) {
+          this.bidService.uploadImage(this.addImgPrd[i]).subscribe(data => {
+            countUpload += 1;
+            image.push(data.imageURL);
+            if (countUpload === this.addImgPrd.length) {
+              this.bidData.image = image;
+              this.bidService.saveBid(this.bidData).subscribe(res => {
+                this.pubsub.$pub('loading', false);
+                this.InitialData();
+                alert('เพิ่มการประมูลเรียบร้อยแล้ว');
+              }, errRes => {
+                console.log(errRes);
+                this.pubsub.$pub('loading', false);
+                alert('ไม่สามารถเพิ่มการประมูลได้');
+              });
+            }
+          }, err => {
+            console.log(err);
+            this.pubsub.$pub('loading', false);
+            alert('ไม่สามารถอัพโหลดรูปได้');
+          });
+        }
+      } else if (this.ACTION_BID === 'แก้ไข') {
+        this.bidService.editBid(this.bidData).subscribe(data => {
+          this.pubsub.$pub('loading', false);
+          alert('แก้ไขข้อมูลเรียบร้อย');
+          $(this.modalbid.nativeElement).modal('hide');
+          this.InitialData();
         }, err => {
           console.log(err);
           this.pubsub.$pub('loading', false);
-          alert('ไม่สามารถอัพโหลดรูปได้');
+          alert('ไม่สามารถแก้ไขข้อมูลได้');
         });
       }
-    } else if (this.ACTION_BID === 'แก้ไข') {
-      this.bidService.editBid(this.bidData).subscribe(data => {
-        this.pubsub.$pub('loading', false);
-        alert('แก้ไขข้อมูลเรียบร้อย');
-        $(this.modalbid.nativeElement).modal('hide');
-        window.location.reload();
-      }, err => {
-        console.log(err);
-        this.pubsub.$pub('loading', false);
-        alert('ไม่สามารถแก้ไขข้อมูลได้');
-      });
     }
   }
 }

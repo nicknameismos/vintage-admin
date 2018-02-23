@@ -30,67 +30,69 @@
         </div>
       </div>
 
-      <!-- Tab panes -->
+      <!-- <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" *ngFor="let tab of couponTabs.titles; let i = index" class="{{ selectedTab === i ? 'active':''}}">
+              <a href="#tab{{i}}" role="tab" data-toggle="tab" (click)="selectTab(tab)">{{tab}}</a>
+            </li>
+          </ul>
+        </div>
+      </div> -->
+
+      <!-- Tab admin -->
       <div class="tab-content">
+        <div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-content table-responsive">
+                  <table class="table table-hover">
+                    <thead class="text-danger">
+                      <tr>
+                        <th class="text-center" index-col-size>#</th>
+                        <th class="text-center">รหัสคูปอง</th>
+                        <th class="text-center">วันที่เริ่มต้น</th>
+                        <th class="text-center">วันที่สิ้นสุด</th>
+                        <th class="text-center">ราคาที่ลด</th>
+                        <th class="text-center">ประเภท</th>
+                        <!-- <th class="text-center">Action</th> -->
+                        <!-- <th class="text-center"></th> -->
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="couponlist && couponlist.length <=0">
+                        <td colspan="8" class="text-center">
+                          ยังไม่มีข้อมูลในระบบ
+                        </td>
 
-        <!-- Tab Customer -->
-        <div role="tabpanel" class="tab-pane active">
-          <div class="tab-content">
-
-            <div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="card">
-                    <div class="card-content table-responsive">
-                      <table class="table table-hover">
-                        <thead class="text-danger">
-                          <tr>
-                            <th class="text-center" index-col-size>#</th>
-                            <th class="text-center">โค๊ด</th>
-                            <th class="text-center">วันที่เริ่มต้น</th>
-                            <th class="text-center">วันที่สิ้นสุด</th>
-                            <th class="text-center">ราคาที่ลด</th>
-                            <th class="text-center">ประเภท</th>
-                            <!-- <th class="text-center">Action</th> -->
-                            <!-- <th class="text-center"></th> -->
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngIf="couponlist && couponlist.length <=0">
-                            <td colspan="8" class="text-center">
-                              ยังไม่มีข้อมูลในระบบ
-                            </td>
-
-                          </tr>
-                          <tr *ngFor="let item of couponlist; let i = index ">
-                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{i+1}}</td>
-                            <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{item.code}}</td>
-                            <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{item.startdate | date :'dd/MM/yyyy'}}</td>
-                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{item.enddate | date :'dd/MM/yyyy'}}</td>
-                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{item.price}}</td>
-                            <td class="text-center" data-toggle="modal" data-target="#modalCreateCoupon" (click)="editUser(item)">{{item.type}}</td>
-                            <!-- <td style="text-align: center">
+                      </tr>
+                      <tr *ngFor="let item of couponlist; let i = index ">
+                        <td class="text-center">{{i+1}}</td>
+                        <td class="name-ovf" style="text-align: center">{{item.code}}</td>
+                        <td class="name-ovf" style="text-align: center">{{item.startdate | date :'dd/MM/yyyy'}}</td>
+                        <td class="text-center">{{item.enddate | date :'dd/MM/yyyy'}}</td>
+                        <td class="text-center">{{item.price || 0 | number}}</td>
+                        <td class="text-center">{{item.type === 'single' ? 'ระบุผู้ใช้' : item.type === 'multi' ? 'ผู้ใช้ทุกคน' : ''}}</td>
+                        <!-- <td style="text-align: center">
                               <ui-switch size="small" color="green" (change)="activeChange($event,item)"></ui-switch>
                             </td> -->
-                            <!-- <td style="text-align: center">
+                        <!-- <td style="text-align: center">
                               <button class="btn btn-danger btn-simple btn-xs btn-border" type="button" (click)="banUser(item)">
                                 Ban User
                               </button>
                             </td> -->
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
-        <!-- Tab Customer -->
 
       </div>
+      <!-- Tab admin -->
 
     </div>
 
@@ -113,7 +115,7 @@
         <div class="row bd">
           <div class="col-md-12">
             <div class="form-group form-black is-empty">
-              คูปอง
+              รหัสคูปอง
               <span style="color:red"> *</span>:
               <input class="form-control" type="text" [(ngModel)]="coupon.code">
             </div>
@@ -137,9 +139,9 @@
               <!-- <input class="form-check-input" type="radio" name="type" value="single" [(ngModel)]="coupon.type">single
               <input class="form-check-input" type="radio" name="type" value="multi" [(ngModel)]="coupon.type">multi -->
               <label>
-                <input type="radio" name="type" value="single" [(ngModel)]="coupon.type">single</label>
+                <input type="radio" name="type" value="single" [(ngModel)]="coupon.type">ระบุผู้ใช้</label>
               <label>
-                <input type="radio" name="type" value="multi" [(ngModel)]="coupon.type">multi</label>
+                <input type="radio" name="type" value="multi" [(ngModel)]="coupon.type">ผู้ใช้ทุกคน</label>
             </div>
           </div>
         </div>
@@ -167,6 +169,16 @@
           </div>
         </div>
 
+        <div class="row bd">
+          <div class="col-md-12">
+            <div class="form-group form-black is-empty">
+              ข้อความแจ้งเตือน
+              <span style="color:red"> *</span>:
+              <input class="form-control" type="text" [(ngModel)]="coupon.message">
+            </div>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
             <div class="form-group form-black is-empty">
@@ -188,8 +200,8 @@
       <div class="modal-footer">
         <div class="row">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-            <button class="btn btn-success" data-dismiss="modal" (click)="createCoupon()">บันทึก</button>
-            <button class="btn" data-dismiss="modal" (click)="cancel()">ยกเลิก</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal" (click)="createCoupon()" [disabled]="!coupon.code || !coupon.price || !coupon.type || !coupon.message">บันทึก</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancel()">ยกเลิก</button>
           </div>
         </div>
       </div>
