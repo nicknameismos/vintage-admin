@@ -28,35 +28,7 @@
               <a href="#tab{{i}}" role="tab" data-toggle="tab" (click)="selectTab(tab)">{{tab}}</a>
             </li>
           </ul>
-          <!-- <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
-              <a href="#topay" aria-controls="topay" role="tab" data-toggle="tab" (click)="activeTab('topay')">รอชำระเงิน</a>
-            </li>
-            <li role="presentation">
-              <a href="#confirm" aria-controls="confirm" role="tab" data-toggle="tab" (click)="activeTab('confirm')">รอจัดส่ง</a>
-            </li>
-            <li role="presentation">
-              <a href="#sent" aria-controls="sent" role="tab" data-toggle="tab" (click)="activeTab('sent')">รอรับสินค้า</a>
-            </li>
-            <li role="presentation">
-              <a href="#completed" aria-controls="completed" role="tab" data-toggle="tab" (click)="activeTab('completed')">สำเร็จ</a>
-            </li>
-            <li role="presentation">
-              <a href="#cancel" aria-controls="cancel" role="tab" data-toggle="tab" (click)="activeTab('cancel')">ลูกค้ายกเลิก</a>
-            </li>
-            <li role="presentation">
-              <a href="#reject" aria-controls="reject" role="tab" data-toggle="tab" (click)="activeTab('reject')">ร้านค้าปฏิเสธ</a>
-            </li>
-            <li role="presentation">
-              <a href="#cancelrefund" aria-controls="cancelrefund" role="tab" data-toggle="tab" (click)="activeTab('cancelrefund')">คืนเงินแล้ว</a>
-            </li>
-            <li role="presentation">
-              <a href="#transferred" aria-controls="transferred" role="tab" data-toggle="tab" (click)="activeTab('transferred')">จ่ายเงินแล้ว</a>
-            </li>
-          </ul> -->
         </div>
-
-
       </div>
 
       <div class="tab-content">
@@ -94,25 +66,9 @@
                         <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.qty | number}}</td>
                         <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.shippingtype || 'ไม่มี'}}</td>
                         <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.shippingprice || 0 | number}}</td>
-                        <td *ngIf="item.status !=='topay'" class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.amount+item.shippingprice || 0 | number }}</td>
-                        <td *ngIf="item.status ==='topay'" class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.amount || 0 | number }}</td>
+                        <td *ngIf="item.channel !=='bid'" class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.amount+item.shippingprice || 0 | number }}</td>
+                        <td *ngIf="item.channel ==='bid'" class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.amount || 0 | number }}</td>
 
-                        <!-- <td class="text-center">
-                          <div class="dropdown pull-right">
-                            <button class="btn btn-simple btn-xs pull-right dropdown-toggle " type="button" id="dropdownMenu2" data-toggle="dropdown"
-                              aria-haspopup="true" aria-expanded="true">
-                              <i class="material-icons toggle-color">more_horiz</i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                              <span (click)="ok()">
-                                <i class="material-icons edit-color">done</i>
-                              </span>
-                              <span (click)="cancel()">
-                                <i class="material-icons del-color">clear</i>
-                              </span>
-                            </ul>
-                          </div>
-                        </td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -155,8 +111,8 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 
-              <p *ngIf="OrderDetail.status !=='topay'">{{OrderDetail.confirmdate | amLocale:'th' | amTimeAgo}}</p>
-              <p *ngIf="OrderDetail.status ==='topay'">{{OrderDetail.topaydate | amLocale:'th' | amTimeAgo}}</p>
+              <p *ngIf="OrderDetail.channel !=='bid'">{{OrderDetail.confirmdate | amLocale:'th' | amTimeAgo}}</p>
+              <p *ngIf="OrderDetail.channel ==='bid'">{{OrderDetail.topaydate | amLocale:'th' | amTimeAgo}}</p>
 
               <p>สถานะ :
                 <label>{{OrderDetail.status === 'confirm' ? 'รอจัดส่ง': OrderDetail.status === 'sent' ? 'รอรับสินค้า': OrderDetail.status
@@ -171,7 +127,7 @@
               <p *ngIf="OrderDetail.channel === 'order'">ผู้สั่งซื้อ :
                 <label>{{OrderDetail.user.displayName}}</label>
               </p>
-              <p *ngIf="OrderDetail.channel === 'bid'">ผู้ประมูล :
+              <p *ngIf="OrderDetail.channel === 'bid'">ผู้ชนะการประมูล :
                 <label>{{OrderDetail.user.displayName}}</label>
               </p>
               <p *ngIf="OrderDetail.shipping.name">ที่อยู่จัดส่ง :
@@ -196,10 +152,10 @@
               <p>ราคารวม :
                 <label>{{OrderDetail.amount | number : '1.2-2'}}</label>
               </p>
-              <p *ngIf="OrderDetail.shipping.name">รวมสุทธิ :
+              <p *ngIf="OrderDetail.channel !=='bid'">รวมสุทธิ :
                 <label>{{OrderDetail.amount+OrderDetail.product.shippingprice | number : '1.2-2'}}</label>
               </p>
-              <p *ngIf="!OrderDetail.shipping.name">รวมสุทธิ :
+              <p *ngIf="OrderDetail.channel ==='bid'">รวมสุทธิ :
                 <label>{{OrderDetail.amount || 0 | number : '1.2-2'}}</label>
               </p>
               <p>วิธีการจัดส่ง :
@@ -208,7 +164,7 @@
               <p *ngIf="OrderDetail.topaydate">วันที่ประมูล :
                 <label>{{OrderDetail.topaydate | date :'dd/MM/yyyy HH:mm'}}</label>
               </p>
-              <p *ngIf="OrderDetail.status !=='topay'">วันที่สั่งซื้อ :
+              <p *ngIf="OrderDetail.channel !=='bid'">วันที่สั่งซื้อ :
                 <label>{{OrderDetail.confirmdate | date :'dd/MM/yyyy HH:mm'}}</label>
               </p>
               <p *ngIf="OrderDetail.sentdate">วันที่ส่ง :
@@ -245,7 +201,7 @@
           <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
 
-              <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'topay'" (click)="confirmitm()" data-dismiss="modal">ชำระเงิน</button>
+              <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'topay'" data-toggle="modal" data-target="#shipping">ชำระเงิน</button>
               <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'topay'" data-toggle="modal" data-target="#remark">ยกเลิกออเดอร์</button>
 
               <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'confirm'" data-toggle="modal" data-target="#refid">จัดส่งแล้ว</button>
@@ -313,3 +269,88 @@
     </div>
   </div>
   <!-- MODAL REMARK -->
+
+  <!-- MODAL SHIPPING -->
+  <div class="modal" tabindex="-1" role="dialog" id="shipping">
+    <div class="modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">ที่อยู่จัดส่ง</h5>
+          <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+              <div class="form-group form-black is-empty">
+                ชื่อ
+                <span style="color:red"> *</span>:
+                <input type="text" class="form-control" [(ngModel)]="shipping.name">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+              <div class="col-md-12">
+                <div class="form-group form-black is-empty">
+                  เบอร์โทรศัพท์ :
+                  <input type="text" class="form-control" [(ngModel)]="shipping.tel">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+              <div class="form-group form-black is-empty">
+                ที่อยู่
+                <span style="color:red"> *</span>:
+                <input type="text" class="form-control" [(ngModel)]="shipping.address.address">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+              <div class="col-md-12">
+                <div class="form-group form-black is-empty">
+                  ตำบล/แขวง
+                  <span style="color:red"> *</span>:
+                  <input type="text" class="form-control" [(ngModel)]="shipping.address.subdistrict">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+              <div class="form-group form-black is-empty">
+                อำเภอ/เขต
+                <span style="color:red"> *</span>:
+                <input type="text" class="form-control" [(ngModel)]="shipping.address.district">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+              <div class="col-md-12">
+                <div class="form-group form-black is-empty">
+                  จังหวัด
+                  <span style="color:red"> *</span>:
+                  <input type="text" class="form-control" [(ngModel)]="shipping.address.province">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+              <div class="form-group form-black is-empty">
+                รหัสไปรษณีย์
+                <span style="color:red"> *</span>:
+                <input type="text" class="form-control" [(ngModel)]="shipping.address.postcode">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-success" (click)="confirmitm()" [disabled]="!shipping.name || !shipping.address.address || !shipping.address.subdistrict || !shipping.address.district || !shipping.address.province || !shipping.address.postcode" data-dismiss="modal">ยืนยัน</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL SHIPPING -->

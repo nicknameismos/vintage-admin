@@ -19,10 +19,11 @@ export class ManageCouponComponent implements OnInit {
   private user: Array<any> = [];
   private users: any = [];
   private userList: Array<any> = [];
-  private couponlist: any;
+  // private couponlist: any;
 
   private couponTabs: any = {};
   private typeTab = 'กำลังใช้งาน';
+  private selectedTab: number = 0;
   private currentPageSelected: number = 1;
   private searchKeyword: string = '';
   private pageSelect: number = 0;
@@ -44,8 +45,7 @@ export class ManageCouponComponent implements OnInit {
         this.pubsub.$pub('loading', false);
       } else {
         this.getUser();
-        // this.searchCoupon();
-        this.getCoupon();
+        this.searchCoupon();
       }
     });
   }
@@ -55,6 +55,10 @@ export class ManageCouponComponent implements OnInit {
     this.couponService.searchCoupon(this.typeTab, this.currentPageSelected, this.searchKeyword).subscribe(data => {
       this.couponTabs = data;
       console.log(this.couponTabs);
+      if (this.currentPageSelected === 1) {
+        this.curentPage[1] = 'active';
+      }
+
       this.pubsub.$pub('loading', false);
     }, err => {
       this.pubsub.$pub('loading', false);
@@ -115,17 +119,17 @@ export class ManageCouponComponent implements OnInit {
 
   }
 
-  getCoupon() {
-    this.pubsub.$pub('loading', true);
-    this.couponService.getList().subscribe(resp => {
-      this.couponlist = resp;
-      console.log(this.couponlist);
-      this.pubsub.$pub('loading', false);
-    }, err => {
-      this.pubsub.$pub('loading', false);
-      console.log(err);
-    });
-  }
+  // getCoupon() {
+  //   this.pubsub.$pub('loading', true);
+  //   this.couponService.getList().subscribe(resp => {
+  //     this.couponlist = resp;
+  //     console.log(this.couponlist);
+  //     this.pubsub.$pub('loading', false);
+  //   }, err => {
+  //     this.pubsub.$pub('loading', false);
+  //     console.log(err);
+  //   });
+  // }
 
   createCoupon() {
     // console.log('coupon');
@@ -134,7 +138,7 @@ export class ManageCouponComponent implements OnInit {
     this.couponService.createCoupon(this.coupon).subscribe(data => {
       // console.log(data);
       this.coupon = '';
-      this.getCoupon();
+      this.searchCoupon();
       this.pubsub.$pub('loading', false);
     }, err => {
       this.pubsub.$pub('loading', false);
@@ -143,7 +147,7 @@ export class ManageCouponComponent implements OnInit {
   }
 
   cancel() {
-    this.coupon = '';
+    this.coupon = {};
     this.userList = [];
   }
 

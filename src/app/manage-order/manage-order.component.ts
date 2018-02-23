@@ -24,13 +24,17 @@ export class ManageOrderComponent implements OnInit {
   private statusdate: string = '';
   public refid: '';
   public remark: '';
+  private shipping: any = {
+    address: {}
+  };
+
   @ViewChild('modalDetail') modalDetail;
   constructor(
     private pubsub: PubSubService,
     private server: ServerConfig,
     private router: Router,
     public manageOrderService: ManageOrderService
-  ) { }
+  ) {  }
 
   ngOnInit() {
     this.server.isLogin().subscribe(data => {
@@ -47,10 +51,13 @@ export class ManageOrderComponent implements OnInit {
     this.pubsub.$pub('loading', true);
     this.refid = '';
     this.remark = '';
+    // this.shipping = {};
     this.manageOrderService.searchOrder(this.typeTab, this.currentPageSelected, this.searchKeyword).subscribe(data => {
       this.OrderList = data;
-      // this.OrderList.items = data.items;
-      // this.OrderList.pagings = data.paging;
+      if(this.currentPageSelected === 1){
+        this.curentPage[1] = 'active';
+      }
+
       console.log(this.OrderList);
       this.pubsub.$pub('loading', false);
     }, err => {
@@ -129,10 +136,13 @@ export class ManageOrderComponent implements OnInit {
   confirmitm() {
     const cfconfirm = confirm('ยืนยันการชำระเงิน');
     if (cfconfirm) {
-      this.manageOrderService.changeStatusConfirm(this.OrderDetail).subscribe(data => {
+      this.manageOrderService.adminStatusConfirm(this.OrderDetail, this.shipping).subscribe(data => {
+        this.modalDetail.nativeElement.click();
         alert('ชำระเงินเรียบร้อยแล้ว!');
+        console.log(data);
         this.searchOrder();
       }, err => {
+        this.modalDetail.nativeElement.click();
         console.log(err);
       });
     }
@@ -161,6 +171,7 @@ export class ManageOrderComponent implements OnInit {
         // console.log(data);
         this.searchOrder();
       }, err => {
+        this.modalDetail.nativeElement.click();
         console.log(err);
       });
     }
@@ -177,6 +188,7 @@ export class ManageOrderComponent implements OnInit {
         // console.log(data);
         this.searchOrder();
       }, err => {
+        this.modalDetail.nativeElement.click();
         console.log(err);
       });
     }

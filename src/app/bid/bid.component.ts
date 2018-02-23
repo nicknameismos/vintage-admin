@@ -55,38 +55,67 @@ export class BidComponent implements OnInit {
     let date = new Date(this.bidData.starttime);
     let _month = date.getMonth() <= 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
     let _date = date.getDate() <= 9 ? '0' + date.getDate() : date.getDate();
-    let _incHr = (date.getHours() + 1) <= 9 ? '0' + (date.getHours() + 1) : (date.getHours() + 1);
+    let _incHr = date.getHours() <= 9 ? '0' + date.getHours() : date.getHours();
     let _incMin = date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes();
-    let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin;
+    let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin + ':00';
 
-    let date2 = new Date(this.bidData.endtime);
-    let _month2 = date2.getMonth() <= 9 ? '0' + (date2.getMonth() + 1) : date2.getMonth() + 1;
-    let _date2 = date2.getDate() <= 9 ? '0' + date2.getDate() : date2.getDate();
-    let _incHr2 = (date2.getHours() - 1) <= 9 ? '0' + (date2.getHours() - 1) : (date2.getHours() - 1);
-    let _incMin2 = date2.getMinutes() <= 9 ? '0' + date2.getMinutes() : date2.getMinutes();
-    let defaultDate2 = date2.getFullYear() + '-' + _month2 + '-' + _date2 + 'T' + _incHr2 + ':' + _incMin2;
-    console.log(defaultDate2);
-    this.bidData.starttime = _type === 'end' ? defaultDate2 : this.bidData.starttime;
-    this.bidData.endtime = _type === 'end' ? this.bidData.endtime : defaultDate;
+    let dateEnd = new Date(this.bidData.endtime);
+    let month_end = dateEnd.getMonth() <= 9 ? '0' + (dateEnd.getMonth() + 1) : dateEnd.getMonth() + 1;
+    let date_end = dateEnd.getDate() <= 9 ? '0' + dateEnd.getDate() : dateEnd.getDate();
+    let incHr_end = dateEnd.getHours() <= 9 ? '0' + dateEnd.getHours() : dateEnd.getHours();
+    let incMin_end = dateEnd.getMinutes() <= 9 ? '0' + dateEnd.getMinutes() : dateEnd.getMinutes();
+    let defaultDateEnd = dateEnd.getFullYear() + '-' + month_end + '-' + date_end + 'T' + incHr_end + ':' + incMin_end + ':00';
+
+    let dateNow = new Date();
+    let month_n = dateNow.getMonth() <= 9 ? '0' + (dateNow.getMonth() + 1) : dateNow.getMonth() + 1;
+    let date_n = dateNow.getDate() <= 9 ? '0' + dateNow.getDate() : dateNow.getDate();
+    let incHr_n = dateNow.getHours() <= 9 ? '0' + dateNow.getHours() : dateNow.getHours();
+    let incMin_n = dateNow.getMinutes() <= 9 ? '0' + dateNow.getMinutes() : dateNow.getMinutes();
+    let defaultDateNow = dateNow.getFullYear() + '-' + month_n + '-' + date_n + 'T' + incHr_n + ':' + incMin_n + ':00';
 
     let oneDay = 24 * 60 * 60 * 1000;
-    let firstDate = new Date(this.bidData.starttime);
-    let secondDate = new Date(this.bidData.endtime);
-    let diffDays = Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay));
-    console.log(diffDays);
-    if (diffDays >= 0 && diffDays <= 1 && secondDate.getTime() >= firstDate.getTime()) {
-      this.oldDate = {
-        starttime: this.bidData.starttime,
-        endtime: this.bidData.starttime
-      };
-    } else {
-      this.bidData.starttime = '';
-      this.bidData.endtime = '';
-      setTimeout(() => {
-        this.bidData.starttime = this.oldDate.starttime;
-        this.bidData.endtime = this.oldDate.endtime;
-      }, 50);
-      alert('ต้องไม่เกิน 24 ชั่วโมง');
+
+    let firstDate_1 = new Date(defaultDateNow);
+    let secondDate_1 = new Date(defaultDate);
+    let diffDaysNow = Math.abs((firstDate_1.getTime() - secondDate_1.getTime()) / (oneDay));
+
+    let firstDate_2 = new Date(defaultDate);
+    let secondDate_2 = new Date(defaultDateEnd);
+    let diffDaysFirstAndEnd = Math.abs((firstDate_2.getTime() - secondDate_2.getTime()) / (oneDay));
+
+    if (_type === 'start') {
+      if (!isNaN(secondDate_1.getTime())) {
+        if (secondDate_1.getTime() >= firstDate_1.getTime()) {
+          this.oldDate = {
+            starttime: this.bidData.starttime,
+            endtime: this.bidData.starttime
+          };
+        } else {
+          alert('ต้องไม่น้อยกว่าวันปัจจุบัน');
+          let defaultDateNow_mod = dateNow.getFullYear() + '-' + month_n + '-' + date_n + 'T' + incHr_n + ':' + incMin_n;
+          this.bidData.starttime = '';
+          this.bidData.endtime = '';
+          setTimeout(() => {
+            this.bidData.starttime = defaultDateNow_mod;
+            this.bidData.endtime = defaultDateNow_mod;
+          }, 50);
+        }
+      }
+    } else if (_type === 'end') {
+      if (diffDaysFirstAndEnd >= 0 && diffDaysFirstAndEnd <= 1 && secondDate_2.getTime() >= firstDate_2.getTime()) {
+        this.oldDate = {
+          starttime: this.bidData.starttime,
+          endtime: this.bidData.starttime
+        };
+      } else {
+        alert('ต้องไม่เกิน 24 ชั่วโมง');
+        this.bidData.starttime = '';
+        this.bidData.endtime = '';
+        setTimeout(() => {
+          this.bidData.starttime = this.oldDate.starttime;
+          this.bidData.endtime = this.oldDate.endtime;
+        }, 50);
+      }
     }
   }
 
@@ -129,7 +158,7 @@ export class BidComponent implements OnInit {
     let _date = date.getDate() <= 9 ? '0' + date.getDate() : date.getDate();
     let _incHr = date.getHours() <= 9 ? '0' + date.getHours() : date.getHours();
     let _incMin = date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes();
-    let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin;
+    let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin + ':00';
     this.bidData.starttime = defaultDate;
     this.bidData.endtime = defaultDate;
     this.oldDate = {
@@ -268,6 +297,7 @@ export class BidComponent implements OnInit {
                 this.pubsub.$pub('loading', false);
                 this.InitialData();
                 alert('เพิ่มการประมูลเรียบร้อยแล้ว');
+                $(this.modalbid.nativeElement).modal('hide');
               }, errRes => {
                 console.log(errRes);
                 this.pubsub.$pub('loading', false);
