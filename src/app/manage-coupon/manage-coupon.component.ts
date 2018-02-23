@@ -16,15 +16,17 @@ export class ManageCouponComponent implements OnInit {
   private listUsercustomer: Array<any> = [];
   private listUseradmin: Array<any> = [];
   private listUsershopowner: Array<any> = [];
-
   private user: Array<any> = [];
-  // private selectList: Array<any> = [];
-  // private userSelected: Array<any> = [];
   private users: any = [];
-  // private checkeds: Array<any> = [];
   private userList: Array<any> = [];
   private couponlist: any;
 
+  private couponTabs: any = {};
+  private typeTab = 'กำลังใช้งาน';
+  private currentPageSelected: number = 1;
+  private searchKeyword: string = '';
+  private pageSelect: number = 0;
+  private curentPage: Array<any> = [];
 
   constructor(
     private UserService: ManageUserService,
@@ -42,9 +44,41 @@ export class ManageCouponComponent implements OnInit {
         this.pubsub.$pub('loading', false);
       } else {
         this.getUser();
+        // this.searchCoupon();
         this.getCoupon();
       }
     });
+  }
+
+  searchCoupon() {
+    this.pubsub.$pub('loading', true);
+    this.couponService.searchCoupon(this.typeTab, this.currentPageSelected, this.searchKeyword).subscribe(data => {
+      this.couponTabs = data;
+      console.log(this.couponTabs);
+      this.pubsub.$pub('loading', false);
+    }, err => {
+      this.pubsub.$pub('loading', false);
+      console.log(err);
+    });
+  }
+
+  selectTab(titles) {
+    this.currentPageSelected = 1;
+    this.curentPage = [];
+    this.curentPage[1] = 'active';
+    this.typeTab = titles;
+    this.searchCoupon();
+  }
+
+  pageing(page: number) {
+    this.pubsub.$pub('loading', true);
+    this.pageSelect = 0;
+    this.curentPage = [];
+    this.curentPage[page] = 'active';
+    this.pageSelect = (page - 1) * 10;
+    this.currentPageSelected = page;
+    console.log(this.currentPageSelected);
+    this.searchCoupon();
   }
 
   getUser() {

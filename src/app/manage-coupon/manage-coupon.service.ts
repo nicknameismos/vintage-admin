@@ -22,4 +22,14 @@ export class ManageCouponService {
             .catch((error: any) => Observable.throw(error));
     }
 
+    searchCoupon(typeTab, currentPage, keyword): Observable<any> {
+        return this.http.post(this.server.url + 'api/getcouponsbyadmin', {
+            title: typeTab,
+            currentpage: currentPage,
+            keyword: keyword
+        }, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
 }

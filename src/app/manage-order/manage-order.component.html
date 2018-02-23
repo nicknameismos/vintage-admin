@@ -168,6 +168,12 @@
               <p>เลขการสั่งซื้อ :
                 <label>{{OrderDetail.docno}}</label>
               </p>
+              <p *ngIf="OrderDetail.channel === 'order'">ผู้สั่งซื้อ :
+                <label>{{OrderDetail.user.displayName}}</label>
+              </p>
+              <p *ngIf="OrderDetail.channel === 'bid'">ผู้ประมูล :
+                <label>{{OrderDetail.user.displayName}}</label>
+              </p>
               <p *ngIf="OrderDetail.shipping.name">ที่อยู่จัดส่ง :
                 <label>{{OrderDetail.shipping.name + ' '+ OrderDetail.shipping.address + ' '+ OrderDetail.shipping.subdistrict +'
                   '+ OrderDetail.shipping.district + ' '+ OrderDetail.shipping.province + ' ' + OrderDetail.shipping.postcode
@@ -200,8 +206,8 @@
                 <label>{{OrderDetail.product.shippingtype || 'ไม่มี'}}</label>
               </p>
               <p *ngIf="OrderDetail.topaydate">วันที่ประมูล :
-                  <label>{{OrderDetail.topaydate | date :'dd/MM/yyyy HH:mm'}}</label>
-                </p>
+                <label>{{OrderDetail.topaydate | date :'dd/MM/yyyy HH:mm'}}</label>
+              </p>
               <p *ngIf="OrderDetail.status !=='topay'">วันที่สั่งซื้อ :
                 <label>{{OrderDetail.confirmdate | date :'dd/MM/yyyy HH:mm'}}</label>
               </p>
