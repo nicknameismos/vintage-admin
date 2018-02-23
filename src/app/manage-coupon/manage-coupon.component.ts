@@ -147,7 +147,7 @@ export class ManageCouponComponent implements OnInit {
   }
 
   cancel() {
-    this.coupon = '';
+    this.coupon = {};
     this.userList = [];
   }
 
