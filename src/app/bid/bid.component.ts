@@ -59,6 +59,13 @@ export class BidComponent implements OnInit {
     let _incMin = date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes();
     let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin + ':00';
 
+    let dateEnd = new Date(this.bidData.endtime);
+    let month_end = dateEnd.getMonth() <= 9 ? '0' + (dateEnd.getMonth() + 1) : dateEnd.getMonth() + 1;
+    let date_end = dateEnd.getDate() <= 9 ? '0' + dateEnd.getDate() : dateEnd.getDate();
+    let incHr_end = dateEnd.getHours() <= 9 ? '0' + dateEnd.getHours() : dateEnd.getHours();
+    let incMin_end = dateEnd.getMinutes() <= 9 ? '0' + dateEnd.getMinutes() : dateEnd.getMinutes();
+    let defaultDateEnd = dateEnd.getFullYear() + '-' + month_end + '-' + date_end + 'T' + incHr_end + ':' + incMin_end + ':00';
+
     let dateNow = new Date();
     let month_n = dateNow.getMonth() <= 9 ? '0' + (dateNow.getMonth() + 1) : dateNow.getMonth() + 1;
     let date_n = dateNow.getDate() <= 9 ? '0' + dateNow.getDate() : dateNow.getDate();
@@ -71,15 +78,15 @@ export class BidComponent implements OnInit {
     let firstDate_1 = new Date(defaultDateNow);
     let secondDate_1 = new Date(defaultDate);
     let diffDaysNow = Math.abs((firstDate_1.getTime() - secondDate_1.getTime()) / (oneDay));
-    console.log(defaultDateNow);
-    console.log(diffDaysNow);
 
     if (!(diffDaysNow >= 0 && diffDaysNow <= 1 && secondDate_1.getTime() >= firstDate_1.getTime())) {
       alert('ต้องไม่น้อยกว่าวันปัจจุบัน');
       let defaultDateNow_mod = dateNow.getFullYear() + '-' + month_n + '-' + date_n + 'T' + incHr_n + ':' + incMin_n;
       this.bidData.starttime = '';
+      this.bidData.endtime = '';
       setTimeout(() => {
         this.bidData.starttime = defaultDateNow_mod;
+        this.bidData.endtime = defaultDateNow_mod;
       }, 50);
       // this.bidData.endtime = _type === 'end' ? this.bidData.endtime : defaultDate;
     }
@@ -144,7 +151,7 @@ export class BidComponent implements OnInit {
     let _date = date.getDate() <= 9 ? '0' + date.getDate() : date.getDate();
     let _incHr = date.getHours() <= 9 ? '0' + date.getHours() : date.getHours();
     let _incMin = date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes();
-    let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin;
+    let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin + ':00';
     this.bidData.starttime = defaultDate;
     this.bidData.endtime = defaultDate;
     this.oldDate = {
