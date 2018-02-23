@@ -42,79 +42,177 @@
 
           <div class="card-block">
             <div class="row">
-
+              <div class="col-lg-2 col-md-3 col-sm-4 col-xs-4">
+                <div class="btn-group btn-group-vertical" role="group" aria-label="...">
+                  <button type="button" [class]="activeMenu[0]" btn-fb-checked (click)="selectTab(0)">ข้อมูลเกี่ยวกับร้านค้า</button>
+                  <button type="button" [class]="activeMenu[1]" btn-fb-checked (click)="selectTab(1)">ข้อมูลติดต่อร้านค้า</button>
+                  <!-- <button type="button" [class]="activeMenu[2]" btn-fb-checked (click)="selectTab(2)">วันเวลาเปิดปิดร้าน</button> -->
+                  <button type="button" [class]="activeMenu[3]" btn-fb-checked (click)="selectTab(3)">ที่อยู่ร้าน</button>
+                </div>
+              </div>
               <div class="col-lg-10 col-md-9 col-sm-8 col-xs-8">
 
 
                 <!-- SHOP INFO -->
+                <div class="card-block" *ngIf="selectTabs == 0">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="btn-group">
+                        <button type="button" [disabled]="blockInput" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                          aria-expanded="true">
+                          เลือกประเภทร้านค้า
+                          <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <p class="text-select-cate" *ngFor="let item of categoryShopList" (click)="selectCate(item._id)">{{item.name}}
+                            <img *ngIf="checkeds[item._id]" class="check_po check_icon" src="https://image.flaticon.com/icons/svg/189/189677.svg" alt="icon">
+                          </p>
+                        </ul>
+                      </div>
+                      <span *ngFor="let cateSelect of shop.categories"> {{cateSelect.name}} </span>
 
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="btn-group">
-                      <button type="button" [disabled]="blockInput" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="true">
-                        เลือกประเภทร้านค้า
-                        <span class="caret"></span>
-                      </button>
-                      <ul class="dropdown-menu">
-                        <p class="text-select-cate" *ngFor="let item of categoryShopList" (click)="selectCate(item._id)">{{item.name}}
-                          <img *ngIf="checkeds[item._id]" class="check_po check_icon" src="https://image.flaticon.com/icons/svg/189/189677.svg" alt="icon">
-                        </p>
-                      </ul>
+                      <div class="form-group">
+                        ชื่อร้าน<span style="color:red"> *</span>
+                        <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="shopName" [(ngModel)]="shop.name" required>
+                      </div>
+                      <!-- <div class="form-group">
+                        ชื่อร้าน (ภาษาอังกฤษ)
+                        <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="shopNameEn" [(ngModel)]="shop.name_eng">
+                      </div> -->
+
                     </div>
-                    <span *ngFor="let cateSelect of shop.categories"> {{cateSelect.name}} </span>
-
-                    <div class="form-group">
-                      ชื่อร้าน
-                      <span style="color:red"> *</span>
-                      <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="shopName" [(ngModel)]="shop.name" required>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        รายละเอียดร้าน
+                        <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="detail" [(ngModel)]="shop.detail">
+                      </div>
                     </div>
                   </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      รายละเอียดร้าน
-                      <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="detail" [(ngModel)]="shop.detail">
-                    </div>
-                  </div>
+
                 </div>
-
-
                 <!-- SHOP INFO -->
 
 
                 <!-- SHOP CONTACT INFO -->
-                <form name="myForm">
+                <div class="card-block" *ngIf="selectTabs == 1">
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
-                        อีเมล์
-                        <span style="color:red"> *</span>
-                        <input type="email" class="form-control" [disabled]="blockInput" placeholder="" name="email" email="true" [(ngModel)]="shop.email"
-                          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required>
-
-                        <div *ngIf="email.errors?.email">
-                          Primary Email not valid.
-                        </div>
+                        อีเมล์<span style="color:red"> *</span>
+                        <input type="email" class="form-control" [disabled]="blockInput" placeholder="" name="email" email="true" [(ngModel)]="shop.email" required>
                       </div>
-
                       <div class="form-group">
                         หมายเลขโทรศัพท์ร้านค้า
                         <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="tel" [(ngModel)]="shop.tel">
                       </div>
-                    </div>
-                  </div>
-                </form>
-                <!-- SHOP CONTACT INFO -->
-
-                <!-- SHOP ADDRESS -->
-                <div class="row">
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      ที่อยู่
-                      <textarea rows="1" class="form-control" placeholder="" name="addr" [(ngModel)]="address"></textarea>
+                      <!-- <div class="form-group">
+                        Facebook fanpage
+                        <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="Facebook" [(ngModel)]="shop.facebook">
+                      </div>
+                      <div class="form-group">
+                        Line@ Id
+                        <input type="text" class="form-control" [disabled]="blockInput" placeholder="" name="Line" [(ngModel)]="shop.line">
+                      </div> -->
                     </div>
                   </div>
                 </div>
+                <!-- SHOP CONTACT INFO -->
+
+
+                <!-- SHOP TIME - CLOSE -->
+                <!-- <div class="card-block" *ngIf="selectTabs == 2">
+                  <div class="row">
+
+                    <div class="col-md-3 text-center" (click)="openTime()" *ngIf="isEditshopMode == true">
+                      <img class="img" src="http://res.cloudinary.com/ha7s6qhcg/image/upload/v1511499758/pp_clfpol.jpg" alt="image">
+                    </div>
+                    <div class="col-md-3" *ngFor="let item of timeList;let i = index">
+                      <div class="card card-time-size" style="margin: 0px 0;">
+                        <span class="bin" (click)="deleteTime(i)" *ngIf="isEditshopMode == true">
+                          <i class="material-icons">delete</i>
+                        </span>
+                        <div class="card-block text-center">
+                          <h4 class="card-title" style="text-align: center;">{{item.description}}</h4>
+                          <p class="card-text">เวลาเปิด {{item.timestart}} น.</p>
+                          <p class="card-text">เวลาปิด {{item.timeend}} น.</p>
+                          <div class="time-elaspe">
+                            <span *ngFor="let item2 of item.days">{{item2}} </span>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="row no-padding" *ngIf="showeditTime">
+                    <div class="col-xs-12">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label for="timeDetail">รายละเอียด</label>
+                            <input type="text" class="form-control" placeholder="ระบุชื่อช่วงเวลา เช่น ส.-อ." name="timeDetail" [(ngModel)]="times.description">
+                          </div>
+                        </div>
+                        <div class="col-lg-3">
+                          <div class="form-group">
+                            <label for="start">เวลาเปิด</label>
+                            <input type="time" class="form-control" name="start" [(ngModel)]="times.timestart">
+                          </div>
+                        </div>
+                        <div class="col-lg-3">
+                          <div class="form-group">
+                            <label for="end">เวลาปิด</label>
+                            <input type="time" class="form-control" name="end" [(ngModel)]="times.timeend">
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <label for="daySelect">เลือกวันที่ร้านเปิดทำการ</label>
+                          <div name="daySelect" class="add-padding-left">
+                            <input type="checkbox" name="" id="" (change)="selectDay(0)"> วันอาทิตย์
+                            <input type="checkbox" name="" id="" (change)="selectDay(1)"> วันจันทร์
+                            <input type="checkbox" name="" id="" (change)="selectDay(2)"> วันอังคาร
+                            <input type="checkbox" name="" id="" (change)="selectDay(3)"> วันพุธ
+                            <input type="checkbox" name="" id="" (change)="selectDay(4)"> วันพฤหัสบดี
+                            <input type="checkbox" name="" id="" (change)="selectDay(5)"> วันศุกร์
+                            <input type="checkbox" name="" id="" (change)="selectDay(6)"> วันเสาร์
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <div class="ct">
+                      <button class="btn btn-success" (click)="saveTime()">เพิ่ม</button>
+                      <button class="btn btn-danger" (click)="cancelTime()">ยกเลิก</button>
+                    </div>
+                  </div>
+
+                </div> -->
+                <!-- SHOP TIME - CLOSE -->
+
+
+                <!-- SHOP ADDRESS -->
+                <div class="card-block" *ngIf="selectTabs == 3">
+                  <div class="form-group">
+                    ที่อยู่
+                    <textarea rows="1" class="form-control ct" placeholder="" name="addr" [(ngModel)]="address"></textarea>
+                  </div>
+                  <!-- <p class="pin" (click)="openSelectMap()">
+                    <i class="material-icons">room</i>
+                  </p> -->
+                </div>
+                <!-- <div *ngIf="showeMap">
+                  <input #pacinput id="pac-input" class="controls m2" type="text" placeholder="ค้นหาสถานที่">
+                  <div #map class="map"></div>
+                  <div class="ct">
+                    <button class="btn btn-info" (click)="saveMap()">ยืนยัน</button>
+                  </div>
+                </div> -->
                 <!-- SHOP ADDRESS -->
 
 

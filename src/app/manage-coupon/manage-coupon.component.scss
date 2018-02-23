@@ -17,7 +17,7 @@
 .nav-tabs>li.active>a,
 .nav-tabs>li.active>a:hover,
 .nav-tabs>li.active>a:focus {
-    border-bottom: 3px solid rgb(14, 156, 14) !important;
+    border-bottom: 3px solid #3c6233 !important;
 }
 
 .tel-col-size {
@@ -45,7 +45,7 @@
 }
 
 .edit-color {
-    color: #f75251;
+    color: #D50000;
     font-size: 3.5rem;
 }
 
@@ -97,14 +97,14 @@ fieldset[disabled] .form-group .form-control {
 }
 
 .btn-border {
-    border: 2px solid rgb(255, 0, 0);
+    border: 2px solid #D50000;
     border-radius: 10rem;
     width: 8rem;
 }
 
 .btn-color {
     border-radius: 10rem;
-    background-color: rgb(255, 0, 0);
+    background-color: #D50000;
     width: 8rem;
 }
 
@@ -139,8 +139,8 @@ fieldset[disabled] .form-group .form-control {
 
 .addBTN {
     background-color: #ffffff00;
-    color: rgb(34, 143, 34);
-    border-color: rgb(34, 143, 34);
+    color: #3c6233;
+    border-color: #3c6233;
     border-radius: 4rem;
     border: 3px solid;
     font-size: 1.5rem;

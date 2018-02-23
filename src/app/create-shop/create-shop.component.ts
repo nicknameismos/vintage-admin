@@ -237,9 +237,11 @@ export class CreateShopComponent implements OnInit {
   createFormControls() {
     this.shopName = new FormControl('', Validators.required);
     this.shopNameEn = new FormControl('', Validators.required);
+   // this.email = new FormControl('', Validators.required);
     this.email = new FormControl('', [
       Validators.required,
-      Validators.pattern("[^ @]*@[^ @]*")
+      Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")
+
     ]);
   }
 
@@ -248,6 +250,7 @@ export class CreateShopComponent implements OnInit {
       shopname: new FormGroup({
         shopName: this.shopName,
         shopNameEn: this.shopNameEn,
+        email: this.email
       }),
       email: this.email
     });
@@ -849,13 +852,17 @@ export class CreateShopComponent implements OnInit {
   }
 
   save() {
-    if (!this.shop.name) {
-      alert("กรุณาระบุชื่อร้านค้า");
-    }
+    
 
     if (this.shop.categories.length <= 0) {
-      alert("กรุณาเลือกประเภทของร้านค้าก่อนทำการบันทึก");
-    } else {
+      alert("กรุณาเลือกประเภทของร้านค้า");
+    }else if (!this.shop.name){
+      alert("กรุณาระบุชื่อร้านค้า");
+    }else if (!this.shop.email){
+      alert("กรุณาระบุอีเมล์ร้านค้า");
+    }else if (this.shop.email && this.shop.email.indexOf("@") != -1) {
+      alert("กรุณาระบุอีเมล์ผิด");
+    }else {
       if (this.shopID) {
         this.shop.address = {
           address: this.address,
@@ -877,7 +884,7 @@ export class CreateShopComponent implements OnInit {
         }, err => {
           console.log(err);
         });
-      } else {
+    } else {
         this.shop.address = {
           address: this.address,
           lat: this.latLng.lat,
