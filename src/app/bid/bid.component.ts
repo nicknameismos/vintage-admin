@@ -102,40 +102,21 @@ export class BidComponent implements OnInit {
         }
       }
     } else if (_type === 'end') {
-      if ((diffDaysFirstAndEnd >= 0 && diffDaysFirstAndEnd <= 1 && secondDate_2.getTime() >= firstDate_2.getTime())) {
-
+      if (diffDaysFirstAndEnd >= 0 && diffDaysFirstAndEnd <= 1 && secondDate_2.getTime() >= firstDate_2.getTime()) {
+        this.oldDate = {
+          starttime: this.bidData.starttime,
+          endtime: this.bidData.starttime
+        };
       } else {
-
+        alert('ต้องไม่เกิน 24 ชั่วโมง');
+        this.bidData.starttime = '';
+        this.bidData.endtime = '';
+        setTimeout(() => {
+          this.bidData.starttime = this.oldDate.starttime;
+          this.bidData.endtime = this.oldDate.endtime;
+        }, 50);
       }
     }
-
-
-
-
-
-
-
-
-    // this.bidData.endtime = _type === 'end' ? this.bidData.endtime : defaultDate;
-    // let oneDay = 24 * 60 * 60 * 1000;
-    // let firstDate = new Date(this.bidData.starttime);
-    // let secondDate = new Date(this.bidData.endtime);
-    // let diffDays = Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay));
-    // console.log(diffDays);
-    // if (diffDays >= 0 && diffDays <= 1 && secondDate.getTime() >= firstDate.getTime()) {
-    //   this.oldDate = {
-    //     starttime: this.bidData.starttime,
-    //     endtime: this.bidData.starttime
-    //   };
-    // } else {
-    //   this.bidData.starttime = '';
-    //   this.bidData.endtime = '';
-    //   setTimeout(() => {
-    //     this.bidData.starttime = this.oldDate.starttime;
-    //     this.bidData.endtime = this.oldDate.endtime;
-    //   }, 50);
-    //   alert('ต้องไม่เกิน 24 ชั่วโมง');
-    // }
   }
 
   selectShipping(item) {
