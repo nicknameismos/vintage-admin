@@ -79,18 +79,44 @@ export class BidComponent implements OnInit {
     let secondDate_1 = new Date(defaultDate);
     let diffDaysNow = Math.abs((firstDate_1.getTime() - secondDate_1.getTime()) / (oneDay));
 
-    if (!(diffDaysNow >= 0 && diffDaysNow <= 1 && secondDate_1.getTime() >= firstDate_1.getTime())) {
-      alert('ต้องไม่น้อยกว่าวันปัจจุบัน');
-      let defaultDateNow_mod = dateNow.getFullYear() + '-' + month_n + '-' + date_n + 'T' + incHr_n + ':' + incMin_n;
-      this.bidData.starttime = '';
-      this.bidData.endtime = '';
-      setTimeout(() => {
-        this.bidData.starttime = defaultDateNow_mod;
-        this.bidData.endtime = defaultDateNow_mod;
-      }, 50);
-      // this.bidData.endtime = _type === 'end' ? this.bidData.endtime : defaultDate;
+    let firstDate_2 = new Date(defaultDate);
+    let secondDate_2 = new Date(defaultDateEnd);
+    let diffDaysFirstAndEnd = Math.abs((firstDate_2.getTime() - secondDate_2.getTime()) / (oneDay));
+
+    if (_type === 'start') {
+      if (!isNaN(secondDate_1.getTime())) {
+        if (secondDate_1.getTime() >= firstDate_1.getTime()) {
+          this.oldDate = {
+            starttime: this.bidData.starttime,
+            endtime: this.bidData.starttime
+          };
+        } else {
+          alert('ต้องไม่น้อยกว่าวันปัจจุบัน');
+          let defaultDateNow_mod = dateNow.getFullYear() + '-' + month_n + '-' + date_n + 'T' + incHr_n + ':' + incMin_n;
+          this.bidData.starttime = '';
+          this.bidData.endtime = '';
+          setTimeout(() => {
+            this.bidData.starttime = defaultDateNow_mod;
+            this.bidData.endtime = defaultDateNow_mod;
+          }, 50);
+        }
+      }
+    } else if (_type === 'end') {
+      if ((diffDaysFirstAndEnd >= 0 && diffDaysFirstAndEnd <= 1 && secondDate_2.getTime() >= firstDate_2.getTime())) {
+
+      } else {
+
+      }
     }
 
+
+
+
+
+
+
+
+    // this.bidData.endtime = _type === 'end' ? this.bidData.endtime : defaultDate;
     // let oneDay = 24 * 60 * 60 * 1000;
     // let firstDate = new Date(this.bidData.starttime);
     // let secondDate = new Date(this.bidData.endtime);
