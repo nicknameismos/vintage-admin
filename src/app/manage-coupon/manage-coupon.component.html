@@ -5,7 +5,7 @@
         <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" >
         </div>
 
-        <div class="col-lg-4 col-md-8 col-sm-8 col-xs-8">
+        <div class="col-lg-4 col-md-8 col-sm-8 col-xs-8" style="margin-top: 10px">
           <div class="sb">
             <span class="inner-sb">
               <span class="txb">
@@ -51,7 +51,7 @@
                         <th class="text-center">วันที่สิ้นสุด</th>
                         <th class="text-center">ราคาที่ลด</th>
                         <th class="text-center">ประเภท</th>
-                        <!-- <th class="text-center">Action</th> -->
+                        <th class="text-center">จำนวนผู้ใช้</th>
                         <!-- <th class="text-center"></th> -->
                       </tr>
                     </thead>
@@ -68,6 +68,7 @@
                         <td class="text-center">{{item.enddate | date :'dd/MM/yyyy'}}</td>
                         <td class="text-center">{{item.price || 0 | number}}</td>
                         <td class="text-center">{{item.type === 'single' ? 'ระบุผู้ใช้' : item.type === 'multi' ? 'ผู้ใช้ทุกคน' : ''}}</td>
+                        <td class="text-center">{{item.useruse.length || 0 | number}}</td>                     
                         <!-- <td style="text-align: center">
                               <ui-switch size="small" color="green" (change)="activeChange($event,item)"></ui-switch>
                             </td> -->

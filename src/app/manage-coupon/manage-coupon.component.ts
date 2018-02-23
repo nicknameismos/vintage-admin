@@ -55,7 +55,9 @@ export class ManageCouponComponent implements OnInit {
     this.couponService.searchCoupon(this.typeTab, this.currentPageSelected, this.searchKeyword).subscribe(data => {
       this.couponTabs = data;
       console.log(this.couponTabs);
-      this.curentPage[1] = 'active';
+      if (this.currentPageSelected === 1) {
+        this.curentPage[1] = 'active';
+      }
 
       this.pubsub.$pub('loading', false);
     }, err => {
