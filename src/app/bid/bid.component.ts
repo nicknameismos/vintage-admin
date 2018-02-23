@@ -59,14 +59,6 @@ export class BidComponent implements OnInit {
     let _incMin = date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes();
     let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin;
 
-    let date2 = new Date(this.bidData.endtime);
-    let _month2 = date2.getMonth() <= 9 ? '0' + (date2.getMonth() + 1) : date2.getMonth() + 1;
-    let _date2 = date2.getDate() <= 9 ? '0' + date2.getDate() : date2.getDate();
-    let _incHr2 = (date2.getHours() - 1) <= 9 ? '0' + (date2.getHours() - 1) : (date2.getHours() - 1);
-    let _incMin2 = date2.getMinutes() <= 9 ? '0' + date2.getMinutes() : date2.getMinutes();
-    let defaultDate2 = date2.getFullYear() + '-' + _month2 + '-' + _date2 + 'T' + _incHr2 + ':' + _incMin2;
-    console.log(defaultDate2);
-    this.bidData.starttime = _type === 'end' ? defaultDate2 : this.bidData.starttime;
     this.bidData.endtime = _type === 'end' ? this.bidData.endtime : defaultDate;
 
     let oneDay = 24 * 60 * 60 * 1000;
@@ -268,6 +260,7 @@ export class BidComponent implements OnInit {
                 this.pubsub.$pub('loading', false);
                 this.InitialData();
                 alert('เพิ่มการประมูลเรียบร้อยแล้ว');
+                $(this.modalbid.nativeElement).modal('hide');
               }, errRes => {
                 console.log(errRes);
                 this.pubsub.$pub('loading', false);
