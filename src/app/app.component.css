@@ -31,22 +31,18 @@
 
 
 .loading-bg {
-    background-color: rgba(0, 0, 0, 0.4);
+    /* background-color: rgba(0, 0, 0, 0.4);
     height: 100%;
     width: 100%;
     z-index: 2000;
-    position: absolute;
+    position: absolute; */
 }
-
 .gif-po {
-    /* margin-left: 50%;
-    margin-top: 18%; */
-    width:  140px;
-    height: 140px;
-    z-index: 2000;
-    position: absolute;
-    top: 38.2%;
-    left: 49.6%;
+   border: 15px white solid;
+    width:  100px;
+    height: 100px;
+    background-color: white;
+    border-radius: 100%;
 }
 /* loading */
 
@@ -54,18 +50,21 @@
     /* margin-left: 50%;
     margin-top: 50%; */
     /* position: relative; */
-    z-index: 2000;
+    z-index: 2001;
     position: absolute;
     -webkit-animation: lds-eclipse 1s linear infinite;
     animation: lds-eclipse 1s linear infinite;
-    width: 160px;
-    height: 160px;
-    top: 37%;
-    left: 49%;
+    width: 80px;
+    height: 80px;
+    top: 39.2%;
+    left: 50.25%;
     border-radius: 50%;
     box-shadow: 0 4px 0 0 #689171;
-    -webkit-transform-origin: 80px 82px;
-    transform-origin: 80px 82px;
+    -webkit-transform-origin: 40px 42px;
+    transform-origin: 40px 42px;
+    /* top: 40%;
+    left: 50.6%; */
+    /* transform: translate(-50%, -50%) */
 }
 
 @-webkit-keyframes lds-eclipse {
