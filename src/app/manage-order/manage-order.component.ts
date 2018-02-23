@@ -50,6 +50,8 @@ export class ManageOrderComponent implements OnInit {
     this.manageOrderService.searchOrder(this.typeTab, this.currentPageSelected, this.searchKeyword).subscribe(data => {
       this.OrderList = data;
       // this.OrderList.items = data.items;
+      this.curentPage[1] = 'active';
+
       // this.OrderList.pagings = data.paging;
       console.log(this.OrderList);
       this.pubsub.$pub('loading', false);

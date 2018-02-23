@@ -17,7 +17,7 @@
 .nav-tabs>li.active>a,
 .nav-tabs>li.active>a:hover,
 .nav-tabs>li.active>a:focus {
-    border-bottom: 3px solid rgb(14, 156, 14) !important;
+    border-bottom: 3px solid #3c6233 !important;
 }
 
 .tel-col-size {
@@ -257,4 +257,7 @@ fieldset[disabled] .form-group .form-control {
 .open>.navbar .navbar-nav>li>a.btn.btn-danger.dropdown-toggle:hover {
     background-color: #D50000;
     color: #FFFFFF;
+}
+.pc {
+    text-align: center;
 }

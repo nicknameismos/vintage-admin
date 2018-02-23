@@ -2,15 +2,10 @@
   <div class="container-fluid">
     <div>
       <div class="row">
-        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
-          <ul class="nav nav-tabs">
-            <li role="presentation">
-              <a>รายการคูปอง</a>
-            </li>
-          </ul>
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" >
         </div>
 
-        <div class="col-lg-4 col-md-8 col-sm-8 col-xs-8" style="margin-top: 10px">
+        <div class="col-lg-4 col-md-8 col-sm-8 col-xs-8">
           <div class="sb">
             <span class="inner-sb">
               <span class="txb">
@@ -18,7 +13,7 @@
               </span>
             </span>
             <span>
-              <input type="text" class="form-control tb" [(ngModel)]="searchKeyword" (keyup.enter)="searchShop()">
+              <input type="text" class="form-control tb" [(ngModel)]="searchKeyword" (keyup.enter)="searchCoupon()">
             </span>
           </div>
         </div>
@@ -30,7 +25,7 @@
         </div>
       </div>
 
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" *ngFor="let tab of couponTabs.titles; let i = index" class="{{ selectedTab === i ? 'active':''}}">
@@ -38,11 +33,11 @@
             </li>
           </ul>
         </div>
-      </div> -->
+      </div>
 
       <!-- Tab admin -->
       <div class="tab-content">
-        <div>
+        <div id="tab{{k}}" *ngFor="let item of couponTabs.titles; let k = index" class="tab-pane fade in {{ k === 0 ? 'active':''}}">
           <div class="row">
             <div class="col-md-12">
               <div class="card">
@@ -61,13 +56,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngIf="couponlist && couponlist.length <=0">
+                      <tr *ngIf="couponTabs && couponTabs.items.length <= 0">
                         <td colspan="8" class="text-center">
                           ยังไม่มีข้อมูลในระบบ
                         </td>
-
                       </tr>
-                      <tr *ngFor="let item of couponlist; let i = index ">
+                      <tr *ngFor="let item of couponTabs.items; let i = index ">
                         <td class="text-center">{{i+1}}</td>
                         <td class="name-ovf" style="text-align: center">{{item.code}}</td>
                         <td class="name-ovf" style="text-align: center">{{item.startdate | date :'dd/MM/yyyy'}}</td>
@@ -85,6 +79,15 @@
                       </tr>
                     </tbody>
                   </table>
+                  <div class="pc">
+                    <nav aria-label="Page navigation">
+                      <ul class="pagination">
+                        <li [class]="curentPage[item]" *ngFor="let item of couponTabs.paging">
+                          <a (click)="pageing(item)">{{item}}</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
                 </div>
               </div>
             </div>
