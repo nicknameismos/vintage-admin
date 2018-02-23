@@ -55,31 +55,54 @@ export class BidComponent implements OnInit {
     let date = new Date(this.bidData.starttime);
     let _month = date.getMonth() <= 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
     let _date = date.getDate() <= 9 ? '0' + date.getDate() : date.getDate();
-    let _incHr = (date.getHours() + 1) <= 9 ? '0' + (date.getHours() + 1) : (date.getHours() + 1);
+    let _incHr = date.getHours() <= 9 ? '0' + date.getHours() : date.getHours();
     let _incMin = date.getMinutes() <= 9 ? '0' + date.getMinutes() : date.getMinutes();
-    let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin;
+    let defaultDate = date.getFullYear() + '-' + _month + '-' + _date + 'T' + _incHr + ':' + _incMin + ':00';
 
-    this.bidData.endtime = _type === 'end' ? this.bidData.endtime : defaultDate;
+    let dateNow = new Date();
+    let month_n = dateNow.getMonth() <= 9 ? '0' + (dateNow.getMonth() + 1) : dateNow.getMonth() + 1;
+    let date_n = dateNow.getDate() <= 9 ? '0' + dateNow.getDate() : dateNow.getDate();
+    let incHr_n = dateNow.getHours() <= 9 ? '0' + dateNow.getHours() : dateNow.getHours();
+    let incMin_n = dateNow.getMinutes() <= 9 ? '0' + dateNow.getMinutes() : dateNow.getMinutes();
+    let defaultDateNow = dateNow.getFullYear() + '-' + month_n + '-' + date_n + 'T' + incHr_n + ':' + incMin_n + ':00';
 
     let oneDay = 24 * 60 * 60 * 1000;
-    let firstDate = new Date(this.bidData.starttime);
-    let secondDate = new Date(this.bidData.endtime);
-    let diffDays = Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay));
-    console.log(diffDays);
-    if (diffDays >= 0 && diffDays <= 1 && secondDate.getTime() >= firstDate.getTime()) {
-      this.oldDate = {
-        starttime: this.bidData.starttime,
-        endtime: this.bidData.starttime
-      };
-    } else {
+
+    let firstDate_1 = new Date(defaultDateNow);
+    let secondDate_1 = new Date(defaultDate);
+    let diffDaysNow = Math.abs((firstDate_1.getTime() - secondDate_1.getTime()) / (oneDay));
+    console.log(defaultDateNow);
+    console.log(diffDaysNow);
+
+    if (!(diffDaysNow >= 0 && diffDaysNow <= 1 && secondDate_1.getTime() >= firstDate_1.getTime())) {
+      alert('ต้องไม่น้อยกว่าวันปัจจุบัน');
+      let defaultDateNow_mod = dateNow.getFullYear() + '-' + month_n + '-' + date_n + 'T' + incHr_n + ':' + incMin_n;
       this.bidData.starttime = '';
-      this.bidData.endtime = '';
       setTimeout(() => {
-        this.bidData.starttime = this.oldDate.starttime;
-        this.bidData.endtime = this.oldDate.endtime;
+        this.bidData.starttime = defaultDateNow_mod;
       }, 50);
-      alert('ต้องไม่เกิน 24 ชั่วโมง');
+      // this.bidData.endtime = _type === 'end' ? this.bidData.endtime : defaultDate;
     }
+
+    // let oneDay = 24 * 60 * 60 * 1000;
+    // let firstDate = new Date(this.bidData.starttime);
+    // let secondDate = new Date(this.bidData.endtime);
+    // let diffDays = Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay));
+    // console.log(diffDays);
+    // if (diffDays >= 0 && diffDays <= 1 && secondDate.getTime() >= firstDate.getTime()) {
+    //   this.oldDate = {
+    //     starttime: this.bidData.starttime,
+    //     endtime: this.bidData.starttime
+    //   };
+    // } else {
+    //   this.bidData.starttime = '';
+    //   this.bidData.endtime = '';
+    //   setTimeout(() => {
+    //     this.bidData.starttime = this.oldDate.starttime;
+    //     this.bidData.endtime = this.oldDate.endtime;
+    //   }, 50);
+    //   alert('ต้องไม่เกิน 24 ชั่วโมง');
+    // }
   }
 
   selectShipping(item) {
