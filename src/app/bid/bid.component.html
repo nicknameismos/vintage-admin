@@ -69,13 +69,13 @@
                         <i class="material-icons toggle-color">more_horiz</i>
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button type="button" class="btn btn-xs btn-diss" (click)="editBid(item)" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))">
+                        <button type="button" class="btn btn-xs btn-diss w-40" (click)="editBid(item)" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))">
                           <i class="material-icons edit-color">border_color</i>
                         </button>
                         <!-- <span (click)="editBid(item)">
                           <i class="material-icons edit-color">border_color</i>
                         </span> -->
-                        <button type="button" class="btn btn-xs btn-diss" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))"
+                        <button type="button" class="btn btn-xs btn-diss w-40" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))"
                           (click)="deleteBid(item)">
                           <i class="material-icons del-color">delete</i>
                         </button>
@@ -215,8 +215,9 @@
 
 
         <div class="modal-footer text-center">
-          <button type="button" class="btn btn-success" [disabled]="!(bidData.status=='end' || (bidData.status=='active' && bidData.isbid=='false'))"
+          <button type="button" class="btn btn-success" *ngIf="ACTION_BID=='แก้ไข'" [disabled]="!(bidData.status=='end' || (bidData.status=='active' && bidData.isbid=='false'))"
             (click)="saveBid()">บันทึก</button>
+          <button type="button" class="btn btn-success" *ngIf="ACTION_BID=='เพิ่ม'" (click)="saveBid()">บันทึก</button>
           <button type="button" class="btn btn-default " (click)="cancelAddBid()">ยกเลิก</button>
         </div>
       </div>
