@@ -860,8 +860,8 @@ export class CreateShopComponent implements OnInit {
       alert("กรุณาระบุชื่อร้านค้า");
     }else if (!this.shop.email){
       alert("กรุณาระบุอีเมล์ร้านค้า");
-    }else if (this.shop.email && this.shop.email.indexOf("@") != -1) {
-      alert("กรุณาระบุอีเมล์ผิด");
+    }else if (this.shop.email && this.shop.email.indexOf("@") == -1) {
+      alert("กรุณากรอกอีเมล์ให้ถูกต้อง");
     }else {
       if (this.shopID) {
         this.shop.address = {

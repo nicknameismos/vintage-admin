@@ -1,24 +1,8 @@
 <div class="main-content">
-
   <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
-        <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active" (click)="selectTab('กำลังประมูล')">
-            <a href="#tab1" role="tab" data-toggle="tab">กำลังประมูล</a>
-          </li>
-          <li role="presentation" (click)="selectTab('รอการประมูล')">
-            <a href="#tab2" role="tab" data-toggle="tab">รอการประมูล</a>
-          </li>
-          <li role="presentation" (click)="selectTab('ประมูลแล้ว')">
-            <a href="#tab3" role="tab" data-toggle="tab">ประมูลแล้ว</a>
-          </li>
-          <li role="presentation" (click)="selectTab('จ่ายเงินแล้ว')">
-            <a href="#tab4" role="tab" data-toggle="tab">จ่ายเงินแล้ว</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-lg-4 col-md-8 col-sm-8 col-xs-8" style="margin-top: 10px">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="margin-top: 10px"></div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12" style="margin-top: 10px">
         <div class="sb">
           <span class="inner-sb">
             <span class="txb">
@@ -26,17 +10,95 @@
             </span>
           </span>
           <span>
-            <input type="text" class="form-control tb">
+            <input type="text" class="form-control tb" [(ngModel)]="keyword" (keyup.enter)="search()">
           </span>
         </div>
       </div>
-      <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
+      <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12" style="margin-top: 10px">
         <button class="btn addBTN" (click)="addBid()">
           <i class="material-icons">add</i>เพิ่มการประมูล</button>
       </div>
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-top: 10px">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" *ngFor="let item of bidlist.titles;let i = index" class="{{ selectedTab === i ? 'active':''}}" (click)="selectTab(i,item)">
+            <a href="#tab{{i}}" role="tab" data-toggle="tab">{{item}}</a>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <div class="row">
+    <!-- content tabs -->
+    <div class="tab-content">
+      <div role="tabpanel" id="tab{{i}}" *ngFor="let item of bidlist.titles; let i = index" class="tab-pane {{ selectedTab === i ? 'active':''}}">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="card">
+              <div class="card-content">
+                <table class="table table-hover">
+                  <thead class="text-green">
+                    <tr>
+                      <th class="text-center">#</th>
+                      <th class="prd-col">สินค้าประมูล</th>
+                      <th>ราคาเริ่มต้น</th>
+                      <th>ราคาประมูลต่อเคาะ</th>
+                      <th>เวลาเริ่มต้นประมูล</th>
+                      <th>เวลาสิ้นสุดประมูล</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngIf="bidlist.items.length <= 0">
+                      <td colspan="8" class="center">
+                        ยังไม่มีข้อมูลในระบบ
+                      </td>
+                    </tr>
+                    <tr style="height:10rem;" *ngFor="let item of bidlist.items; let i = index">
+                      <td class="text-center" (click)="editBid(item)">{{i + pageSelect + 1}}</td>
+                      <td (click)="editBid(item)">
+                        <img class="img-display" [src]="item.image ? item.image[0] : 'http://tutaki.org.nz/wp-content/uploads/2016/04/no-image-available.png'"
+                          alt=""> {{item.name}}</td>
+                      <td class="text-center" (click)="editBid(item)">{{item.startprice}}</td>
+                      <td class="text-center" (click)="editBid(item)">{{item.bidprice}}</td>
+                      <td class="text-center" (click)="editBid(item)">{{item.starttime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</td>
+                      <td class="text-center" (click)="editBid(item)">{{item.endtime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</td>
+                      <td class="text-center">
+                        <div class="dropdown pull-right">
+                          <button class="btn btn-simple btn-xs pull-right dropdown-toggle " type="button" id="dropdownMenu2" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="true">
+                            <i class="material-icons toggle-color">more_horiz</i>
+                          </button>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <button type="button" class="btn btn-xs btn-diss w-40" (click)="editBid(item)" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))">
+                              <i class="material-icons edit-color">border_color</i>
+                            </button>
+                            <button type="button" class="btn btn-xs btn-diss w-40" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))"
+                              (click)="deleteBid(item)">
+                              <i class="material-icons del-color">delete</i>
+                            </button>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="pc">
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                      <li [class]="curentPage[item]" *ngFor="let item of bidlist.paging">
+                        <a (click)="pageing(item)">{{item}}</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end content tabs -->
+
+    <!-- <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="card">
           <div class="card-content">
@@ -57,7 +119,6 @@
                   <td class="text-center" (click)="editBid(item)">{{i + 1}}</td>
                   <td (click)="editBid(item)">
                     <img class="img-display" [src]="item.image[0]" alt=""> {{item.name}}</td>
-
                   <td class="text-center" (click)="editBid(item)">{{item.startprice}}</td>
                   <td class="text-center" (click)="editBid(item)">{{item.bidprice}}</td>
                   <td class="text-center" (click)="editBid(item)">{{item.starttime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</td>
@@ -72,16 +133,10 @@
                         <button type="button" class="btn btn-xs btn-diss w-40" (click)="editBid(item)" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))">
                           <i class="material-icons edit-color">border_color</i>
                         </button>
-                        <!-- <span (click)="editBid(item)">
-                          <i class="material-icons edit-color">border_color</i>
-                        </span> -->
                         <button type="button" class="btn btn-xs btn-diss w-40" [disabled]="!(item.status=='end' || (item.status=='active' && item.isbid=='false'))"
                           (click)="deleteBid(item)">
                           <i class="material-icons del-color">delete</i>
                         </button>
-                        <!-- <span (click)="deleteBid(item)">
-                          <i class="material-icons del-color">delete</i>
-                        </span> -->
                       </ul>
                     </div>
                   </td>
@@ -91,7 +146,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
@@ -169,14 +224,17 @@
           <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 text-center">
             <div class="form-group form-black floating is-empty">
               เริ่มต้นประมูล
-              <span class="red">*</span>
-              <input type="datetime-local" format="dd/MM/yyyy" name="starttime" [(ngModel)]="bidData.starttime" (ngModelChange)="calcDate('start')">
+              <span class="red">* </span>
+              <input type="datetime-local" format="dd/MM/yyyy" name="starttime" [ngClass]="{'input-err' : input_err_start == true}" [(ngModel)]="bidData.starttime"
+                (ngModelChange)="calcDate('start')">
+              <div class="txt-e" *ngIf="input_err_start">{{txtErr_start}}</div>
             </div>
             <div class="form-group form-black floating is-empty">
               สิ้นสุดประมูล
-              <span class="red">*</span>
-              <input type="datetime-local" format="dd/MM/yyyy" name="endtime" [disabled]="!bidData.endtime" [(ngModel)]="bidData.endtime"
+              <span class="red">* </span>
+              <input type="datetime-local" format="dd/MM/yyyy" name="endtime" [ngClass]="{'input-err' : input_err_end == true}" [(ngModel)]="bidData.endtime"
                 (ngModelChange)="calcDate('end')">
+              <div class="txt-e2" *ngIf="input_err_end">{{txtErr_end}}</div>
             </div>
           </div>
           <div class="col-lg-1 col-md-1 col-sm-1  text-center"></div>

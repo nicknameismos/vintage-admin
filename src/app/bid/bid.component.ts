@@ -20,11 +20,21 @@ export class BidComponent implements OnInit {
   private isEditImage: boolean = false;
   private bidData: any = {};
   private bidlist: Array<any> = [];
-  private selectedTab: string = 'กำลังประมูล';
+  private selectedTab: number = 0;
   private oldDate: any = {};
   private shippingMaster: Array<any> = [];
   private shippingMasterOld: Array<any> = [];
   private shippings: Array<any> = [];
+  private curentPage: Array<any> = [];
+  private typeTab: string = '';
+  private currentPageSelected: number = 0;
+  private keyword: string = '';
+  private pageSelect: number = 0;
+  private input_err_start: boolean = false;
+  private input_err_end: boolean = false;
+  private txtErr_start: string;
+  private txtErr_end: string;
+
   constructor(private server: ServerConfig, private router: Router, private pubsub: PubSubService, private bidService: BidService) { }
 
   ngOnInit() {
@@ -37,9 +47,54 @@ export class BidComponent implements OnInit {
       }
     });
   }
-  InitialData() {
-    this.bidService.getBid().subscribe((data) => {
+
+  search() {
+    this.pubsub.$pub('loading', true);
+    this.curentPage = [];
+    this.pageSelect = 0;
+    this.curentPage[1] = 'active';
+    this.currentPageSelected = 0;
+    this.typeTab = this.typeTab;
+    this.selectedTab = this.selectedTab;
+    this.getBidList();
+  }
+
+  pageing(page: number) {
+    this.pubsub.$pub('loading', true);
+    this.currentPageSelected = page;
+    this.pageSelect = 0;
+    this.curentPage = [];
+    this.pageSelect = (page - 1) * 10;
+    this.curentPage[page] = 'active';
+    this.getBidList();
+  }
+
+  getBidList() {
+    const params = {
+      title: this.typeTab,
+      currentpage: this.currentPageSelected,
+      keyword: this.keyword
+    };
+    console.log(params);
+    this.bidService.getBidList(params).subscribe((data) => {
       this.bidlist = data;
+      console.log(data);
+      this.pubsub.$pub('loading', false);
+    });
+  }
+
+  InitialData() {
+    const params = {
+      title: '',
+      currentpage: 0,
+      keyword: ''
+    };
+    console.log(params);
+    this.bidService.getBidList(params).subscribe((data) => {
+      this.bidlist = data;
+      if (data.paging.length > 0) {
+        this.curentPage[1] = 'active';
+      }
       this.pubsub.$pub('loading', false);
     });
     this.bidService.getShipingMaster().subscribe(data => {
@@ -90,15 +145,21 @@ export class BidComponent implements OnInit {
             starttime: this.bidData.starttime,
             endtime: this.bidData.starttime
           };
+          this.input_err_start = false;
+          this.input_err_end = false;
+          this.txtErr_start = '';
+          this.txtErr_end = '';
         } else {
-          alert('ต้องไม่น้อยกว่าวันปัจจุบัน');
-          let defaultDateNow_mod = dateNow.getFullYear() + '-' + month_n + '-' + date_n + 'T' + incHr_n + ':' + incMin_n;
-          this.bidData.starttime = '';
-          this.bidData.endtime = '';
-          setTimeout(() => {
-            this.bidData.starttime = defaultDateNow_mod;
-            this.bidData.endtime = defaultDateNow_mod;
-          }, 50);
+          this.input_err_start = true;
+          this.txtErr_start = 'ต้องไม่น้อยกว่าวันปัจจุบัน';
+          // alert('ต้องไม่น้อยกว่าวันปัจจุบัน');
+          // let defaultDateNow_mod = dateNow.getFullYear() + '-' + month_n + '-' + date_n + 'T' + incHr_n + ':' + incMin_n;
+          // this.bidData.starttime = '';
+          // this.bidData.endtime = '';
+          // setTimeout(() => {
+          //   this.bidData.starttime = defaultDateNow_mod;
+          //   this.bidData.endtime = defaultDateNow_mod;
+          // }, 50);
         }
       }
     } else if (_type === 'end') {
@@ -107,14 +168,20 @@ export class BidComponent implements OnInit {
           starttime: this.bidData.starttime,
           endtime: this.bidData.starttime
         };
+        this.input_err_start = false;
+        this.input_err_end = false;
+        this.txtErr_start = '';
+        this.txtErr_end = '';
       } else {
-        alert('ต้องไม่เกิน 24 ชั่วโมง');
-        this.bidData.starttime = '';
-        this.bidData.endtime = '';
-        setTimeout(() => {
-          this.bidData.starttime = this.oldDate.starttime;
-          this.bidData.endtime = this.oldDate.endtime;
-        }, 50);
+        // alert('ต้องไม่เกิน 24 ชั่วโมง');
+        this.input_err_end = true;
+        this.txtErr_end = 'ต้องไม่เกิน 24 ชั่วโมง';
+        // this.bidData.starttime = '';
+        // this.bidData.endtime = '';
+        // setTimeout(() => {
+        //   this.bidData.starttime = this.oldDate.starttime;
+        //   this.bidData.endtime = this.oldDate.endtime;
+        // }, 50);
       }
     }
   }
@@ -142,11 +209,20 @@ export class BidComponent implements OnInit {
     }
   }
 
-  selectTab(name) {
-    this.selectedTab = name;
+  selectTab(index, typeTab) {
+    this.pubsub.$pub('loading', true);
+    this.curentPage = [];
+    this.pageSelect = 0;
+    this.curentPage[1] = 'active';
+    this.currentPageSelected = 0;
+    this.typeTab = typeTab;
+    this.selectedTab = index;
+    this.getBidList();
   }
 
   addBid() {
+    this.input_err_start = false;
+    this.input_err_end = false;
     this.ACTION_BID = 'เพิ่ม';
     this.shippings = [];
     this.shippingMaster.forEach((e, i) => {
@@ -266,9 +342,9 @@ export class BidComponent implements OnInit {
       alert('กรุณาใส่ราคาเริ่มต้น');
     } else if (!this.bidData.bidprice) {
       alert('กรุณาใส่ราคาเคาะประมูล');
-    } else if (!this.bidData.starttime) {
+    } else if (!this.bidData.starttime || this.input_err_start) {
       alert('กรุณาใส่วันที่เริ่มต้นประมูล');
-    } else if (!this.bidData.endtime) {
+    } else if (!this.bidData.endtime || this.input_err_end) {
       alert('กรุณาใส่วันที่สิ้นสุดประมูล');
     } else if (this.shippings.length <= 0) {
       alert('กรุณาเลือกการจัดส่ง');
