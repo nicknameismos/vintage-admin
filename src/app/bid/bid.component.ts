@@ -171,7 +171,7 @@ export class BidComponent implements OnInit {
         this.input_err_start = false;
         this.input_err_end = false;
         this.txtErr_start = '';
-          this.txtErr_end = '';
+        this.txtErr_end = '';
       } else {
         // alert('ต้องไม่เกิน 24 ชั่วโมง');
         this.input_err_end = true;
@@ -342,9 +342,9 @@ export class BidComponent implements OnInit {
       alert('กรุณาใส่ราคาเริ่มต้น');
     } else if (!this.bidData.bidprice) {
       alert('กรุณาใส่ราคาเคาะประมูล');
-    } else if (!this.bidData.starttime) {
+    } else if (!this.bidData.starttime || this.input_err_start) {
       alert('กรุณาใส่วันที่เริ่มต้นประมูล');
-    } else if (!this.bidData.endtime) {
+    } else if (!this.bidData.endtime || this.input_err_end) {
       alert('กรุณาใส่วันที่สิ้นสุดประมูล');
     } else if (this.shippings.length <= 0) {
       alert('กรุณาเลือกการจัดส่ง');

@@ -232,8 +232,8 @@
             <div class="form-group form-black floating is-empty">
               สิ้นสุดประมูล
               <span class="red">* </span>
-              <input type="datetime-local" format="dd/MM/yyyy" name="endtime" [ngClass]="{'input-err' : input_err_end == true}" [disabled]="!bidData.endtime"
-                [(ngModel)]="bidData.endtime" (ngModelChange)="calcDate('end')">
+              <input type="datetime-local" format="dd/MM/yyyy" name="endtime" [ngClass]="{'input-err' : input_err_end == true}" [(ngModel)]="bidData.endtime"
+                (ngModelChange)="calcDate('end')">
               <div class="txt-e2" *ngIf="input_err_end">{{txtErr_end}}</div>
             </div>
           </div>
