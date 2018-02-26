@@ -44,6 +44,17 @@ export class BidComponent implements OnInit {
     });
   }
 
+  search() {
+    this.pubsub.$pub('loading', true);
+    this.curentPage = [];
+    this.pageSelect = 0;
+    this.curentPage[1] = 'active';
+    this.currentPageSelected = 0;
+    this.typeTab = this.typeTab;
+    this.selectedTab = this.selectedTab;
+    this.getBidList();
+  }
+
   pageing(page: number) {
     this.pubsub.$pub('loading', true);
     this.currentPageSelected = page;
