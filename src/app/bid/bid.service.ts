@@ -11,6 +11,12 @@ export class BidService {
 
     constructor(private http: Http, public server: ServerConfig) { }
 
+    getBidList(data): Observable<any> {
+        return this.http.post(this.server.url + 'api/bidlist', data, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
     saveBid(data): Observable<any> {
         return this.http.post(this.server.url + 'api/bids', data, this.server.AuthHeaders())
             .map((res: Response) => res.json())
