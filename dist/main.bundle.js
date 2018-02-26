@@ -673,6 +673,8 @@ var BidComponent = (function () {
         this.getBidList();
     };
     BidComponent.prototype.addBid = function () {
+        this.addImgPrd = [];
+        this.bidData = {};
         this.input_err_start = false;
         this.input_err_end = false;
         this.ACTION_BID = 'เพิ่ม';
@@ -766,8 +768,8 @@ var BidComponent = (function () {
         var _this = this;
         var fileBrowser = this.prdimgInput.nativeElement;
         var reader = new FileReader();
-        reader.readAsDataURL(fileBrowser.files[0]);
         if (fileBrowser.files.length > 0) {
+            reader.readAsDataURL(fileBrowser.files[0]);
             reader.onload = function () {
                 _this.isEditImage = true;
                 var result = reader.result.replace(/\n/g, '');
