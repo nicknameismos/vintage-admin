@@ -12,17 +12,25 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 })
 export class ManageUserComponent implements OnInit {
   @ViewChild('dissmissBtn2') dissmissBtn2;
+  loading: boolean = true;
   private listAllUser: Array<any> = [];
   private listCust: Array<any> = [];
   private listShopOwner: Array<any> = [];
   private listAdmin: Array<any> = [];
   private listBiker: Array<any> = [];
-  private curentPage: Array<any> = [];
-  private pageSelect: number = 0;
-  private currentPageSelected: number = 1;
   private editingUserData: any = {};
   private tabType: string = 'customer';
   private action: string = '';
+
+  private userList: any = {};
+  private typeTab = 'ลูกค้า';
+  private searchKeyword: string = '';
+  private currentPageSelected: number = 1;
+  private curentPage: Array<any> = [];
+  private pageSelect: number = 0;
+  private selectedTab: number = 0;
+
+
   constructor(private UserService: ManageUserService, private server: ServerConfig, private router: Router, private pubsub: PubSubService) {
   }
 
@@ -33,9 +41,46 @@ export class ManageUserComponent implements OnInit {
         this.router.navigate(['/login']);
         this.pubsub.$pub('loading', false);
       } else {
-        this.getAllUser();
+        // this.getAllUser();
+        this.searchUser();
       }
     });
+  }
+
+  searchUser() {
+    this.pubsub.$pub('loading', true);
+    this.UserService.searchUser(this.typeTab, this.currentPageSelected, this.searchKeyword).subscribe(data => {
+      this.userList = data;
+      if (this.currentPageSelected === 1) {
+        this.curentPage[1] = 'active';
+      }
+      console.log(this.userList);
+      this.pubsub.$pub('loading', false);
+    }, err => {
+      this.pubsub.$pub('loading', false);
+
+      console.log(err);
+    });
+  }
+
+  selectTab(titles) {
+    this.pageSelect = 0;
+    this.currentPageSelected = 1;
+    this.curentPage = [];
+    this.curentPage[1] = 'active';
+    this.typeTab = titles;
+    this.searchUser();
+  }
+
+  pageing(page: number) {
+    this.pubsub.$pub('loading', true);
+    this.pageSelect = 0;
+    this.curentPage = [];
+    this.curentPage[page] = 'active';
+    this.pageSelect = (page - 1) * 10;
+    this.currentPageSelected = page;
+    console.log(this.currentPageSelected);
+    this.searchUser();
   }
 
   getAllUser() {

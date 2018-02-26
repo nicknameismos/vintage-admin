@@ -20,11 +20,17 @@ export class BidComponent implements OnInit {
   private isEditImage: boolean = false;
   private bidData: any = {};
   private bidlist: Array<any> = [];
-  private selectedTab: string = 'กำลังประมูล';
+  private selectedTab: number = 0;
   private oldDate: any = {};
   private shippingMaster: Array<any> = [];
   private shippingMasterOld: Array<any> = [];
   private shippings: Array<any> = [];
+  private curentPage: Array<any> = [];
+  private typeTab: string = '';
+  private currentPageSelected: number = 0;
+  private keyword: string = '';
+  private pageSelect: number = 0;
+
   constructor(private server: ServerConfig, private router: Router, private pubsub: PubSubService, private bidService: BidService) { }
 
   ngOnInit() {
@@ -37,9 +43,54 @@ export class BidComponent implements OnInit {
       }
     });
   }
-  InitialData() {
-    this.bidService.getBid().subscribe((data) => {
+
+  search() {
+    this.pubsub.$pub('loading', true);
+    this.curentPage = [];
+    this.pageSelect = 0;
+    this.curentPage[1] = 'active';
+    this.currentPageSelected = 0;
+    this.typeTab = this.typeTab;
+    this.selectedTab = this.selectedTab;
+    this.getBidList();
+  }
+
+  pageing(page: number) {
+    this.pubsub.$pub('loading', true);
+    this.currentPageSelected = page;
+    this.pageSelect = 0;
+    this.curentPage = [];
+    this.pageSelect = (page - 1) * 10;
+    this.curentPage[page] = 'active';
+    this.getBidList();
+  }
+
+  getBidList() {
+    const params = {
+      title: this.typeTab,
+      currentpage: this.currentPageSelected,
+      keyword: this.keyword
+    };
+    console.log(params);
+    this.bidService.getBidList(params).subscribe((data) => {
       this.bidlist = data;
+      console.log(data);
+      this.pubsub.$pub('loading', false);
+    });
+  }
+
+  InitialData() {
+    const params = {
+      title: '',
+      currentpage: 0,
+      keyword: ''
+    };
+    console.log(params);
+    this.bidService.getBidList(params).subscribe((data) => {
+      this.bidlist = data;
+      if (data.paging.length > 0) {
+        this.curentPage[1] = 'active';
+      }
       this.pubsub.$pub('loading', false);
     });
     this.bidService.getShipingMaster().subscribe(data => {
@@ -142,8 +193,15 @@ export class BidComponent implements OnInit {
     }
   }
 
-  selectTab(name) {
-    this.selectedTab = name;
+  selectTab(index, typeTab) {
+    this.pubsub.$pub('loading', true);
+    this.curentPage = [];
+    this.pageSelect = 0;
+    this.curentPage[1] = 'active';
+    this.currentPageSelected = 0;
+    this.typeTab = typeTab;
+    this.selectedTab = index;
+    this.getBidList();
   }
 
   addBid() {
