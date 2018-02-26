@@ -221,6 +221,8 @@ export class BidComponent implements OnInit {
   }
 
   addBid() {
+    this.addImgPrd = [];
+    this.bidData = {};
     this.input_err_start = false;
     this.input_err_end = false;
     this.ACTION_BID = 'เพิ่ม';
@@ -319,8 +321,8 @@ export class BidComponent implements OnInit {
   onupImgPrdChange($event) {
     const fileBrowser = this.prdimgInput.nativeElement;
     const reader = new FileReader();
-    reader.readAsDataURL(fileBrowser.files[0]);
     if (fileBrowser.files.length > 0) {
+      reader.readAsDataURL(fileBrowser.files[0]);
       reader.onload = () => {
         this.isEditImage = true;
         let result = reader.result.replace(/\n/g, '');
