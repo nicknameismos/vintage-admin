@@ -30,6 +30,10 @@ export class BidComponent implements OnInit {
   private currentPageSelected: number = 0;
   private keyword: string = '';
   private pageSelect: number = 0;
+  private input_err_start: boolean = false;
+  private input_err_end: boolean = false;
+  private txtErr_start: string;
+  private txtErr_end: string;
 
   constructor(private server: ServerConfig, private router: Router, private pubsub: PubSubService, private bidService: BidService) { }
 
@@ -141,15 +145,21 @@ export class BidComponent implements OnInit {
             starttime: this.bidData.starttime,
             endtime: this.bidData.starttime
           };
+          this.input_err_start = false;
+          this.input_err_end = false;
+          this.txtErr_start = '';
+          this.txtErr_end = '';
         } else {
-          alert('ต้องไม่น้อยกว่าวันปัจจุบัน');
-          let defaultDateNow_mod = dateNow.getFullYear() + '-' + month_n + '-' + date_n + 'T' + incHr_n + ':' + incMin_n;
-          this.bidData.starttime = '';
-          this.bidData.endtime = '';
-          setTimeout(() => {
-            this.bidData.starttime = defaultDateNow_mod;
-            this.bidData.endtime = defaultDateNow_mod;
-          }, 50);
+          this.input_err_start = true;
+          this.txtErr_start = 'ต้องไม่น้อยกว่าวันปัจจุบัน';
+          // alert('ต้องไม่น้อยกว่าวันปัจจุบัน');
+          // let defaultDateNow_mod = dateNow.getFullYear() + '-' + month_n + '-' + date_n + 'T' + incHr_n + ':' + incMin_n;
+          // this.bidData.starttime = '';
+          // this.bidData.endtime = '';
+          // setTimeout(() => {
+          //   this.bidData.starttime = defaultDateNow_mod;
+          //   this.bidData.endtime = defaultDateNow_mod;
+          // }, 50);
         }
       }
     } else if (_type === 'end') {
@@ -158,14 +168,20 @@ export class BidComponent implements OnInit {
           starttime: this.bidData.starttime,
           endtime: this.bidData.starttime
         };
+        this.input_err_start = false;
+        this.input_err_end = false;
+        this.txtErr_start = '';
+          this.txtErr_end = '';
       } else {
-        alert('ต้องไม่เกิน 24 ชั่วโมง');
-        this.bidData.starttime = '';
-        this.bidData.endtime = '';
-        setTimeout(() => {
-          this.bidData.starttime = this.oldDate.starttime;
-          this.bidData.endtime = this.oldDate.endtime;
-        }, 50);
+        // alert('ต้องไม่เกิน 24 ชั่วโมง');
+        this.input_err_end = true;
+        this.txtErr_end = 'ต้องไม่เกิน 24 ชั่วโมง';
+        // this.bidData.starttime = '';
+        // this.bidData.endtime = '';
+        // setTimeout(() => {
+        //   this.bidData.starttime = this.oldDate.starttime;
+        //   this.bidData.endtime = this.oldDate.endtime;
+        // }, 50);
       }
     }
   }
@@ -205,6 +221,8 @@ export class BidComponent implements OnInit {
   }
 
   addBid() {
+    this.input_err_start = false;
+    this.input_err_end = false;
     this.ACTION_BID = 'เพิ่ม';
     this.shippings = [];
     this.shippingMaster.forEach((e, i) => {

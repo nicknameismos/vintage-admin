@@ -18,6 +18,20 @@ th {
     font-size: 1.5rem;
 }
 
+.input-err {
+    border: 1px solid red !important;
+}
+
+.txt-e {
+    margin-left: 42px;
+    color: red;
+}
+
+.txt-e2 {
+    margin-left: 18px;
+    color: red;
+}
+
 .line-w:hover {
     color: white;
     border: 3px solid rgba(34, 143, 34, 0);
