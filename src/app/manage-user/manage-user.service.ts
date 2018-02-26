@@ -10,6 +10,16 @@ export class ManageUserService {
 
     constructor(private http: Http, public server: ServerConfig) { }
 
+    searchUser(typeTab, currentPage, keyword): Observable<any> {
+        return this.http.post(this.server.url + 'api/getusersbyadmin', {
+            title: typeTab,
+            currentpage: currentPage,
+            keyword: keyword
+        }, this.server.AuthHeaders())
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error));
+    }
+
     getUser(): Observable<any> {
         return this.http.get(this.server.url + 'api/management/users', this.server.AuthHeaders())
             .map((res: Response) => res.json())
