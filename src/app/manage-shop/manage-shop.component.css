@@ -126,13 +126,13 @@
 .pagination>.active>span,
 .pagination>.active>span:focus,
 .pagination>.active>span:hover {
-    background-color: #9E9E9E;
-    border-color: #9E9E9E;
+    background-color: #3c6233;
+    border-color: #3c6233;
     color: #ffffff;
 }
 
 .pagination>li>a {
-    color: #9e9e9e;
+    color: #3c6233;
 }
 
 .nav-tabs {

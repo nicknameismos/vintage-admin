@@ -155,7 +155,7 @@ fieldset[disabled] .form-group .form-control {
 .btn:focus .open>.btn.dropdown-toggle:hover,
 .btn.btn-default,
 .btn.btn-default:hover {
-    background-color: #ffffff00 ;
+    background-color: #ffffff00;
     border-color: #3c6233;
     color: #3c6233;
 }
@@ -258,6 +258,22 @@ fieldset[disabled] .form-group .form-control {
     background-color: #D50000;
     color: #FFFFFF;
 }
+
 .pc {
     text-align: center;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+    background-color: #3c6233;
+    border-color: #3c6233;
+    color: #ffffff;
+}
+
+.pagination>li>a {
+    color: #3c6233;
 }
