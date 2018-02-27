@@ -75,10 +75,8 @@ export class BidComponent implements OnInit {
       currentpage: this.currentPageSelected,
       keyword: this.keyword
     };
-    console.log(params);
     this.bidService.getBidList(params).subscribe((data) => {
       this.bidlist = data;
-      console.log(data);
       this.pubsub.$pub('loading', false);
     });
   }
@@ -89,7 +87,6 @@ export class BidComponent implements OnInit {
       currentpage: 0,
       keyword: ''
     };
-    console.log(params);
     this.bidService.getBidList(params).subscribe((data) => {
       this.bidlist = data;
       if (data.paging.length > 0) {
@@ -284,7 +281,6 @@ export class BidComponent implements OnInit {
     }, 100);
     this.bidData.starttime = this.bidData.starttime.replace(':00.000Z', '');
     this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
-    console.log(this.bidData);
     $(this.modalbid.nativeElement).modal('show');
   }
 
@@ -373,7 +369,7 @@ export class BidComponent implements OnInit {
               this.bidData.image = image;
               this.bidService.saveBid(this.bidData).subscribe(res => {
                 this.pubsub.$pub('loading', false);
-                this.InitialData();
+                this.getBidList();
                 alert('เพิ่มการประมูลเรียบร้อยแล้ว');
                 $(this.modalbid.nativeElement).modal('hide');
               }, errRes => {
@@ -393,7 +389,7 @@ export class BidComponent implements OnInit {
           this.pubsub.$pub('loading', false);
           alert('แก้ไขข้อมูลเรียบร้อย');
           $(this.modalbid.nativeElement).modal('hide');
-          this.InitialData();
+          this.getBidList();
         }, err => {
           console.log(err);
           this.pubsub.$pub('loading', false);
