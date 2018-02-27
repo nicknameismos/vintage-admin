@@ -70,8 +70,7 @@
                             <i class="material-icons toggle-color">more_horiz</i>
                           </button>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <button type="button" class="btn btn-xs btn-diss w-40" *ngIf="!(typeTab=='สิ้นสุดการประมูล')"
-                              (click)="editBid(item)">
+                            <button type="button" class="btn btn-xs btn-diss w-40" *ngIf="!(typeTab=='สิ้นสุดการประมูล')" (click)="editBid(item)">
                               <i class="material-icons edit-color">border_color</i>
                             </button>
                             <button type="button" class="btn btn-xs btn-diss w-40" (click)="deleteBid(item)">
@@ -229,12 +228,17 @@
           </div>
         </div>
 
-
-        <div class="modal-footer text-center">
-          <button type="button" class="btn btn-success" [disabled]="typeTab=='' || typeTab=='กำลังประมูล' || typeTab=='ประมูลแล้ว' || typeTab=='จ่ายเงินแล้ว' || typeTab=='สิ้นสุดการประมูล'" *ngIf="ACTION_BID=='แก้ไข'" (click)="saveBid()">บันทึก</button>
-          <button type="button" class="btn btn-success" *ngIf="ACTION_BID=='เพิ่ม'" (click)="saveBid()">บันทึก</button>
+        <div class="modal-footer text-center" *ngIf="ACTION_BID=='แก้ไข'">
+          <button type="button" class="btn btn-success" *ngIf="ACTION_BID=='แก้ไข' && typeTab=='รอการประมูล'" (click)="saveBid()">บันทึก</button>
           <button type="button" class="btn btn-default " (click)="cancelAddBid()">ยกเลิก</button>
         </div>
+
+        <div class="modal-footer text-center" *ngIf="ACTION_BID=='เพิ่ม'">
+          <button type="button" class="btn btn-success" (click)="saveBid()">บันทึก</button>
+          <button type="button" class="btn btn-default " (click)="cancelAddBid()">ยกเลิก</button>
+        </div>
+
+
       </div>
     </div>
   </div>
