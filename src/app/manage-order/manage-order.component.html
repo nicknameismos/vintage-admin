@@ -343,12 +343,21 @@
               </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
-
+              <div class="col-md-12">
+                <div class="form-group form-black is-empty">
+                  วิธีการจัดส่ง
+                  <span style="color:red"> *</span>:
+                  <select class="form-control" id="sel1" [(ngModel)]="adminshipping">
+                    <option *ngFor="let item of OrderDetail.shippings" [ngValue]="item">{{item.ref.name}}</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         <div class="modal-footer text-center">
-          <button type="button" class="btn btn-success" (click)="confirmitm()" [disabled]="!shipping.name || !shipping.address.address || !shipping.address.subdistrict || !shipping.address.district || !shipping.address.province || !shipping.address.postcode" data-dismiss="modal">ยืนยัน</button>
+          <button type="button" class="btn btn-success" (click)="confirmitm()" [disabled]="!shipping.name || !shipping.address.address || !shipping.address.subdistrict || !shipping.address.district || !shipping.address.province || !shipping.address.postcode || !adminshipping"
+            data-dismiss="modal">ยืนยัน</button>
         </div>
       </div>
     </div>

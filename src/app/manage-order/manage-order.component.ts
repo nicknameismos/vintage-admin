@@ -27,14 +27,19 @@ export class ManageOrderComponent implements OnInit {
   private shipping: any = {
     address: {}
   };
-
+  private adminshipping: any = {
+    ref: {
+      name: ''
+    },
+    price: 0
+  };
   @ViewChild('modalDetail') modalDetail;
   constructor(
     private pubsub: PubSubService,
     private server: ServerConfig,
     private router: Router,
     public manageOrderService: ManageOrderService
-  ) {  }
+  ) { }
 
   ngOnInit() {
     this.server.isLogin().subscribe(data => {
@@ -54,11 +59,10 @@ export class ManageOrderComponent implements OnInit {
     // this.shipping = {};
     this.manageOrderService.searchOrder(this.typeTab, this.currentPageSelected, this.searchKeyword).subscribe(data => {
       this.OrderList = data;
-      if(this.currentPageSelected === 1){
+      if (this.currentPageSelected === 1) {
         this.curentPage[1] = 'active';
       }
-
-      console.log(this.OrderList);
+      // console.log(this.OrderList);
       this.pubsub.$pub('loading', false);
     }, err => {
       this.pubsub.$pub('loading', false);
@@ -88,10 +92,11 @@ export class ManageOrderComponent implements OnInit {
 
   onClickDetail(item) {
     this.pubsub.$pub('loading', true);
+    this.adminshipping = {};
     this.manageOrderService.orderDetail(item.orderid, item.itemid).subscribe(data => {
       // console.log(data);
       this.OrderDetail = data;
-      console.log(this.OrderDetail);
+      // console.log(this.OrderDetail);
       if (this.OrderDetail.status === 'confirm') {
         this.dateShow = this.OrderDetail.confirmdate;
         this.statusdate = 'วันที่สั่งซื้อ';
@@ -136,10 +141,11 @@ export class ManageOrderComponent implements OnInit {
   confirmitm() {
     const cfconfirm = confirm('ยืนยันการชำระเงิน');
     if (cfconfirm) {
-      this.manageOrderService.adminStatusConfirm(this.OrderDetail, this.shipping).subscribe(data => {
+      // console.log(this.adminshipping);
+      this.manageOrderService.adminStatusConfirm(this.OrderDetail, this.shipping, this.adminshipping).subscribe(data => {
         this.modalDetail.nativeElement.click();
         alert('ชำระเงินเรียบร้อยแล้ว!');
-        console.log(data);
+        // console.log(data);
         this.searchOrder();
       }, err => {
         this.modalDetail.nativeElement.click();
