@@ -318,7 +318,7 @@ export class BidComponent implements OnInit {
   }
   removeprdImg(index) {
     this.addImgPrd.splice(index, 1);
-    if (this.addImgPrd.length == 0) {
+    if (this.addImgPrd.length === 0) {
       this.isEditImage = false;
     }
   }
@@ -329,7 +329,6 @@ export class BidComponent implements OnInit {
       this.isEditImage = false;
     }
   }
-
 
   onupImgPrdChange($event) {
     const fileBrowser = this.prdimgInput.nativeElement;
@@ -387,13 +386,15 @@ export class BidComponent implements OnInit {
               this.bidService.saveBid(this.bidData).subscribe(res => {
                 this.pubsub.$pub('loading', false);
                 this.getBidList();
+                alert('เพิ่มการประมูลเรียบร้อยแล้ว');
+                this.shippingMaster = [];
                 setTimeout(() => {
+                  this.shippingMaster = this.shippingMasterOld;
                   this.shippingMaster.forEach((e, i) => {
                     e.isChecked = false;
                   });
-                }, 50);
-                alert('เพิ่มการประมูลเรียบร้อยแล้ว');
-                $(this.modalbid.nativeElement).modal('hide');
+                  $(this.modalbid.nativeElement).modal('hide');
+                }, 200);
               }, errRes => {
                 console.log(errRes);
                 this.pubsub.$pub('loading', false);
