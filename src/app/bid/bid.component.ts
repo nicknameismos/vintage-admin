@@ -13,6 +13,7 @@ declare let $: any;
 })
 export class BidComponent implements OnInit {
   @ViewChild('modalbid') modalbid;
+  @ViewChild('modalBidDetail') modalBidDetail;
   @ViewChild('prdimgInput') prdimgInput;
   private ACTION_BID: string;
   private addImgPrd: Array<string> = [];
@@ -241,11 +242,16 @@ export class BidComponent implements OnInit {
       endtime: this.bidData.starttime
     };
   }
+
   cancelAddBid() {
     $(this.modalbid.nativeElement).modal('hide');
     this.addImgPrd = [];
     this.ImgprdEdit = [];
     this.bidData = {};
+  }
+
+  cancelBidDetail() {
+    $(this.modalBidDetail.nativeElement).modal('hide');
   }
 
   editBid(item) {
@@ -281,7 +287,12 @@ export class BidComponent implements OnInit {
     }, 100);
     this.bidData.starttime = this.bidData.starttime.replace(':00.000Z', '');
     this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
-    $(this.modalbid.nativeElement).modal('show');
+    console.log(this.bidData);
+    if (this.typeTab === 'รอการประมูล') {
+      $(this.modalbid.nativeElement).modal('show');
+    } else {
+      $(this.modalBidDetail.nativeElement).modal('show');
+    }
   }
 
   deleteBid(item) {

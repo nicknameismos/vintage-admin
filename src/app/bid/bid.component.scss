@@ -27,6 +27,14 @@ th {
     color: red;
 }
 
+.close {
+    font-size: 4rem;
+}
+
+.close-modal {
+    margin-top: -40px;
+}
+
 .txt-e2 {
     margin-left: 18px;
     color: red;
@@ -262,6 +270,7 @@ hr {
 .w-40 {
     width: 40px;
 }
+
 .pagination>.active>a,
 .pagination>.active>a:focus,
 .pagination>.active>a:hover,
