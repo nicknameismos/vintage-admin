@@ -62,7 +62,7 @@
                       <td class="text-center" (click)="editBid(item)">{{item.bidprice}}</td>
                       <td class="text-center" (click)="editBid(item)">{{item.starttime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</td>
                       <td class="text-center" (click)="editBid(item)">{{item.endtime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</td>
-                      <td class="text-center" (click)="editBid(item)" *ngIf="typeTab=='ประมูลแล้ว' || typeTab=='จ่ายเงินแล้ว' || typeTab=='สิ้นสุดการประมูล'">{{item.user ? item.user.displayName : '-'}}</td>
+                      <td class="text-center" (click)="editBid(item)" *ngIf="typeTab=='ประมูลแล้ว' || typeTab=='จ่ายเงินแล้ว' || typeTab=='สิ้นสุดการประมูล'">{{item.userbid.length > 0 ? item.userbid.reverse()[0].user.displayName : '-'}}</td>
                       <td class="text-center" *ngIf="!(typeTab=='' || typeTab=='กำลังประมูล' || typeTab=='ประมูลแล้ว' || typeTab=='จ่ายเงินแล้ว')">
                         <div class="dropdown pull-right">
                           <button class="btn btn-simple btn-xs pull-right dropdown-toggle " type="button" id="dropdownMenu2" data-toggle="dropdown"
@@ -221,12 +221,12 @@
           </div>
         </div>
 
-        <div class="row" *ngIf="(typeTab=='สิ้นสุดการประมูล' || typeTab=='ประมูลแล้ว' || typeTab=='จ่ายเงินแล้ว') && ACTION_BID=='แก้ไข'">
+        <!-- <div class="row" *ngIf="(typeTab=='สิ้นสุดการประมูล' || typeTab=='ประมูลแล้ว' || typeTab=='จ่ายเงินแล้ว') && ACTION_BID=='แก้ไข'">
           <div class="col-lg-1 col-md-1 col-sm-1"></div>
           <div class="col-lg-11 col-md-11 col-sm-11">
             ผู้ชนะการประมูล: {{bidData.user ? bidData.user.displayName : '-'}}
           </div>
-        </div>
+        </div> -->
 
         <div class="modal-footer text-center" *ngIf="ACTION_BID=='แก้ไข'">
           <button type="button" class="btn btn-success" *ngIf="ACTION_BID=='แก้ไข' && typeTab=='รอการประมูล'" (click)="saveBid()">บันทึก</button>
@@ -242,4 +242,73 @@
       </div>
     </div>
   </div>
-  <!-- //////////////////  Modal ADD BID ///////////////////// -->
+</div>
+<!-- //////////////////  end Modal ADD BID ///////////////////// -->
+
+
+<!-- //////////////////  Modal bid detail ///////////////////// -->
+<div class="modal fade" #modalBidDetail tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" data-keyboard="false"
+  data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel2">รายละเอียดการประมูล</h4>
+        <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close" (click)="cancelBidDetail()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <img style="width: 100%;" [src]="addImgPrd.length > 0 ? addImgPrd[0] : 'http://tutaki.org.nz/wp-content/uploads/2016/04/no-image-available.png'">
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <p>
+              <b>สถานะ:</b>
+              <label>{{typeTab}}</label>
+            </p>
+            <p>
+              <b>ชื่อสินค้า:</b>
+              <label>{{bidData.name}}</label>
+            </p>
+            <p>
+              <b>ราคาเริ่มต้น:</b>
+              <label>{{bidData.price | number}} บาท</label>
+            </p>
+            <p>
+              <b>ราคาเคาะประมูล:</b>
+              <label>{{bidData.bidprice | number}} บาท</label>
+            </p>
+            <p>
+              <b>เริ่มต้นประมูล:</b>
+              <label>{{bidData.starttime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</label>
+            </p>
+            <p>
+              <b>สิ้นสุดการประมูล:</b>
+              <label>{{bidData.endtime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</label>
+            </p>
+            <p>
+              <b>รายละเอียด:</b>
+              <label>{{bidData.detail ? bidData.detail : '-'}}</label>
+            </p>
+            <p style="text-decoration: underline;">
+              <b>การจัดส่ง</b>
+            </p>
+            <p *ngFor="let item of bidData.shippings">- {{item.ref.name}} {{item.ref.detail}} ราคา {{item.price | number}} บาท</p>
+            <p>
+              <b>จำนวนครั้งที่ประมูล:</b>
+              <label>{{bidData.userbid ? bidData.userbid.length : 0 | number}} ครั้ง</label>
+            </p>
+            <p>
+              <b>ผู้ชนะประมูล:</b>
+              <label>{{bidData.userbid ? bidData.userbid.reverse()[0].user.displayName : '-'}}</label>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- /////////////////  end Modal bid detail //////////////////// -->
