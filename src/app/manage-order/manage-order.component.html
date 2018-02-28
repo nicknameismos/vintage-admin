@@ -241,7 +241,7 @@
         </div>
         <div class="modal-footer text-center">
           <!-- <button type="button" class="btn btn-primary displaynone" #modalDetail data-dismiss="modal">Save changes</button> -->
-          <button type="button" class="btn btn-success" (click)="sentitm(refid)" data-dismiss="modal">ยืนยัน</button>
+          <button type="button" class="btn btn-success" (click)="sentitm(refid)" data-dismiss="modal" [disabled]="!refid">ยืนยัน</button>
         </div>
       </div>
     </div>
@@ -263,7 +263,7 @@
         </div>
         <div class="modal-footer text-center">
           <!-- <button type="button" class="btn btn-primary displaynone" #modalDetail data-dismiss="modal">Save changes</button> -->
-          <button type="button" class="btn btn-success" (click)="adminCancelitm(remark)" data-dismiss="modal">ยืนยัน</button>
+          <button type="button" class="btn btn-success" (click)="adminCancelitm(remark)" data-dismiss="modal" [disabled]="!remark">ยืนยัน</button>
         </div>
       </div>
     </div>
