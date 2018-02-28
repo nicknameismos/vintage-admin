@@ -265,7 +265,7 @@
           <div class="col-lg-6 col-md-6 col-sm-12">
             <p>
               <b>สถานะ:</b>
-              <label>{{typeTab}}</label>
+              <label>{{typeTab ? typeTab : '-'}}</label>
             </p>
             <p>
               <b>ชื่อสินค้า:</b>
@@ -301,7 +301,7 @@
             </p>
             <p>
               <b>ผู้ชนะประมูล:</b>
-              <label>{{bidData.userbid ? bidData.userbid.reverse()[0].user.displayName : '-'}}</label>
+              <label>{{winnerBid}}</label>
             </p>
           </div>
         </div>

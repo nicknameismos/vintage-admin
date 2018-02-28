@@ -35,6 +35,8 @@ export class BidComponent implements OnInit {
   private input_err_end: boolean = false;
   private txtErr_start: string;
   private txtErr_end: string;
+  private winnerBid: string;
+  private showWinnerBid: boolean = false;
 
   constructor(private server: ServerConfig, private router: Router, private pubsub: PubSubService, private bidService: BidService) { }
 
@@ -262,6 +264,8 @@ export class BidComponent implements OnInit {
       e.isChecked = false;
     });
 
+    this.winnerBid = this.bidData.userbid.length > 0 ? this.bidData.userbid.reverse()[0].user.displayName : '-';
+
     setTimeout(() => {
       for (let i = 0; i < this.shippingMaster.length; i++) {
         for (let j = 0; j < this.bidData.shippings.length; j++) {
@@ -289,8 +293,10 @@ export class BidComponent implements OnInit {
     this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
     console.log(this.bidData);
     if (this.typeTab === 'รอการประมูล') {
+      this.showWinnerBid = false;
       $(this.modalbid.nativeElement).modal('show');
     } else {
+      this.showWinnerBid = true;
       $(this.modalBidDetail.nativeElement).modal('show');
     }
   }
@@ -381,6 +387,11 @@ export class BidComponent implements OnInit {
               this.bidService.saveBid(this.bidData).subscribe(res => {
                 this.pubsub.$pub('loading', false);
                 this.getBidList();
+                setTimeout(() => {
+                  this.shippingMaster.forEach((e, i) => {
+                    e.isChecked = false;
+                  });
+                }, 50);
                 alert('เพิ่มการประมูลเรียบร้อยแล้ว');
                 $(this.modalbid.nativeElement).modal('hide');
               }, errRes => {
