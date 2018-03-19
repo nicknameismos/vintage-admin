@@ -156,8 +156,10 @@ export class ManageShopComponent implements OnInit {
     if (cfDelete) {
       this.pubsub.$pub('loading', true);
       this.shopService.delete(shopID).subscribe(data => {
+        alert("ระบบทำการลบข้อมูลร้านค้าสำเร็จ");
         this.getListShop();
       }, err => {
+        this.pubsub.$pub('loading', false);
         console.log(err);
       });
     }
