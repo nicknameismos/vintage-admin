@@ -5069,8 +5069,10 @@ var ManageShopComponent = (function () {
         if (cfDelete) {
             this.pubsub.$pub('loading', true);
             this.shopService.delete(shopID).subscribe(function (data) {
+                alert("ระบบทำการลบข้อมูลร้านค้าสำเร็จ");
                 _this.getListShop();
             }, function (err) {
+                _this.pubsub.$pub('loading', false);
                 console.log(err);
             });
         }
