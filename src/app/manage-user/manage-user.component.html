@@ -47,13 +47,13 @@
                     <thead class="text-danger">
                       <tr>
                         <th class="text-center" index-col-size>#</th>
-                        <th class="text-center">ชื่อที่แสดง</th>
+                        <!-- <th class="text-center">ชื่อที่แสดง</th> -->
                         <th class="text-center">ชื่อ - นามสกุล</th>
                         <th class="text-center">เบอร์โทร</th>
                         <th class="text-center">อีเมล์</th>
-                        <th class="text-center">สถานะ</th>
-                        <th class="text-center">Action</th>
-                        <th class="text-center"></th>
+                        <!-- <th class="text-center">สถานะ</th> -->
+                        <!-- <th class="text-center">Action</th> -->
+                        <!-- <th class="text-center"></th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -65,23 +65,19 @@
                       </tr>
                       <tr *ngFor="let item of userList.items; let i = index">
                         <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{i + pageSelect + 1}}</td>
-                        <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.displayName}}</td>
+                        <!-- <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.displayName}}</td> -->
                         <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.firstName}} {{item.lastName}}</td>
                         <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.mobile ? item.mobile: '-'}}</td>
                         <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.email}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">Active</td>
-                        <td style="text-align: center">
+                        <!-- <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">Active</td> -->
+                        <!-- <td style="text-align: center">
                           <ui-switch size="small" color="green" (change)="activeChange($event,item)"></ui-switch>
-                          <!-- <button class="btn btn-danger btn-simple btn-xs btn-border" style="margin-top: -8px" type="button" (click)="banUser(item)">
-                                Ban User
-                              </button> -->
-                          <!-- <i class="material-icons del-color" style="color:red">delete</i> -->
                         </td>
                         <td style="text-align: center">
                           <button class="btn btn-danger btn-simple btn-xs btn-border" type="button" (click)="banUser(item)">
                             Ban User
                           </button>
-                        </td>
+                        </td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -90,17 +86,16 @@
                     <thead class="text-danger">
                       <tr>
                         <th class="text-center" index-col-size>#</th>
-                        <th class="text-center" displayname-col-size>ชื่อที่แสดง</th>
+                        <!-- <th class="text-center" displayname-col-size>ชื่อที่แสดง</th> -->
                         <th class="text-center" name-col-size>ชื่อ - นามสกุล</th>
                         <th class="text-center tel-col-size">เบอร์โทร</th>
                         <th class="text-center" email-col-size>อีเมล์</th>
-                        <th class="text-center col-md-1">สถานะ</th>
+                        <!-- <th class="text-center col-md-1">สถานะ</th> -->
 
 
-                        <th class="text-center col-md-1 col-lg-1 action-col-size">
+                        <!-- <th class="text-center col-md-1 col-lg-1 action-col-size">
                           Action
-                          <!-- <span style="margin-right:-50px"></span> -->
-                        </th>
+                        </th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -113,19 +108,19 @@
                       </tr>
                       <tr *ngFor="let item of userList.items; let i = index ">
                         <td class="text-center " data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{i + pageSelect + 1}}</td>
-                        <td class="text-center name-ovf" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.displayName}}</td>
+                        <!-- <td class="text-center name-ovf" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.displayName}}</td> -->
                         <td class="text-center name-ovf" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.firstName}} {{item.lastName}}</td>
                         <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.mobile ? item.mobile: '-'}}</td>
                         <td class="text-center email-ovf" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.email}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.gender ? item.gender: '-'}}</td>
+                        <!-- <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.gender ? item.gender: '-'}}</td> -->
 
 
-                        <td class="text-center">
+                        <!-- <td class="text-center">
                           <span>
                             <ui-switch size="small" color="red" (change)="activeChange($event,item)"></ui-switch>
                           </span>
 
-                        </td>
+                        </td> -->
                       </tr>
 
                     </tbody>
@@ -135,17 +130,16 @@
                     <thead class="text-danger">
                       <tr>
                         <th class="text-center" index-col-size>#</th>
-                        <th class="text-center" displayname-col-size>ชื่อที่แสดง</th>
+                        <!-- <th class="text-center" displayname-col-size>ชื่อที่แสดง</th> -->
                         <th class="text-center" name-col-size>ชื่อ - นามสกุล</th>
                         <th class="text-center col-md-2 tel-col-size">เบอร์โทร</th>
                         <th class="text-center" email-col-size>อีเมล์</th>
-                        <th class="text-center col-md-1">สถานะ</th>
+                        <!-- <th class="text-center col-md-1">สถานะ</th> -->
 
 
-                        <th class="text-center col-md-1 col-lg-1 action-col-size">
+                        <!-- <th class="text-center col-md-1 col-lg-1 action-col-size">
                           Action
-                          <!-- <span style="margin-right:-50px"></span> -->
-                        </th>
+                        </th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -158,19 +152,19 @@
                       </tr>
                       <tr *ngFor="let item of userList.items; let i = index ">
                         <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{i + pageSelect + 1}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.displayName}}</td>
+                        <!-- <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.displayName}}</td> -->
                         <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.firstName}} {{item.lastName}}</td>
                         <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.mobile ? item.mobile: '-'}}</td>
                         <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.email}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.gender ? item.gender: '-'}}</td>
+                        <!-- <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.gender ? item.gender: '-'}}</td> -->
 
-                        <td class="text-center">
+                        <!-- <td class="text-center">
                           <span>
                             <ui-switch size="small" color="red" (change)="activeChange($event,item)"></ui-switch>
                           </span>
 
 
-                        </td>
+                        </td> -->
                       </tr>
 
                     </tbody>
@@ -224,21 +218,23 @@
 
       <div class="modal-body marginT-body">
 
-        <div class="row bd" *ngIf="action == 'เพิ่มบัญชีผู้ใช้'">
+        <!-- <div class="row bd" *ngIf="action == 'เพิ่มบัญชีผู้ใช้'">
           <div class="col-md-12">
             <div class="form-group form-black is-empty">
-              Username
+              ชื่อผู้ใช้งาน
               <span style="color:red"> *</span>:
               <input class="form-control" type="text" [(ngModel)]="editingUserData.username">
             </div>
           </div>
-        </div>
+        </div> -->
+
         <div class="row bd" *ngIf="action == 'เพิ่มบัญชีผู้ใช้'">
           <div class="col-md-12">
             <div class="form-group form-black is-empty">
-              Password
+              อีเมล์
               <span style="color:red"> *</span>:
-              <input class="form-control" type="password" [(ngModel)]="editingUserData.password">
+              <input class="form-control" type="email" [(ngModel)]="editingUserData.email" #email="ngModel">
+
             </div>
           </div>
         </div>
@@ -246,10 +242,9 @@
         <div class="row bd" *ngIf="action == 'เพิ่มบัญชีผู้ใช้'">
           <div class="col-md-12">
             <div class="form-group form-black is-empty">
-              Email
+              รหัสผ่าน
               <span style="color:red"> *</span>:
-              <input class="form-control" type="email" [(ngModel)]="editingUserData.email" #email="ngModel">
-
+              <input class="form-control" type="password" [(ngModel)]="editingUserData.password">
             </div>
           </div>
         </div>
@@ -288,15 +283,15 @@
             </div>
           </div> -->
         </div>
-        <div class="row bd" *ngIf="action != 'เพิ่มบัญชีผู้ใช้'">
+        <div class="row bd">
           <div class="col-md-12">
 
             <div class="form-group">
-              <label for="roles">ระดับผู้ใช้:</label>
+              <label for="roles">สิทธิ์ผู้ใช้งาน <span style="color:red"> *</span>:</label>
               <select class="form-control " id="roles" [(ngModel)]="editingUserData.roles">
-                <option value="admin">Admin</option>
-                <option value="user">Customer</option>
-                <option value="shop">Shop Owner</option>
+                <option value="admin">แอดมิน</option>
+                <option value="user">ลูกค้า</option>
+                <!-- <option value="shop">Shop Owner</option> -->
                 <!-- <option value="biker">Biker</option> -->
               </select>
             </div>
@@ -305,8 +300,8 @@
         <div class="modal-footer">
           <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-              <button class="btn btn-success" (click)="saveUser()" *ngIf="action == 'เพิ่มบัญชีผู้ใช้'" [disabled]="!editingUserData.mobile || !editingUserData.username || !editingUserData.password || !editingUserData.firstName || !editingUserData.lastName || !editingUserData.email">บันทึก</button>
-              <button class="btn btn-success" (click)="saveUser()" *ngIf="action != 'เพิ่มบัญชีผู้ใช้'" [disabled]="!editingUserData.firstName || !editingUserData.lastName || !editingUserData.mobile">บันทึก</button>
+              <button class="btn btn-success" (click)="saveUser()" *ngIf="action == 'เพิ่มบัญชีผู้ใช้'" [disabled]="!editingUserData.mobile || !editingUserData.password || !editingUserData.firstName || !editingUserData.lastName || !editingUserData.email || !editingUserData.roles">บันทึก</button>
+              <button class="btn btn-success" (click)="saveUser()" *ngIf="action != 'เพิ่มบัญชีผู้ใช้'" [disabled]="!editingUserData.firstName || !editingUserData.lastName || !editingUserData.mobile || !editingUserData.roles">บันทึก</button>
 
               <button class="btn red" (click)="deleteUser()" type="button" *ngIf="action != 'เพิ่มบัญชีผู้ใช้'">ลบ</button>
             </div>

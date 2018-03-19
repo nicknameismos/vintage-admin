@@ -119,7 +119,7 @@ export class ManageUserComponent implements OnInit {
     if (r) {
       this.UserService.delete(this.editingUserData._id).subscribe(data => {
         console.log(data);
-        this.getAllUser();
+        this.searchUser();
         this.dissmissBtn2.nativeElement.click();
       }, err => {
         console.log(err);
@@ -141,14 +141,15 @@ export class ManageUserComponent implements OnInit {
     this.pubsub.$pub('loading', true);
     if (this.action === 'แก้ไขบัญชีผู้ใช้') {
       this.UserService.edit(this.editingUserData).subscribe(data => {
-        this.getAllUser();
+        this.searchUser();
         this.dissmissBtn2.nativeElement.click();
       }, err => {
         console.log(err);
       });
     } else {
+      this.editingUserData.username = this.editingUserData.email;
       this.UserService.add(this.editingUserData).subscribe(data => {
-        this.getAllUser();
+        this.searchUser();
         this.dissmissBtn2.nativeElement.click();
       }, err => {
         console.log(err);
