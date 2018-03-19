@@ -358,7 +358,7 @@ export class ManageShopComponent implements OnInit {
     this.customSearch = false;
   }
   isSendMail(shop) {
-    const cf = confirm('ยืนยันการส่งอีเมล');
+    const cf = confirm('ยืนยันการส่งอีเมลล์');
     if (cf) {
       this.loading = true;
       let sendShop = shop;
