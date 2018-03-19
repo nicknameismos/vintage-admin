@@ -5265,7 +5265,7 @@ var ManageShopComponent = (function () {
     };
     ManageShopComponent.prototype.isSendMail = function (shop) {
         var _this = this;
-        var cf = confirm('ยืนยันการส่งอีเมล');
+        var cf = confirm('ยืนยันการส่งอีเมลล์');
         if (cf) {
             this.loading = true;
             var sendShop = shop;
