@@ -49,10 +49,10 @@
 
       <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
         <div class="dropdown">
-          <button class="btn dropdown-toggle addBTN" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <button class="btn dropdown-toggle addBTN" type="button" aria-haspopup="true" aria-expanded="true" (click)="createShop()">
             <i class="material-icons">add</i> เพิ่มร้านค้า
           </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <!-- <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li (click)="createShop()">
               <a>เพิ่มข้อมูลเอง</a>
             </li>
@@ -62,7 +62,7 @@
             <li (click)="getShopFromFacebook()">
               <a data-toggle="modal" data-target="#modalGoogle">นำเข้าจาก Facebook</a>
             </li>
-          </ul>
+          </ul> -->
         </div>
       </div>
     </div>
@@ -83,11 +83,11 @@
                       <th class="text-center col-md-2 tel-col-size">เบอร์โทร</th>
                       <th adr-column-width>ที่อยู่</th>
                       <th class="text-center col-md-2 input-col-size">ช่องทางนำเข้า</th>
-                      <th class="text-center col-md-1">Official</th>
-                      <th class="text-center col-md-1 col-lg-1 action-col-size">
+                      <th class="text-center col-md-1">สถานะ</th>
+                      <th class="text-center col-md-1"></th>
+                      <!-- <th class="text-center col-md-1 col-lg-1 action-col-size">
                         Action
-                        <!-- <span style="margin-right:-50px"></span> -->
-                      </th>
+                      </th> -->
                     </tr>
                   </thead>
                   <tbody>
@@ -114,12 +114,11 @@
                         <p *ngIf="item.issendmail">Joined</p>
                       </td>
                       <td class="text-center">
-                        <ui-switch size="small" [(ngModel)]="item.isactiveshop" (change)="activeChange($event,item)"></ui-switch>
+                        <!-- <ui-switch size="small" [(ngModel)]="item.isactiveshop" (change)="activeChange($event,item)"></ui-switch> -->
 
-
-                        <div class="dropdown pull-right">
-                          <button class="btn btn-simple btn-xs pull-right dropdown-toggle " type="button" id="dropdownMenu2" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="true">
+                        <div class="dropdown">
+                          <button class="btn btn-simple btn-xs dropdown-toggle " type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="true">
                             <i class="material-icons toggle-color">more_horiz</i>
                           </button>
                           <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -138,7 +137,7 @@
 
                   </tbody>
                 </table>
-                
+
 
                 <div class="pc">
                   <nav aria-label="Page navigation">

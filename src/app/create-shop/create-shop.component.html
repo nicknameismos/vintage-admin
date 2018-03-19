@@ -62,7 +62,7 @@
                         </p>
                       </ul>
                     </div>
-                    <span *ngFor="let cateSelect of shop.categories"> {{cateSelect.name}} </span>
+                    <span *ngFor="let cateSelect of shop.categories; let i = index"> {{i+1}}.{{cateSelect.name}} </span>
 
                     <div class="form-group">
                       ชื่อร้าน
@@ -124,15 +124,14 @@
         </div>
       </div>
     </div>
-
-    <div class="row" *ngIf="shopID">
+    <!-- MANAGE PRODUCT -->
+    <!-- <div class="row" *ngIf="shopID">
       <div class="col-xs-12">
         <div class="card">
           <div class="card-header cw">
             จัดการสินค้า
           </div>
 
-          <!-- MANAGE CATE & PRODUCT ZONE -->
           <div class="card-block">
             <div class="row">
               <div class="col-md-12">
@@ -141,19 +140,13 @@
             </div>
 
             <div class="row scrollmenu">
-              <!-- <div class="row scroll-x" [dragula]='"zone1"'> -->
 
-              <!-- ADD CATE -->
               <div class="col-lg-2 col-md-2 col-sm-2 col-scroll" (click)="updateCateImg()">
                 <img class="img" src="http://res.cloudinary.com/ha7s6qhcg/image/upload/v1511499758/pp_clfpol.jpg" alt="image">
                 <input type="file" #cateimgInput accept="image/*" [(ngModel)]="cateImg" (change)="onCateImgChange($event,cateModal)" style="visibility: hidden;"
                 />
               </div>
 
-              <!-- ADD CATE -->
-
-
-              <!-- SHOW CATEGOY ZONE -->
               <div class="col-lg-2 col-md-2 col-sm-2 col-scroll" *ngFor="let item of cateList;let i = index">
                 <div *ngIf="item && item._id" class="cate-w">
                   <div class="deleteCateClass">
@@ -173,13 +166,8 @@
                   </div>
                 </div>
               </div>
-              <!-- SHOW CATEGOY ZONE -->
             </div>
 
-            <!-- SHOW CATEGOY ZONE -->
-            <!-- </div> -->
-
-            <!-- SHOW PRODUCT IN CATE ZONE -->
             <div class="row" *ngIf="shop.items && shop.items.length > 0">
               <div class="col-md-12">
                 <h4 class="h">Products</h4>
@@ -202,13 +190,12 @@
               </div>
             </div>
 
-            <!-- SHOW PRODUCT IN CATE ZONE -->
           </div>
-          <!-- MANAGE CATE & PRODUCT ZONE -->
 
         </div>
       </div>
-    </div>
+    </div> -->
+    <!-- MANAGE PRODUCT -->
   </div>
   <!-- end shop content -->
 

@@ -365,12 +365,16 @@ export class ManageShopComponent implements OnInit {
       sendShop.isactiveshop = true;
       this.manageShopService.sendMail(sendShop).subscribe(data => {
         alert('ระบบได้ทำการส่ง User ไปให้ร้านเรียบร้อยแล้วค่ะ');
-        this.manageShopService.getLocalJSONshoplist().subscribe(jso => {
-          this.loading = false;
-          this.getListShop();
-          this.shopsL = jso;
-          this.curentPage[1] = 'active';
-        });
+        this.loading = false;
+        this.getListShop();
+        // this.shopsL = jso;
+        this.curentPage[1] = 'active';
+        // this.manageShopService.getLocalJSONshoplist().subscribe(jso => {
+        //   this.loading = false;
+        //   this.getListShop();
+        //   this.shopsL = jso;
+        //   this.curentPage[1] = 'active';
+        // });
       }, err => {
         console.log(err);
         alert('ระบบไม่สามารถส่ง User ไปให้ร้านได้ค่ะ กรุณาติดต่อทางทีมงานค่ะ');

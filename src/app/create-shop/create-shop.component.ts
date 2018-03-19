@@ -879,8 +879,8 @@ export class CreateShopComponent implements OnInit {
           this.showeditTime = false;
           alert("ระบบทำการบันทึกข้อมูลร้านค้าเรียบร้อยแล้วค่ะ");
 
-          // this.router.navigate(['/manage-shop']);
-          location.reload();
+          this.router.navigate(['/manage-shop']);
+          // location.reload();
         }, err => {
           console.log(err);
         });
@@ -900,8 +900,8 @@ export class CreateShopComponent implements OnInit {
           this.showeditTime = false;
           window.localStorage.setItem('selectShop', data._id);
           alert("ระบบทำการบันทึกข้อมูลร้านค้าใหม่เรียบร้อยแล้วค่ะ");
-          // this.router.navigate(['/manage-shop']);
-          location.reload();
+          this.router.navigate(['/manage-shop']);
+          // location.reload();
         }, err => {
           console.log(err);
         });
