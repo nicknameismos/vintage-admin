@@ -135,15 +135,21 @@ export class ManageCouponComponent implements OnInit {
     // console.log('coupon');
     this.coupon.owner = this.users;
     this.pubsub.$pub('loading', true);
-    this.couponService.createCoupon(this.coupon).subscribe(data => {
-      // console.log(data);
-      this.coupon = '';
-      this.searchCoupon();
+    if (this.coupon.price >= 0) {
+      this.couponService.createCoupon(this.coupon).subscribe(data => {
+        // console.log(data);
+        alert('ระบบทำการบันทึกข้อมูลคูปองสำเร็จ');
+        this.coupon = '';
+        this.searchCoupon();
+        this.pubsub.$pub('loading', false);
+      }, err => {
+        this.pubsub.$pub('loading', false);
+        console.log(err);
+      });
+    } else {
+      alert('ราคาส่วนลดต้องมากกว่า 0');
       this.pubsub.$pub('loading', false);
-    }, err => {
-      this.pubsub.$pub('loading', false);
-      console.log(err);
-    });
+    }
   }
 
   cancel() {

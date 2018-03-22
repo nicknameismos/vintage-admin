@@ -108,7 +108,7 @@
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 style="font-family: 'Kanit', sans-serif;" class="modal-title">สร้างคูปอง</h4>
+        <h4 style="font-family: 'Kanit', sans-serif;" class="modal-title">เพิ่มคูปอง</h4>
         <button type="button" class="close close-modal" data-dismiss="modal" (click)="cancel()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -130,7 +130,7 @@
             <div class="form-group form-black is-empty">
               ราคา
               <span style="color:red"> *</span>:
-              <input class="form-control" type="number" [(ngModel)]="coupon.price">
+              <input class="form-control" type="number" [(ngModel)]="coupon.price" min="0">
             </div>
           </div>
         </div>
