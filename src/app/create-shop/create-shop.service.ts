@@ -18,19 +18,19 @@ export class ShopService {
     }
 
     uploadCateImage(imgcategory): Observable<any> {
-        return this.http.post(this.server.url + 'api/products_picture', { data: imgcategory.replace('data:image/jpeg;base64,', '') }, this.server.AuthHeaders())
+        return this.http.post(this.server.url + 'api/products_picture', { data: imgcategory }, this.server.AuthHeaders())
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error));
     }
 
     uploadImage(shop): Observable<any> {
-        return this.http.post(this.server.url + 'api/products_picture', { data: shop.coverimage.replace('data:image/jpeg;base64,', '') }, this.server.AuthHeaders())
+        return this.http.post(this.server.url + 'api/products_picture', { data: shop.coverimage }, this.server.AuthHeaders())
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error));
     }
-    
+
     uploadPromoteImage(shop): Observable<any> {
-        return this.http.post(this.server.url + 'api/products_picture', { data: shop.newpromoteimage.replace('data:image/jpeg;base64,', '') }, this.server.AuthHeaders())
+        return this.http.post(this.server.url + 'api/products_picture', { data: shop.newpromoteimage }, this.server.AuthHeaders())
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error));
     }
@@ -55,8 +55,8 @@ export class ShopService {
 
     //////////////product
 
-    createProduct(product,shop_id): Observable<any> {
-        return this.http.put(this.server.url + 'api/createproduct/' + shop_id , product, this.server.AuthHeaders())
+    createProduct(product, shop_id): Observable<any> {
+        return this.http.put(this.server.url + 'api/createproduct/' + shop_id, product, this.server.AuthHeaders())
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error));
     }
@@ -87,7 +87,7 @@ export class ShopService {
 
     /////////////category
 
-    saveCategory(category,shopID): Observable<any> {
+    saveCategory(category, shopID): Observable<any> {
         return this.http.put(this.server.url + 'api/createcate/' + shopID, category, this.server.AuthHeaders())
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error));

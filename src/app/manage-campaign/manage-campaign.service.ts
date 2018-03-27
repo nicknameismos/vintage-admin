@@ -51,7 +51,7 @@ export class CampaignService {
     }
 
     uploadImage(img): Observable<any> {
-        return this.http.post(this.server.url + 'api/products_picture', { data: img.replace('data:image/jpeg;base64,', '') }, this.server.AuthHeaders())
+        return this.http.post(this.server.url + 'api/products_picture', { data: img }, this.server.AuthHeaders())
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error));
     }
