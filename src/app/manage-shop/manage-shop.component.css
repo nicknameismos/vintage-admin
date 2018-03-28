@@ -143,8 +143,10 @@
 .nav-tabs>li>a,
 .nav-tabs>li>a:hover,
 .nav-tabs>li>a:focus {
+    background-color: #fff;
     color: black !important;
     font-size: 1.2em;
+    border-bottom: 3px solid #3c6233 !important;
 }
 
 .nav-tabs>li.active>a,
