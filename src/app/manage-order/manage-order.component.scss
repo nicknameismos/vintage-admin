@@ -174,7 +174,6 @@ fieldset[disabled] .form-group .form-control {
 // .modal-content .modal-footer button {
 //     width: 10rem;
 // }
-
 .dropdown-menu {
     min-width: 90px;
 }
@@ -210,11 +209,12 @@ fieldset[disabled] .form-group .form-control {
     overflow: hidden;
     text-overflow: ellipsis
 }
-.close-modal{
+
+.close-modal {
     margin-top: -40px;
 }
 
-.displaynone{
+.displaynone {
     display: none;
 }
 
@@ -223,18 +223,68 @@ fieldset[disabled] .form-group .form-control {
     color: #3c6233;
     font-size: 14px;
 }
+
 .btn-border[_ngcontent-c4] {
     border: 2px solid #D50000 !important;
     color: #D50000 !important;
 }
-.btn.btn-success, .btn.btn-success:hover, .btn.btn-success:focus, .btn.btn-success:active, .btn.btn-success.active, .btn.btn-success:active:focus, .btn.btn-success:active:hover, .btn.btn-success.active:focus, .btn.btn-success.active:hover, .open > .btn.btn-success.dropdown-toggle, .open > .btn.btn-success.dropdown-toggle:focus, .open > .btn.btn-success.dropdown-toggle:hover, .navbar .navbar-nav > li > a.btn.btn-success, .navbar .navbar-nav > li > a.btn.btn-success:hover, .navbar .navbar-nav > li > a.btn.btn-success:focus, .navbar .navbar-nav > li > a.btn.btn-success:active, .navbar .navbar-nav > li > a.btn.btn-success.active, .navbar .navbar-nav > li > a.btn.btn-success:active:focus, .navbar .navbar-nav > li > a.btn.btn-success:active:hover, .navbar .navbar-nav > li > a.btn.btn-success.active:focus, .navbar .navbar-nav > li > a.btn.btn-success.active:hover, .open > .navbar .navbar-nav > li > a.btn.btn-success.dropdown-toggle, .open > .navbar .navbar-nav > li > a.btn.btn-success.dropdown-toggle:focus, .open > .navbar .navbar-nav > li > a.btn.btn-success.dropdown-toggle:hover {
+
+.btn.btn-success,
+.btn.btn-success:hover,
+.btn.btn-success:focus,
+.btn.btn-success:active,
+.btn.btn-success.active,
+.btn.btn-success:active:focus,
+.btn.btn-success:active:hover,
+.btn.btn-success.active:focus,
+.btn.btn-success.active:hover,
+.open>.btn.btn-success.dropdown-toggle,
+.open>.btn.btn-success.dropdown-toggle:focus,
+.open>.btn.btn-success.dropdown-toggle:hover,
+.navbar .navbar-nav>li>a.btn.btn-success,
+.navbar .navbar-nav>li>a.btn.btn-success:hover,
+.navbar .navbar-nav>li>a.btn.btn-success:focus,
+.navbar .navbar-nav>li>a.btn.btn-success:active,
+.navbar .navbar-nav>li>a.btn.btn-success.active,
+.navbar .navbar-nav>li>a.btn.btn-success:active:focus,
+.navbar .navbar-nav>li>a.btn.btn-success:active:hover,
+.navbar .navbar-nav>li>a.btn.btn-success.active:focus,
+.navbar .navbar-nav>li>a.btn.btn-success.active:hover,
+.open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle,
+.open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle:focus,
+.open>.navbar .navbar-nav>li>a.btn.btn-success.dropdown-toggle:hover {
     background-color: #3c6233;
     color: #FFFFFF;
 }
-.btn.btn-danger, .btn.btn-danger:hover, .btn.btn-danger:focus, .btn.btn-danger:active, .btn.btn-danger.active, .btn.btn-danger:active:focus, .btn.btn-danger:active:hover, .btn.btn-danger.active:focus, .btn.btn-danger.active:hover, .open > .btn.btn-danger.dropdown-toggle, .open > .btn.btn-danger.dropdown-toggle:focus, .open > .btn.btn-danger.dropdown-toggle:hover, .navbar .navbar-nav > li > a.btn.btn-danger, .navbar .navbar-nav > li > a.btn.btn-danger:hover, .navbar .navbar-nav > li > a.btn.btn-danger:focus, .navbar .navbar-nav > li > a.btn.btn-danger:active, .navbar .navbar-nav > li > a.btn.btn-danger.active, .navbar .navbar-nav > li > a.btn.btn-danger:active:focus, .navbar .navbar-nav > li > a.btn.btn-danger:active:hover, .navbar .navbar-nav > li > a.btn.btn-danger.active:focus, .navbar .navbar-nav > li > a.btn.btn-danger.active:hover, .open > .navbar .navbar-nav > li > a.btn.btn-danger.dropdown-toggle, .open > .navbar .navbar-nav > li > a.btn.btn-danger.dropdown-toggle:focus, .open > .navbar .navbar-nav > li > a.btn.btn-danger.dropdown-toggle:hover {
+
+.btn.btn-danger,
+.btn.btn-danger:hover,
+.btn.btn-danger:focus,
+.btn.btn-danger:active,
+.btn.btn-danger.active,
+.btn.btn-danger:active:focus,
+.btn.btn-danger:active:hover,
+.btn.btn-danger.active:focus,
+.btn.btn-danger.active:hover,
+.open>.btn.btn-danger.dropdown-toggle,
+.open>.btn.btn-danger.dropdown-toggle:focus,
+.open>.btn.btn-danger.dropdown-toggle:hover,
+.navbar .navbar-nav>li>a.btn.btn-danger,
+.navbar .navbar-nav>li>a.btn.btn-danger:hover,
+.navbar .navbar-nav>li>a.btn.btn-danger:focus,
+.navbar .navbar-nav>li>a.btn.btn-danger:active,
+.navbar .navbar-nav>li>a.btn.btn-danger.active,
+.navbar .navbar-nav>li>a.btn.btn-danger:active:focus,
+.navbar .navbar-nav>li>a.btn.btn-danger:active:hover,
+.navbar .navbar-nav>li>a.btn.btn-danger.active:focus,
+.navbar .navbar-nav>li>a.btn.btn-danger.active:hover,
+.open>.navbar .navbar-nav>li>a.btn.btn-danger.dropdown-toggle,
+.open>.navbar .navbar-nav>li>a.btn.btn-danger.dropdown-toggle:focus,
+.open>.navbar .navbar-nav>li>a.btn.btn-danger.dropdown-toggle:hover {
     background-color: #D50000;
     color: #FFFFFF;
 }
+
 .pagination>.active>a,
 .pagination>.active>a:focus,
 .pagination>.active>a:hover,
@@ -248,4 +298,10 @@ fieldset[disabled] .form-group .form-control {
 
 .pagination>li>a {
     color: #3c6233;
+}
+
+.red {
+    color: #ffff;
+    background-color: rgb(252, 0, 0);
+    margin-top: -15px;
 }

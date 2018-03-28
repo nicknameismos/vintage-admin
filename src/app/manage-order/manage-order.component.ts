@@ -62,7 +62,7 @@ export class ManageOrderComponent implements OnInit {
       if (this.currentPageSelected === 1) {
         this.curentPage[1] = 'active';
       }
-      // console.log(this.OrderList);
+      console.log(this.OrderList);
       this.pubsub.$pub('loading', false);
     }, err => {
       this.pubsub.$pub('loading', false);
@@ -96,7 +96,7 @@ export class ManageOrderComponent implements OnInit {
     this.manageOrderService.orderDetail(item.orderid, item.itemid).subscribe(data => {
       // console.log(data);
       this.OrderDetail = data;
-      // console.log(this.OrderDetail);
+      console.log(this.OrderDetail);
       if (this.OrderDetail.status === 'confirm') {
         this.dateShow = this.OrderDetail.confirmdate;
         this.statusdate = 'วันที่สั่งซื้อ';
@@ -130,7 +130,7 @@ export class ManageOrderComponent implements OnInit {
     const cfrefund = confirm('ยืนยันการคืนเงินให้ลูกค้า');
     if (cfrefund) {
       this.manageOrderService.changeStatusRefund(this.OrderDetail).subscribe(data => {
-        alert('คืนเงินให้ลูกค้าสำเร็จ!');
+        alert('คืนเงินให้ลูกค้าสำเร็จ');
         this.searchOrder();
       }, err => {
         console.log(err);
@@ -144,7 +144,7 @@ export class ManageOrderComponent implements OnInit {
       // console.log(this.adminshipping);
       this.manageOrderService.adminStatusConfirm(this.OrderDetail, this.shipping, this.adminshipping).subscribe(data => {
         this.modalDetail.nativeElement.click();
-        alert('ชำระเงินเรียบร้อยแล้ว!');
+        alert('ชำระเงินเรียบร้อยแล้ว');
         // console.log(data);
         this.searchOrder();
       }, err => {
@@ -158,7 +158,7 @@ export class ManageOrderComponent implements OnInit {
     const cftransfer = confirm('ยืนยันการจ่ายเงินให้ร้านค้า');
     if (cftransfer) {
       this.manageOrderService.changeStatusTransfer(this.OrderDetail).subscribe(data => {
-        alert('จ่ายเงินให้ร้านค้าสำเร็จ!');
+        alert('จ่ายเงินให้ร้านค้าสำเร็จ');
         this.searchOrder();
       }, err => {
         console.log(err);
@@ -173,7 +173,7 @@ export class ManageOrderComponent implements OnInit {
     if (cfsent) {
       this.manageOrderService.changeStatusSent(this.OrderDetail, this.refid).subscribe(data => {
         this.modalDetail.nativeElement.click();
-        alert('จัดส่งสำเร็จ!');
+        alert('จัดส่งสำเร็จ');
         // console.log(data);
         this.searchOrder();
       }, err => {
@@ -186,11 +186,11 @@ export class ManageOrderComponent implements OnInit {
 
   adminCancelitm(remark) {
     this.remark = remark;
-    const cfcancel = confirm('ยืนยันการยกเลิกออเดอร์');
+    const cfcancel = confirm('ยืนยันการยกเลิกคำสั่งซื้อ');
     if (cfcancel) {
       this.manageOrderService.adminChangeStatusReject(this.OrderDetail, this.remark).subscribe(data => {
         this.modalDetail.nativeElement.click();
-        alert('ยกเลิกออเดอร์สำเร็จ!');
+        alert('ยกเลิกคำสั่งซื้อสำเร็จ');
         // console.log(data);
         this.searchOrder();
       }, err => {
@@ -205,7 +205,7 @@ export class ManageOrderComponent implements OnInit {
     const cfcomplete = confirm('ยืนยันการรับสินค้า');
     if (cfcomplete) {
       this.manageOrderService.changeStatusComplete(this.OrderDetail).subscribe(data => {
-        alert('ได้รับสินค้าแล้ว!');
+        alert('คำสั่งซื้อสำเร็จ');
         this.searchOrder();
       }, err => {
         console.log(err);

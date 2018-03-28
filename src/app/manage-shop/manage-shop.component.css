@@ -180,7 +180,7 @@
 }
 
 .addBTN :active{
-    background-color: #D50000 !important;
+    /* background-color: #D50000 !important; */
 }
 /* .btn .btn:hover .btn:focus .open > .btn.dropdown-toggle .open > .btn.dropdown-toggle:focus .open > .btn.dropdown-toggle:hover {
     background-color: #ff1515fa;
