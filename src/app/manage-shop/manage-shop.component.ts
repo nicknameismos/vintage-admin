@@ -207,8 +207,11 @@ export class ManageShopComponent implements OnInit {
   }
 
   editShop(shop) {
-    window.localStorage.setItem('selectShop', shop._id);
-    this.router.navigate(['/create-shop']);
+    let selection = window.getSelection();
+    if (selection.toString().length === 0) {
+      window.localStorage.setItem('selectShop', shop._id);
+      this.router.navigate(['/create-shop']);
+    }
   }
 
   convertLocalToGeo() {

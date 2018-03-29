@@ -4,7 +4,7 @@ import { ServerConfig } from 'app/provider/server.config';
 import { Router } from '@angular/router';
 import { PubSubService } from 'angular2-pubsub';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
-
+declare let $: any;
 @Component({
   selector: 'app-manage-user',
   templateUrl: './manage-user.component.html',
@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 })
 export class ManageUserComponent implements OnInit {
   @ViewChild('dissmissBtn2') dissmissBtn2;
+  @ViewChild('modalEditUser') modalEditUser;
   loading: boolean = true;
   private listAllUser: Array<any> = [];
   private listCust: Array<any> = [];
@@ -169,8 +170,12 @@ export class ManageUserComponent implements OnInit {
   }
 
   editUser(item) {
-    this.action = 'แก้ไขบัญชีผู้ใช้';
-    this.editingUserData = item;
+    let selection = window.getSelection();
+    if (selection.toString().length === 0) {
+      $(this.modalEditUser.nativeElement).modal('show');
+      this.action = 'แก้ไขบัญชีผู้ใช้';
+      this.editingUserData = item;
+    }
   }
 
   saveUser() {

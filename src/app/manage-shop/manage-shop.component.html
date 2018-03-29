@@ -98,12 +98,12 @@
 
                     </tr>
                     <tr *ngFor="let item of shopsL.items; let i = index ">
-                      <td (click)="editShop(item)">{{i + pageSelect + 1}}</td>
+                      <td>{{i + pageSelect + 1}}</td>
                       <td (click)="editShop(item)">{{item.name}}</td>
-                      <td class="text-center" (click)="editShop(item)">{{item.tel ? item.tel: '-'}}</td>
-                      <td *ngIf="!item.address" (click)="editShop(item)">ไม่ปรากฎที่อยู่ร้าน</td>
-                      <td *ngIf="item.address" (click)="editShop(item)" class="adr-ovf">{{item.address.address ? item.address.address: '-'}}</td>
-                      <td class="text-center" (click)="editShop(item)">{{item.importform}}
+                      <td class="text-center">{{item.tel ? item.tel: '-'}}</td>
+                      <td *ngIf="!item.address">ไม่ปรากฎที่อยู่ร้าน</td>
+                      <td *ngIf="item.address" class="adr-ovf">{{item.address.address ? item.address.address: '-'}}</td>
+                      <td class="text-center">{{item.importform}}
                         <p subText>by {{item.user.firstName}}</p>
                       </td>
                       <td class="text-center ">

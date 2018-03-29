@@ -66,11 +66,11 @@
 
                       </tr>
                       <tr *ngFor="let item of userList.items; let i = index">
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{i + pageSelect + 1}}</td>
+                        <td class="text-center">{{i + pageSelect + 1}}</td>
                         <!-- <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.displayName}}</td> -->
-                        <td class="name-ovf" style="text-align: center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.firstName}} {{item.lastName}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.mobile ? item.mobile: '-'}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.email}}</td>
+                        <td class="name-ovf" style="text-align: center" (click)="editUser(item)">{{item.firstName}} {{item.lastName}}</td>
+                        <td class="text-center">{{item.mobile ? item.mobile: '-'}}</td>
+                        <td class="text-center">{{item.email}}</td>
                         <!-- <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">Active</td> -->
                         <!-- <td style="text-align: center">
                           <ui-switch size="small" color="green" (change)="activeChange($event,item)"></ui-switch>
@@ -109,11 +109,11 @@
 
                       </tr>
                       <tr *ngFor="let item of userList.items; let i = index ">
-                        <td class="text-center " data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{i + pageSelect + 1}}</td>
+                        <td class="text-center ">{{i + pageSelect + 1}}</td>
                         <!-- <td class="text-center name-ovf" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.displayName}}</td> -->
-                        <td class="text-center name-ovf" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.firstName}} {{item.lastName}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.mobile ? item.mobile: '-'}}</td>
-                        <td class="text-center email-ovf" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.email}}</td>
+                        <td class="text-center name-ovf" (click)="editUser(item)">{{item.firstName}} {{item.lastName}}</td>
+                        <td class="text-center">{{item.mobile ? item.mobile: '-'}}</td>
+                        <td class="text-center email-ovf">{{item.email}}</td>
                         <!-- <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.gender ? item.gender: '-'}}</td> -->
 
 
@@ -153,11 +153,11 @@
 
                       </tr>
                       <tr *ngFor="let item of userList.items; let i = index ">
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{i + pageSelect + 1}}</td>
+                        <td class="text-center">{{i + pageSelect + 1}}</td>
                         <!-- <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.displayName}}</td> -->
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.firstName}} {{item.lastName}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.mobile ? item.mobile: '-'}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.email}}</td>
+                        <td class="text-center" (click)="editUser(item)">{{item.firstName}} {{item.lastName}}</td>
+                        <td class="text-center">{{item.mobile ? item.mobile: '-'}}</td>
+                        <td class="text-center">{{item.email}}</td>
                         <!-- <td class="text-center" data-toggle="modal" data-target="#modalEditUser" (click)="editUser(item)">{{item.gender ? item.gender: '-'}}</td> -->
 
                         <!-- <td class="text-center">
@@ -207,7 +207,7 @@
 </div>
 
 <!-- MODAL EDIT USER -->
-<div class="modal fade" id="modalEditUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+<div class="modal fade" #modalEditUser tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
