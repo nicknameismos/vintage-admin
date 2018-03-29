@@ -113,7 +113,7 @@ input[type=file] {
 }
 
 .pc {
-    text-align: center;
+    text-align: right;
 }
 
 .tb {
@@ -291,4 +291,8 @@ hr {
     color: #ffff;
     background-color: rgb(252, 0, 0);
     margin-top: -15px;
+    position: absolute;
+    top: 10px;
+    right: 3px;
+    z-index: 100;
 }

@@ -90,6 +90,40 @@ export class ManageOrderComponent implements OnInit {
     this.searchOrder();
   }
 
+  pageingN() {
+
+    let orderlist = JSON.parse(JSON.stringify(this.OrderList));
+    if (this.currentPageSelected === 0) {
+      this.currentPageSelected = 1;
+    }
+    this.currentPageSelected++;
+    if (orderlist.paging.length >= this.currentPageSelected) {
+      this.pubsub.$pub('loading', true);
+      this.pageSelect = 0;
+      this.curentPage = [];
+      this.pageSelect = (this.currentPageSelected - 1) * 10;
+      this.curentPage[this.currentPageSelected] = 'active';
+      this.searchOrder();
+    }
+  }
+
+  pageingP() {
+    let oldpage = this.currentPageSelected;
+    let orderlist = JSON.parse(JSON.stringify(this.OrderList));
+    if (this.currentPageSelected > 1) {
+      this.currentPageSelected--;
+    }
+    console.log(this.currentPageSelected);
+    if (orderlist.paging.length >= this.currentPageSelected && this.currentPageSelected > 0 && this.currentPageSelected !== oldpage) {
+      this.pubsub.$pub('loading', true);
+      this.pageSelect = 0;
+      this.curentPage = [];
+      this.pageSelect = (this.currentPageSelected - 1) * 10;
+      this.curentPage[this.currentPageSelected] = 'active';
+      this.searchOrder();
+    }
+  }
+
   onClickDetail(item) {
     this.pubsub.$pub('loading', true);
     this.adminshipping = {};

@@ -109,6 +109,40 @@ export class ManageShopComponent implements OnInit {
     });
   }
 
+  pageingN() {
+
+    let shoplist = JSON.parse(JSON.stringify(this.shopsL));
+    if (this.currentPageSelected === 0) {
+      this.currentPageSelected = 1;
+    }
+    this.currentPageSelected++;
+    if (shoplist.pagings.length >= this.currentPageSelected) {
+      this.pubsub.$pub('loading', true);
+      this.pageSelect = 0;
+      this.curentPage = [];
+      this.pageSelect = (this.currentPageSelected - 1) * 10;
+      this.curentPage[this.currentPageSelected] = 'active';
+      this.searchShop();
+    }
+  }
+
+  pageingP() {
+    let oldpage = this.currentPageSelected;
+    let shoplist = JSON.parse(JSON.stringify(this.shopsL));
+    if (this.currentPageSelected > 1) {
+      this.currentPageSelected--;
+    }
+    console.log(this.currentPageSelected);
+    if (shoplist.pagings.length >= this.currentPageSelected && this.currentPageSelected > 0 && this.currentPageSelected !== oldpage) {
+      this.pubsub.$pub('loading', true);
+      this.pageSelect = 0;
+      this.curentPage = [];
+      this.pageSelect = (this.currentPageSelected - 1) * 10;
+      this.curentPage[this.currentPageSelected] = 'active';
+      this.searchShop();
+    }
+  }
+
   selectTab(name) {
     this.currentPageSelected = 1;
     this.typeTab = name;

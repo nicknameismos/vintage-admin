@@ -72,6 +72,40 @@ export class BidComponent implements OnInit {
     this.getBidList();
   }
 
+  pageingN() {
+
+    let bidlist = JSON.parse(JSON.stringify(this.bidlist));
+    if (this.currentPageSelected === 0) {
+      this.currentPageSelected = 1;
+    }
+    this.currentPageSelected++;
+    if (bidlist.paging.length >= this.currentPageSelected) {
+      this.pubsub.$pub('loading', true);
+      this.pageSelect = 0;
+      this.curentPage = [];
+      this.pageSelect = (this.currentPageSelected - 1) * 10;
+      this.curentPage[this.currentPageSelected] = 'active';
+      this.getBidList();
+    }
+  }
+
+  pageingP() {
+    let oldpage = this.currentPageSelected;
+    let bidlist = JSON.parse(JSON.stringify(this.bidlist));
+    if (this.currentPageSelected > 1) {
+      this.currentPageSelected--;
+    }
+    console.log(this.currentPageSelected);
+    if (bidlist.paging.length >= this.currentPageSelected && this.currentPageSelected > 0 && this.currentPageSelected !== oldpage) {
+      this.pubsub.$pub('loading', true);
+      this.pageSelect = 0;
+      this.curentPage = [];
+      this.pageSelect = (this.currentPageSelected - 1) * 10;
+      this.curentPage[this.currentPageSelected] = 'active';
+      this.getBidList();
+    }
+  }
+
   getBidList() {
     const params = {
       title: this.typeTab,

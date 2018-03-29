@@ -83,6 +83,40 @@ export class ManageUserComponent implements OnInit {
     this.searchUser();
   }
 
+  pageingN() {
+
+    let usrlist = JSON.parse(JSON.stringify(this.userList));
+    if (this.currentPageSelected === 0) {
+      this.currentPageSelected = 1;
+    }
+    this.currentPageSelected++;
+    if (usrlist.paging.length >= this.currentPageSelected) {
+      this.pubsub.$pub('loading', true);
+      this.pageSelect = 0;
+      this.curentPage = [];
+      this.pageSelect = (this.currentPageSelected - 1) * 10;
+      this.curentPage[this.currentPageSelected] = 'active';
+      this.searchUser();
+    }
+  }
+
+  pageingP() {
+    let oldpage = this.currentPageSelected;
+    let usrlist = JSON.parse(JSON.stringify(this.userList));
+    if (this.currentPageSelected > 1) {
+      this.currentPageSelected--;
+    }
+    console.log(this.currentPageSelected);
+    if (usrlist.paging.length >= this.currentPageSelected && this.currentPageSelected > 0 && this.currentPageSelected !== oldpage) {
+      this.pubsub.$pub('loading', true);
+      this.pageSelect = 0;
+      this.curentPage = [];
+      this.pageSelect = (this.currentPageSelected - 1) * 10;
+      this.curentPage[this.currentPageSelected] = 'active';
+      this.searchUser();
+    }
+  }
+
   getAllUser() {
 
     this.UserService.getUser().subscribe(jso => {
