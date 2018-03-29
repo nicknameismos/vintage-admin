@@ -128,40 +128,44 @@ export class ManageOrderComponent implements OnInit {
   }
 
   onClickDetail(item) {
-    this.pubsub.$pub('loading', true);
-    this.adminshipping = {};
-    this.manageOrderService.orderDetail(item.orderid, item.itemid).subscribe(data => {
-      // console.log(data);
-      this.OrderDetail = data;
-      console.log(this.OrderDetail);
-      if (this.OrderDetail.status === 'confirm') {
-        this.dateShow = this.OrderDetail.confirmdate;
-        this.statusdate = 'วันที่สั่งซื้อ';
-      } else if (this.OrderDetail.status === 'sent') {
-        this.dateShow = this.OrderDetail.sentdate;
-        this.statusdate = 'วันที่ส่ง';
-      } else if (this.OrderDetail.status === 'completed') {
-        this.dateShow = this.OrderDetail.receiveddate;
-        this.statusdate = 'วันที่สำเร็จ';
-      } else if (this.OrderDetail.status === 'cancel') {
-        this.dateShow = this.OrderDetail.canceldate;
-        this.statusdate = 'วันที่ยกเลิก';
-      } else if (this.OrderDetail.status === 'reject') {
-        this.dateShow = this.OrderDetail.canceldate;
-        this.statusdate = 'วันที่ปฏิเสธ';
-      } else if (this.OrderDetail.status === 'transferred') {
-        this.dateShow = this.OrderDetail.transferdate;
-        this.statusdate = 'วันที่ชำระเงิน';
-      } else if (this.OrderDetail.status === 'rejectrefund' || this.OrderDetail.status === 'cancelrefund') {
-        this.dateShow = this.OrderDetail.refunddate;
-        this.statusdate = 'วันที่คืนเงิน';
-      }
-      this.pubsub.$pub('loading', false);
-      $(this.modalDetail.nativeElement).modal('show');
-    }, err => {
-      this.pubsub.$pub('loading', false);
-      console.log(err);
-    });
+    let selection = window.getSelection();
+    if (selection.toString().length === 0) {
+      // alert('you clicked');
+      this.pubsub.$pub('loading', true);
+      this.adminshipping = {};
+      this.manageOrderService.orderDetail(item.orderid, item.itemid).subscribe(data => {
+        // console.log(data);
+        this.OrderDetail = data;
+        console.log(this.OrderDetail);
+        if (this.OrderDetail.status === 'confirm') {
+          this.dateShow = this.OrderDetail.confirmdate;
+          this.statusdate = 'วันที่สั่งซื้อ';
+        } else if (this.OrderDetail.status === 'sent') {
+          this.dateShow = this.OrderDetail.sentdate;
+          this.statusdate = 'วันที่ส่ง';
+        } else if (this.OrderDetail.status === 'completed') {
+          this.dateShow = this.OrderDetail.receiveddate;
+          this.statusdate = 'วันที่สำเร็จ';
+        } else if (this.OrderDetail.status === 'cancel') {
+          this.dateShow = this.OrderDetail.canceldate;
+          this.statusdate = 'วันที่ยกเลิก';
+        } else if (this.OrderDetail.status === 'reject') {
+          this.dateShow = this.OrderDetail.canceldate;
+          this.statusdate = 'วันที่ปฏิเสธ';
+        } else if (this.OrderDetail.status === 'transferred') {
+          this.dateShow = this.OrderDetail.transferdate;
+          this.statusdate = 'วันที่ชำระเงิน';
+        } else if (this.OrderDetail.status === 'rejectrefund' || this.OrderDetail.status === 'cancelrefund') {
+          this.dateShow = this.OrderDetail.refunddate;
+          this.statusdate = 'วันที่คืนเงิน';
+        }
+        this.pubsub.$pub('loading', false);
+        $(this.modalDetail.nativeElement).modal('show');
+      }, err => {
+        this.pubsub.$pub('loading', false);
+        console.log(err);
+      });
+    }
   }
 
   refunditm() {
