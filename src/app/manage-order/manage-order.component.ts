@@ -4,6 +4,7 @@ import { ServerConfig } from 'app/provider/server.config';
 import { PubSubService } from 'angular2-pubsub';
 import { ManageOrderService } from 'app/manage-order/manage-order.service';
 import { ItemStatusModel } from 'app/manage-order/manage-order.model';
+declare let $: any;
 
 @Component({
   selector: 'app-manage-order',
@@ -156,6 +157,7 @@ export class ManageOrderComponent implements OnInit {
         this.statusdate = 'วันที่คืนเงิน';
       }
       this.pubsub.$pub('loading', false);
+      $(this.modalDetail.nativeElement).modal('show');
     }, err => {
       this.pubsub.$pub('loading', false);
       console.log(err);

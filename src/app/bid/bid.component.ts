@@ -293,48 +293,52 @@ export class BidComponent implements OnInit {
   }
 
   editBid(item) {
-    this.ACTION_BID = 'แก้ไข';
-    this.bidData = JSON.parse(JSON.stringify(item));
-    this.addImgPrd = this.bidData.image;
-    this.shippingMaster.forEach((e, i) => {
-      e.isChecked = false;
-    });
+    let selection = window.getSelection();
+    if (selection.toString().length === 0) {
+      this.ACTION_BID = 'แก้ไข';
+      this.bidData = JSON.parse(JSON.stringify(item));
+      this.addImgPrd = this.bidData.image;
+      this.shippingMaster.forEach((e, i) => {
+        e.isChecked = false;
+      });
 
-    this.winnerBid = this.bidData.userbid.length > 0 ? this.bidData.userbid.reverse()[0].user.displayName : '-';
+      this.winnerBid = this.bidData.userbid.length > 0 ? this.bidData.userbid.reverse()[0].user.displayName : '-';
 
-    setTimeout(() => {
-      for (let i = 0; i < this.shippingMaster.length; i++) {
-        for (let j = 0; j < this.bidData.shippings.length; j++) {
-          if (this.shippingMaster[i]._id === this.bidData.shippings[j].ref._id) {
-            this.shippingMaster[i].isChecked = true;
+      setTimeout(() => {
+        for (let i = 0; i < this.shippingMaster.length; i++) {
+          for (let j = 0; j < this.bidData.shippings.length; j++) {
+            if (this.shippingMaster[i]._id === this.bidData.shippings[j].ref._id) {
+              this.shippingMaster[i].isChecked = true;
+            }
           }
         }
-      }
-    }, 200);
+      }, 200);
 
-    setTimeout(() => {
-      let shippings: Array<any> = [];
-      this.bidData.shippings.forEach((e, i) => {
-        shippings.push({
-          _id: e.ref._id,
-          price: e.price,
-          name: e.ref.name,
-          detail: e.ref.detail,
-          isChecked: true
+      setTimeout(() => {
+        let shippings: Array<any> = [];
+        this.bidData.shippings.forEach((e, i) => {
+          shippings.push({
+            _id: e.ref._id,
+            price: e.price,
+            name: e.ref.name,
+            detail: e.ref.detail,
+            isChecked: true
+          });
         });
-      });
-      this.shippings = shippings;
-    }, 100);
-    this.bidData.starttime = this.bidData.starttime.replace(':00.000Z', '');
-    this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
-    console.log(this.bidData);
-    if (this.typeTab === 'รอการประมูล') {
-      this.showWinnerBid = false;
-      $(this.modalbid.nativeElement).modal('show');
-    } else {
-      this.showWinnerBid = true;
-      $(this.modalBidDetail.nativeElement).modal('show');
+        this.shippings = shippings;
+      }, 100);
+      this.bidData.starttime = this.bidData.starttime.replace(':00.000Z', '');
+      this.bidData.endtime = this.bidData.endtime.replace(':00.000Z', '');
+      console.log(this.bidData);
+      if (this.typeTab === 'รอการประมูล') {
+        this.showWinnerBid = false;
+        $(this.modalbid.nativeElement).modal('show');
+      } else {
+        this.showWinnerBid = true;
+        $(this.modalBidDetail.nativeElement).modal('show');
+      }
     }
+
   }
 
   deleteBid(item) {

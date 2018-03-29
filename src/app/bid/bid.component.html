@@ -56,15 +56,15 @@
                       </td>
                     </tr>
                     <tr style="height:10rem;" *ngFor="let item of bidlist.items; let i = index">
-                      <td class="text-center" (click)="editBid(item)">{{i + pageSelect + 1}}</td>
+                      <td class="text-center">{{i + pageSelect + 1}}</td>
                       <td (click)="editBid(item)">
                         <img class="img-display" [src]="item.image ? item.image[0] : 'http://tutaki.org.nz/wp-content/uploads/2016/04/no-image-available.png'"
                           alt=""> {{item.name}}</td>
-                      <td class="text-center" (click)="editBid(item)">{{item.startprice}}</td>
-                      <td class="text-center" (click)="editBid(item)">{{item.bidprice}}</td>
-                      <td class="text-center" (click)="editBid(item)">{{item.starttime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</td>
-                      <td class="text-center" (click)="editBid(item)">{{item.endtime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</td>
-                      <td class="text-center" (click)="editBid(item)" *ngIf="typeTab=='ประมูลแล้ว' || typeTab=='จ่ายเงินแล้ว' || typeTab=='สิ้นสุดการประมูล'">{{item.userbid.length > 0 ? item.userbid[item.userbid.length - 1].user.displayName : '-'}}</td>
+                      <td class="text-center">{{item.startprice}}</td>
+                      <td class="text-center">{{item.bidprice}}</td>
+                      <td class="text-center">{{item.starttime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</td>
+                      <td class="text-center">{{item.endtime | amFromUtc | amDateFormat: 'DD MMMM YYYY HH:mm'}}</td>
+                      <td class="text-center" *ngIf="typeTab=='ประมูลแล้ว' || typeTab=='จ่ายเงินแล้ว' || typeTab=='สิ้นสุดการประมูล'">{{item.userbid.length > 0 ? item.userbid[item.userbid.length - 1].user.displayName : '-'}}</td>
                       <td class="text-center" *ngIf="!(typeTab=='' || typeTab=='กำลังประมูล' || typeTab=='ประมูลแล้ว' || typeTab=='จ่ายเงินแล้ว')">
                         <div class="dropdown pull-right">
                           <button class="btn btn-simple btn-xs pull-right dropdown-toggle " type="button" id="dropdownMenu2" data-toggle="dropdown"

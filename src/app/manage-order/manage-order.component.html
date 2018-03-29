@@ -59,17 +59,17 @@
                         </td>
 
                       </tr>
-                      <tr *ngFor="let item of OrderList.items; let i = index" (click)="onClickDetail(item)">
-                        <td data-toggle="modal" data-target="#modalDetail">{{item.docno}}</td>
-                        <td data-toggle="modal" data-target="#modalDetail">
+                      <tr *ngFor="let item of OrderList.items; let i = index">
+                        <td (click)="onClickDetail(item)">{{item.docno}}</td>
+                        <td (click)="onClickDetail(item)">
                           <p class="warp-text">{{item.name}}</p>
                         </td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.price | number}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.qty | number}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.shippingtype || 'ไม่มี'}}</td>
-                        <td class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.shippingprice || 0 | number}}</td>
-                        <td *ngIf="item.channel !=='bid'" class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.amount+item.shippingprice || 0 | number }}</td>
-                        <td *ngIf="item.channel ==='bid'" class="text-center" data-toggle="modal" data-target="#modalDetail">{{item.amount || 0 | number }}</td>
+                        <td class="text-center">{{item.price | number}}</td>
+                        <td class="text-center">{{item.qty | number}}</td>
+                        <td class="text-center">{{item.shippingtype || 'ไม่มี'}}</td>
+                        <td class="text-center">{{item.shippingprice || 0 | number}}</td>
+                        <td *ngIf="item.channel !=='bid'" class="text-center">{{item.amount+item.shippingprice || 0 | number }}</td>
+                        <td *ngIf="item.channel ==='bid'" class="text-center">{{item.amount || 0 | number }}</td>
 
                       </tr>
                     </tbody>
@@ -111,7 +111,7 @@
   </div>
 
   <!-- MODAL DETAIL ORDER -->
-  <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal fade" #modalDetail tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
 
