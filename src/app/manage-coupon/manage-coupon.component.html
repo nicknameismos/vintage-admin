@@ -13,7 +13,7 @@
               </span>
             </span>
             <span>
-              <input type="text" class="form-control tb" [(ngModel)]="searchKeyword" (keyup.enter)="searchCoupon()">
+              <input type="text" class="form-control tb" placeholder="ค้นหา รหัสคูปอง" [(ngModel)]="searchKeyword" (keyup.enter)="searchCoupon()">
             </span>
           </div>
         </div>
@@ -93,13 +93,15 @@
 
                     <nav aria-label="Page navigation">
                       <ul class="pagination">
-                        <li class="page-item">
-                          <a class="page-link" (click)="pageingP()">ก่อนหน้า</a>
+                        <li class="page-item" [class]="currentPageSelected === 1 ? 'disabled':''">
+                          <a class="page-link" *ngIf="currentPageSelected !== 1" (click)="pageingP()">ก่อนหน้า</a>
+                          <a class="page-link" *ngIf="currentPageSelected === 1" >ก่อนหน้า</a>
+                          
                         </li>
                         <li [class]="curentPage[item]" *ngFor="let item of couponTabs.paging">
                           <a (click)="pageing(item)">{{item}}</a>
                         </li>
-                        <li class="page-item">
+                        <li class="page-item" [class]="currentPageSelected === couponTabs.paging.length ? 'disabled':''">
                           <a class="page-link" (click)="pageingN()">ถัดไป</a>
                         </li>
                       </ul>

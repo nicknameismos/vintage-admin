@@ -86,6 +86,8 @@ export class BidComponent implements OnInit {
       this.pageSelect = (this.currentPageSelected - 1) * 10;
       this.curentPage[this.currentPageSelected] = 'active';
       this.getBidList();
+    } else {
+      this.currentPageSelected--;
     }
   }
 
@@ -248,7 +250,7 @@ export class BidComponent implements OnInit {
     this.curentPage = [];
     this.pageSelect = 0;
     this.curentPage[1] = 'active';
-    this.currentPageSelected = 0;
+    this.currentPageSelected = 1;
     this.typeTab = typeTab;
     this.selectedTab = index;
     this.getBidList();

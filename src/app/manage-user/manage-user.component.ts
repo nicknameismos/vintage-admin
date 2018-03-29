@@ -97,6 +97,8 @@ export class ManageUserComponent implements OnInit {
       this.pageSelect = (this.currentPageSelected - 1) * 10;
       this.curentPage[this.currentPageSelected] = 'active';
       this.searchUser();
+    } else {
+      this.currentPageSelected--;
     }
   }
 

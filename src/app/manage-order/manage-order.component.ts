@@ -104,6 +104,8 @@ export class ManageOrderComponent implements OnInit {
       this.pageSelect = (this.currentPageSelected - 1) * 10;
       this.curentPage[this.currentPageSelected] = 'active';
       this.searchOrder();
+    } else {
+      this.currentPageSelected--;
     }
   }
 

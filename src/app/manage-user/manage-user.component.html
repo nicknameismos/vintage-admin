@@ -13,7 +13,7 @@
               </span>
             </span>
             <span>
-              <input type="text" class="form-control tb" [(ngModel)]="searchKeyword" (keyup.enter)="searchUser()">
+              <input type="text" class="form-control tb" placeholder="ค้นหา ชื่อผู้ใช้" [(ngModel)]="searchKeyword" (keyup.enter)="searchUser()">
             </span>
           </div>
         </div>
@@ -182,13 +182,15 @@
 
                     <nav aria-label="Page navigation">
                       <ul class="pagination">
-                        <li class="page-item">
-                          <a class="page-link" (click)="pageingP()">ก่อนหน้า</a>
+                        <li class="page-item" [class]="currentPageSelected === 1 ? 'disabled':''">
+                          <a class="page-link" *ngIf="currentPageSelected === 1">ก่อนหน้า</a>
+                          <a class="page-link" *ngIf="currentPageSelected !== 1" (click)="pageingP()">ก่อนหน้า</a>
+
                         </li>
                         <li [class]="curentPage[item]" *ngFor="let item of userList.paging">
                           <a (click)="pageing(item)">{{item}}</a>
                         </li>
-                        <li class="page-item">
+                        <li class="page-item" [class]="currentPageSelected === userList.paging.length ? 'disabled':''">
                           <a class="page-link" (click)="pageingN()">ถัดไป</a>
                         </li>
                       </ul>
@@ -303,7 +305,8 @@
           <div class="col-md-12">
 
             <div class="form-group">
-              <label for="roles">สิทธิ์ผู้ใช้งาน <span style="color:red"> *</span>:</label>
+              <label for="roles">สิทธิ์ผู้ใช้งาน
+                <span style="color:red"> *</span>:</label>
               <select class="form-control " id="roles" [(ngModel)]="editingUserData.roles">
                 <option value="admin">แอดมิน</option>
                 <option value="user">ลูกค้า</option>

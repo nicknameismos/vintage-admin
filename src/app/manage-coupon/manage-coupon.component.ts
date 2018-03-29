@@ -99,6 +99,8 @@ export class ManageCouponComponent implements OnInit {
       this.pageSelect = (this.currentPageSelected - 1) * 10;
       this.curentPage[this.currentPageSelected] = 'active';
       this.searchCoupon();
+    } else {
+      this.currentPageSelected--;
     }
   }
 
