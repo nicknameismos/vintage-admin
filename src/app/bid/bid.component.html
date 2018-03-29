@@ -11,6 +11,7 @@
           </span>
           <span>
             <input type="text" class="form-control tb" placeholder="ค้นหา ชื่อสินค้า" [(ngModel)]="keyword" (keyup.enter)="search()">
+            <i class="material-icons iconright" (click)="search()">search</i>
           </span>
         </div>
       </div>
@@ -22,7 +23,7 @@
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" *ngFor="let item of bidlist.titles;let i = index" class="{{ selectedTab === i ? 'active':''}}" (click)="selectTab(i,item)">
             <a href="#tab{{i}}" role="tab" data-toggle="tab">{{item}}
-              <span class="badge red" *ngIf="bidlist.count[i] > 0">{{bidlist.count[i]}}</span>
+              <span class="badge redbadge" *ngIf="bidlist.count[i] > 0">{{bidlist.count[i]}}</span>
             </a>
           </li>
         </ul>

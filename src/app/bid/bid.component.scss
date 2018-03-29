@@ -287,7 +287,7 @@ hr {
     color: #3c6233;
 }
 
-.red {
+.redbadge {
     color: #ffff;
     background-color: rgb(252, 0, 0);
     margin-top: -15px;
@@ -295,4 +295,12 @@ hr {
     top: 10px;
     right: 3px;
     z-index: 100;
+}
+
+.iconright {
+    position: absolute;
+    top: 8px;
+    right: 6px;
+    width: 50px;
+    font-size: 35px;
 }
