@@ -16,7 +16,9 @@
             </span>
             <span>
               <input type="text" class="form-control tb" placeholder="ค้นหา เลขที่คำสั่งซื้อ" [(ngModel)]="searchKeyword" (keyup.enter)="searchOrder()">
-              <i class="material-icons iconright" (click)="searchOrder()">search</i>
+              <button class="btnsearch">
+                <i class="material-icons iconright" (click)="searchOrder()">search</i>
+              </button>
             </span>
           </div>
         </div>
@@ -89,8 +91,8 @@
                       <ul class="pagination">
                         <li class="page-item" [class]="currentPageSelected === 1 ? 'disabled':''">
                           <a class="page-link" *ngIf="currentPageSelected !== 1" (click)="pageingP()">ก่อนหน้า</a>
-                          <a class="page-link" *ngIf="currentPageSelected === 1" >ก่อนหน้า</a>
-                          
+                          <a class="page-link" *ngIf="currentPageSelected === 1">ก่อนหน้า</a>
+
                         </li>
                         <li [class]="curentPage[item]" *ngFor="let item of OrderList.paging">
                           <a (click)="pageing(item)">{{item}}</a>
@@ -238,8 +240,8 @@
               <button type="button" class="btn btn-success" *ngIf="OrderDetail.status === 'completed'" (click)="transferitm()" data-dismiss="modal">จ่ายเงินให้ร้านค้า</button>
               <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'completed'" data-toggle="modal" data-target="#remark">ยกเลิกคำสั่งซื้อ</button>
 
-              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'cancel' || OrderDetail.status === 'reject' || OrderDetail.status === 'admincancel' && OrderDetail.channel === 'order'" (click)="refunditm()"
-                data-dismiss="modal">คืนเงินให้ลูกค้า</button>
+              <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'cancel' || OrderDetail.status === 'reject' || OrderDetail.status === 'admincancel' && OrderDetail.channel === 'order'"
+                (click)="refunditm()" data-dismiss="modal">คืนเงินให้ลูกค้า</button>
               <button type="button" class="btn btn-danger" *ngIf="OrderDetail.status === 'admincancel' && OrderDetail.channel === 'bid' && OrderDetail.status !== 'topay'"
                 (click)="refunditm()" data-dismiss="modal">คืนเงินให้ลูกค้า</button>
 

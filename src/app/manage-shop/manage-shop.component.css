@@ -292,7 +292,12 @@
 .iconright {
     position: absolute;
     top: 8px;
-    right: 6px;
+    right: 10px;
     width: 50px;
     font-size: 35px;
+}
+
+.btnsearch {
+    background-color: Transparent;
+    border: none;
 }

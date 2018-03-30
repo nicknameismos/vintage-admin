@@ -14,7 +14,9 @@
             </span>
             <span>
               <input type="text" class="form-control tb" placeholder="ค้นหา รหัสคูปอง" [(ngModel)]="searchKeyword" (keyup.enter)="searchCoupon()">
-              <i class="material-icons iconright" (click)="searchCoupon()">search</i>
+              <button class="btnsearch">
+                <i class="material-icons iconright" (click)="searchCoupon()">search</i>
+              </button>
             </span>
           </div>
         </div>
@@ -96,8 +98,8 @@
                       <ul class="pagination">
                         <li class="page-item" [class]="currentPageSelected === 1 ? 'disabled':''">
                           <a class="page-link" *ngIf="currentPageSelected !== 1" (click)="pageingP()">ก่อนหน้า</a>
-                          <a class="page-link" *ngIf="currentPageSelected === 1" >ก่อนหน้า</a>
-                          
+                          <a class="page-link" *ngIf="currentPageSelected === 1">ก่อนหน้า</a>
+
                         </li>
                         <li [class]="curentPage[item]" *ngFor="let item of couponTabs.paging">
                           <a (click)="pageing(item)">{{item}}</a>

@@ -14,7 +14,9 @@
             </span>
             <span>
               <input type="text" class="form-control tb" placeholder="ค้นหา ชื่อผู้ใช้" [(ngModel)]="searchKeyword" (keyup.enter)="searchUser()">
-              <i class="material-icons iconright" (click)="searchUser()">search</i>
+              <button class="btnsearch">
+                <i class="material-icons iconright" (click)="searchUser()">search</i>
+              </button>
             </span>
           </div>
         </div>
