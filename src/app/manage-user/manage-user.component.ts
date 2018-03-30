@@ -156,6 +156,7 @@ export class ManageUserComponent implements OnInit {
     if (r) {
       this.UserService.delete(this.editingUserData._id).subscribe(data => {
         console.log(data);
+        alert('ลบข้อมูลสำเร็จ');
         this.searchUser();
         this.dissmissBtn2.nativeElement.click();
       }, err => {
@@ -167,6 +168,7 @@ export class ManageUserComponent implements OnInit {
   addUser() {
     this.editingUserData = {};
     this.action = 'เพิ่มบัญชีผู้ใช้';
+    $(this.modalEditUser.nativeElement).modal('show');
   }
 
   editUser(item) {
@@ -183,6 +185,7 @@ export class ManageUserComponent implements OnInit {
     if (this.action === 'แก้ไขบัญชีผู้ใช้') {
       this.UserService.edit(this.editingUserData).subscribe(data => {
         this.searchUser();
+        alert('บันทึกข้อมูลสำเร็จ');
         this.dissmissBtn2.nativeElement.click();
       }, err => {
         console.log(err);
@@ -190,6 +193,7 @@ export class ManageUserComponent implements OnInit {
     } else {
       this.editingUserData.username = this.editingUserData.email;
       this.UserService.add(this.editingUserData).subscribe(data => {
+        alert('บันทึกข้อมูลสำเร็จ');
         this.searchUser();
         this.dissmissBtn2.nativeElement.click();
       }, err => {
